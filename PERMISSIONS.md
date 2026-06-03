@@ -81,6 +81,9 @@ Permission                                    | Purpose                         
     Insights views.
 *   `accesscontextmanager.*` is evaluated at the **organization** level. Grant
     it there, or VPC Service Controls will report `UNKNOWN`.
+*   `serviceusage.services.use` is a very broad permission that allows the
+    principal to use services/quota for any project in the org. Consider adding
+    this directly to the allowed project.
 
 ### Recommended: Bundle into One Custom Role
 
