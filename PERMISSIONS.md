@@ -4,9 +4,9 @@ This guide documents the Google Cloud IAM permissions used by the skills in this
 repository. All access is **read-only**—the skills never mutate your resources.
 More skills (and their permission requirements) will be added here over time.
 
-## Security Assessment Skill
+## GCS Security Assessment Skill
 
-The Security Assessment skill performs a **read-only** security posture
+The GCS Security Assessment skill performs a **read-only** security posture
 assessment of Google Cloud Storage projects and buckets. It reads bucket and
 object state via Storage Insights → BigQuery and gathers project-level posture
 via REST. It never mutates target resources.

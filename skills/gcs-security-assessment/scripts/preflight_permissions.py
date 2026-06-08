@@ -18,7 +18,7 @@ import validation
 
 _BIGQUERY_API = "https://bigquery.googleapis.com/bigquery/v2/projects"
 _STORAGE_INSIGHTS_API = "https://storageinsights.googleapis.com/v1/projects"
-_SKILL = "security-assessment"
+_SKILL = "gcs-security-assessment"
 _SCRIPT = "preflight-permissions"
 
 
