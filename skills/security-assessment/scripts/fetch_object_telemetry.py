@@ -6,14 +6,8 @@ import json
 import textwrap
 from typing import Any
 
-# pylint: disable=g-import-not-at-top
-try:
-  from google3.blobstore2.storage_management.gemini.si_agent.skills.security_assessment.scripts import cloud_rest_helpers_nodeps
-  from google3.blobstore2.storage_management.gemini.si_agent.skills.security_assessment.scripts import validation
-except ImportError:
-  import cloud_rest_helpers_nodeps  # type: ignore
-  import validation  # type: ignore
-# pylint: enable=g-import-not-at-top
+import cloud_rest_helpers_nodeps
+import validation
 
 _SKILL = "security-assessment"
 _SCRIPT = "fetch-object-telemetry"

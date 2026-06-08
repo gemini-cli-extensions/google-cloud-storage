@@ -8,12 +8,7 @@ import enum
 import json
 from typing import Any, TypedDict
 
-# pylint: disable=g-import-not-at-top
-try:
-  from google3.blobstore2.storage_management.gemini.si_agent.skills.security_assessment.scripts import cloud_rest_helpers_nodeps
-except ImportError:
-  import cloud_rest_helpers_nodeps  # type: ignore
-# pylint: enable=g-import-not-at-top
+import cloud_rest_helpers_nodeps
 
 _TIMEOUT_SECONDS = 5
 _STORAGE_API = "storage.googleapis.com"
