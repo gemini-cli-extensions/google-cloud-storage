@@ -1,4 +1,4 @@
-"""Preflight permission check for the security assessment skill.
+"""Preflight permission check for the GCS security assessment skill.
 
 Probes prerequisites the assessment depends on and emits a structured report.
 Required checks gate the assessment; recommended checks downgrade it to a
@@ -341,7 +341,7 @@ def run_preflight(*, project_id: str, dataset_name: str) -> Mapping[str, Any]:
 def main() -> None:
   parser = argparse.ArgumentParser(
       description=(
-          "Preflight permission check for the security assessment skill."
+          "Preflight permission check for the GCS security assessment skill."
       )
   )
   parser.add_argument("--project_id", required=True, help="GCP project ID")
