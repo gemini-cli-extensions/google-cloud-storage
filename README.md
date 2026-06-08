@@ -23,7 +23,7 @@ resources.
 -   [Installation](#installation)
 -   [Available Skills](#available-skills)
 -   [Prerequisites](#prerequisites)
--   [Security Assessment Skill](#security-assessment-skill)
+-   [GCS Security Assessment Skill](#gcs-security-assessment-skill)
     -   [Required Permissions](#required-permissions)
     -   [Authentication](#authentication)
     -   [Usage Examples](#usage-examples)
@@ -44,7 +44,7 @@ Gemini CLI, Claude Code, Codex, and Antigravity CLI.
 
 ## Available Skills
 
--   [**Security Assessment**](#security-assessment-skill) — Assesses the
+-   [**GCS Security Assessment**](#gcs-security-assessment-skill) — Assesses the
     security posture of Google Cloud Storage projects and buckets, identifying
     toxic combinations of vulnerabilities and checking SAIF compliance.
 
@@ -61,9 +61,9 @@ Ensure you have the following:
 *   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
     Antigravity CLI.
 
-## Security Assessment Skill
+## GCS Security Assessment Skill
 
-The Security Assessment skill is grounded in Google's
+The GCS Security Assessment skill is grounded in Google's
 [Secure AI Framework (SAIF)](https://saif.google/secure-ai-framework/saif-map).
 Rather than emitting isolated static alerts, it correlates real telemetry
 signals gathered from your project to surface **toxic combinations** of

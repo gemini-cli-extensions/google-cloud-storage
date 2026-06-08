@@ -14,7 +14,7 @@ from typing import Any
 import cloud_rest_helpers_nodeps
 
 _TIMEOUT_SECONDS = 10
-_SKILL = "security-assessment"
+_SKILL = "gcs-security-assessment"
 _SCRIPT = "list-datasets"
 
 

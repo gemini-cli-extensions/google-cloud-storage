@@ -58,7 +58,7 @@ def bigquery_labels(skill: str, script: str) -> dict[str, str]:
   (https://cloud.google.com/bigquery/docs/labels-intro#requirements).
 
   Args:
-    skill: Identifier for the calling skill (e.g., "security-assessment").
+    skill: Identifier for the calling skill (e.g., "gcs-security-assessment").
     script: Identifier for the calling script (e.g., "fetch-bucket-telemetry").
 
   Returns:
@@ -395,7 +395,7 @@ def get_authorized_session(
   also stamped so requests are billed/quota-attributed to that project.
 
   Args:
-    skill: Identifier for the calling skill (e.g., "security-assessment").
+    skill: Identifier for the calling skill (e.g., "gcs-security-assessment").
     script: Identifier for the calling script (e.g., "fetch-bucket-telemetry").
     project_id: Optional GCP project ID for billing/quota attribution. When
       set, stamped as the ``X-Goog-User-Project`` header on every request.
@@ -469,7 +469,7 @@ def execute_bigquery_query(
     project_id: The GCP project ID.
     payload: The JSON query payload.
     session: Authorized session for REST requests.
-    skill: Identifier for the calling skill (e.g., "security-assessment").
+    skill: Identifier for the calling skill (e.g., "gcs-security-assessment").
     script: Identifier for the calling script (e.g., "fetch-bucket-telemetry").
 
   Returns:

@@ -25,7 +25,7 @@ _MODEL_ARMOR_API = "https://modelarmor.googleapis.com/v1/projects"
 # plane, so it needs a longer timeout than per-region/global Model Armor calls.
 _MODEL_ARMOR_TEMPLATES_TIMEOUT_SECONDS = 30
 
-_SKILL = "security-assessment"
+_SKILL = "gcs-security-assessment"
 _SCRIPT = "evaluate-project-security-posture"
 
 

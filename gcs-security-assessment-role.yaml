@@ -1,5 +1,5 @@
 title: "GCS Security Assessment (Read-Only)"
-description: "Read-only access for the GCS security-assessment skill."
+description: "Read-only access for the GCS Security Assessment skill."
 stage: "GA"
 includedPermissions:
   # Bucket & object assessment (Storage Insights telemetry)

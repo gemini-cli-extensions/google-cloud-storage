@@ -9,7 +9,7 @@ from typing import Any
 import cloud_rest_helpers_nodeps
 import validation
 
-_SKILL = "security-assessment"
+_SKILL = "gcs-security-assessment"
 _SCRIPT = "fetch-bucket-telemetry"
 
 
