@@ -4,7 +4,7 @@
   "description": "Vetted Google Cloud Storage skills for your coding agent.",
   "author": {
     "name": "Google LLC",
-    "email": "gemini-for-storage-eng@google.com"
+    "email": "gcs-agentic-ai-customer-support@google.com"
   },
   "homepage": "https://cloud.google.com/storage",
   "repository": "https://github.com/gemini-cli-extensions/google-cloud-storage",
