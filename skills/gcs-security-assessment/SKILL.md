@@ -3,8 +3,9 @@ name: gcs-security-assessment
 description: >-
   Assesses security posture, evaluates risks, and checks SAIF compliance for Google Cloud Storage buckets or projects. Use when the user requests security scans, vulnerability checks, or SAIF assessments. Don't use when: The user is asking about non-GCS resources (Compute Engine, GKE, etc.), investigating a
   live production outage, or asking general security questions not tied to a specific project or bucket.
+license: Apache-2.0
 metadata:
-    version: 1.0.0
+    version: v1
     publisher: google
     tags: [gcs, security, compliance, saif]
     category: security
