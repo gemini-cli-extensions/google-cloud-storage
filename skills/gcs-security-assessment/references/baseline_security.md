@@ -4,7 +4,8 @@ Baseline checks are evaluated for **every project and bucket** before toxic
 combination analysis begins. These are prerequisites — any single failure is
 flagged independently.
 
-> [!IMPORTANT] Baseline failures are reported separately from toxic
+> [!IMPORTANT]
+> Baseline failures are reported separately from toxic
 > combinations. A bucket can fail baseline checks AND match a toxic combination
 > archetype. Report both.
 
@@ -99,5 +100,6 @@ invisible.
     buckets. Set log retention policies and restrict IAM on log sinks to prevent
     audit logs from becoming a secondary exposure.
 
-> [!TIP] Data Access audit logs can generate high volume on busy buckets.
+> [!TIP]
+> Data Access audit logs can generate high volume on busy buckets.
 > Recommend scoping to high-value buckets rather than enabling project-wide.

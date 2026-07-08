@@ -222,5 +222,6 @@ telemetry. Adapt the structure above:
 -   The Quickfix column in Section 2 should be a short plain-language label +
     fix reference — never just a raw command, never blank.
 
-> [!TIP] See `examples/sample_assessment.md` for a complete example of expected
+> [!TIP]
+> See `examples/sample_assessment.md` for a complete example of expected
 > output format.

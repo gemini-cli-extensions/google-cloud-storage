@@ -1,33 +1,33 @@
-# How to contribute
+# Contributing to Google Cloud Storage Skills
 
-We'd love to accept your patches and contributions to this project.
+Thank you for your interest in the Google Cloud Storage Skills repository!
 
-## Before you begin
+## Our Contribution Policy
 
-### Sign our Contributor License Agreement
+At this time, **we are not accepting external pull requests or code
+contributions.** To ensure the technical accuracy, security, and architectural
+alignment of the guidance provided here, all Agent Skills must undergo a
+rigorous internal verification and approval process by Google teams.
 
-Contributions to this project must be accompanied by a
-[Contributor License Agreement](https://cla.developers.google.com/about) (CLA).
-You (or your employer) retain the copyright to your contribution; this simply
-gives us permission to use and redistribute your contributions as part of the
-project.
+## How You Can Help
 
-If you or your current employer have already signed the Google CLA (even if it
-was for a different project), you probably don't need to do it again.
+While we do not accept direct code contributions, your feedback is invaluable
+for improving the quality of these skills:
 
-Visit <https://cla.developers.google.com/> to see your current agreements or to
-sign a new one.
+*   **Report Issues:** If you find a bug, an outdated SDK pattern, or a security
+    anti-pattern in a skill, please
+    [open an issue](https://github.com/gemini-cli-extensions/google-cloud-storage/issues).
 
-### Review our community guidelines
+*   **Request New Skills:** If there is a Google product or a common
+    cross-product architectural pattern you would like to see covered, please
+    let us know via the issue tracker.
 
-This project follows
-[Google's Open Source Community Guidelines](https://opensource.google/conduct/).
+*   **Remix & Share:** You are encouraged to fork this repository and remix
+    these skills for your own specialized workflows. If you build something
+    great, let us know!
 
-## Contribution process
+## Internal Google Teams
 
-### Code reviews
-
-All submissions, including submissions by project members, require review. We
-use GitHub pull requests for this purpose. Consult
-[GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
-information on using pull requests.
+If you are a member of a Google team and wish to author or update a skill for
+your product, refer to the internal **Agent Skills Program** documentation for
+authoring guidelines and the `SKILL.md` specification.

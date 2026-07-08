@@ -21,6 +21,9 @@ from typing import Any
 import urllib.parse
 
 _BIGQUERY_API = "https://bigquery.googleapis.com/bigquery/v2/projects"
+_RESOURCE_MANAGER_API = (
+    "https://cloudresourcemanager.googleapis.com/v3/projects"
+)
 _TIMEOUT_SECONDS = 60
 
 _ATTRIBUTION_PREFIX = "gcs-skills"
@@ -347,12 +350,35 @@ class AuthorizedSession:
       *,
       json: Mapping[str, Any] | None = None,
       timeout: float = _TIMEOUT_SECONDS,
-      headers: Mapping[str, str] | None = None,
+      headers: Mapping[str, str | None] | None = None,
   ) -> Response:
-    """Issues an authenticated HTTP request, refreshing the token on 401."""
+    """Issues an authenticated HTTP request, refreshing the token on 401.
+
+    Args:
+      method: The HTTP method (e.g., "GET", "POST").
+      url: The URL to request.
+      json: Optional JSON-serializable request body, sent with Content-Type:
+        application/json.
+      timeout: The timeout for the request in seconds.
+      headers: Optional per-request headers, merged over the session headers. A
+        header value of None removes that header from the request instead of
+        sending it, matching requests.Session semantics.
+
+    Returns:
+      A Response object.
+
+    Raises:
+      HttpError: If the server returns 401 again after a token refresh.
+      CloudRestError: If curl fails or times out.
+      CredentialsError: If refreshing the token via gcloud fails.
+    """
     request_headers: dict[str, str] = dict(self.headers)
     if headers:
-      request_headers.update(headers)
+      for name, value in headers.items():
+        if value is None:
+          request_headers.pop(name, None)
+        else:
+          request_headers[name] = value
     request_headers["Authorization"] = f"Bearer {self._token}"
 
     body_bytes: bytes | None = None
@@ -378,7 +404,7 @@ class AuthorizedSession:
       url: str,
       *,
       timeout: float = _TIMEOUT_SECONDS,
-      headers: Mapping[str, str] | None = None,
+      headers: Mapping[str, str | None] | None = None,
   ) -> Response:
     """Issues an authenticated HTTP GET request."""
     return self.request("GET", url, timeout=timeout, headers=headers)
@@ -397,8 +423,8 @@ def get_authorized_session(
   Args:
     skill: Identifier for the calling skill (e.g., "gcs-security-assessment").
     script: Identifier for the calling script (e.g., "fetch-bucket-telemetry").
-    project_id: Optional GCP project ID for billing/quota attribution. When
-      set, stamped as the ``X-Goog-User-Project`` header on every request.
+    project_id: Optional GCP project ID for billing/quota attribution. When set,
+      stamped as the ``X-Goog-User-Project`` header on every request.
 
   Returns:
     AuthorizedSession with a freshly fetched access token.
@@ -411,6 +437,52 @@ def get_authorized_session(
   if project_id:
     session.headers["X-Goog-User-Project"] = project_id
   return session
+
+
+def get_project_number(*, project_id: str, session: AuthorizedSession) -> int:
+  """Resolves a GCP project ID to its project number.
+
+  Storage Insights dataset views identify a bucket's owning project by
+  project number, so callers filtering those views by project must resolve
+  the user-facing project ID first. Requires the
+  ``resourcemanager.projects.get`` permission on the project, which every
+  predefined project-level role includes.
+
+  Args:
+    project_id: The GCP project ID (or project number, returned as-is).
+    session: Authorized session for REST requests.
+
+  Returns:
+    The project number.
+
+  Raises:
+    CloudRestError: If the REST call fails or the response does not contain
+      a project number.
+  """
+  # isascii() guards against non-ASCII digits (e.g. superscripts), which
+  # isdigit() accepts but int() rejects.
+  if project_id.isascii() and project_id.isdigit():
+    return int(project_id)
+  url = f"{_RESOURCE_MANAGER_API}/{urllib.parse.quote(project_id, safe='')}"
+  # projects.get is free metadata, so it needs no billing attribution.
+  # Sending X-Goog-User-Project would additionally require the Cloud
+  # Resource Manager API to be enabled on that quota project, so the header
+  # is omitted to keep resolution working on projects that have not
+  # enabled it.
+  with session.get(url, headers={"X-Goog-User-Project": None}) as response:
+    response.raise_for_status()
+    payload = response.json()
+  # v3 projects.get returns the resource name "projects/<project number>".
+  name = payload.get("name") if isinstance(payload, Mapping) else None
+  prefix, _, project_number = (name or "").partition("/")
+  if prefix != "projects" or not (
+      project_number.isascii() and project_number.isdigit()
+  ):
+    raise CloudRestError(
+        f"Could not resolve project number for {project_id!r}: unexpected"
+        f" resource name {name!r} from Cloud Resource Manager."
+    )
+  return int(project_number)
 
 
 def parse_bq_value(val: Any, field: Mapping[str, Any]) -> Any:

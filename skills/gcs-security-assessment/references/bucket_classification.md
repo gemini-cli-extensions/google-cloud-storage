@@ -3,7 +3,8 @@
 Classification runs in Phase 2, before any security evaluation. It determines
 the sensitivity context that modulates how urgently findings are treated.
 
-> [!IMPORTANT] Classification does NOT change which controls are recommended.
+> [!IMPORTANT]
+> Classification does NOT change which controls are recommended.
 > The same controls apply regardless of sensitivity. Classification only
 > modulates the severity label.
 
@@ -78,7 +79,8 @@ Use the classification to adjust the severity label for each finding:
 | Unclassified (inferred) | Full severity         | Unknown = potentially    |
 :                         :                       : sensitive, worst case    :
 
-> [!CAUTION] **Unclassified is NOT non-sensitive.** Unknown data gets full
+> [!CAUTION]
+> **Unclassified is NOT non-sensitive.** Unknown data gets full
 > severity because you cannot confirm it is safe. Only an affirmative
 > classification (SDP or explicit customer tag) reduces severity.
 

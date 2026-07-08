@@ -14,5 +14,6 @@ The classification determines how urgently findings should be treated:
 -   **Non-sensitive (explicit)** → Minimal severity
 -   **Unclassified** → Treat as potentially sensitive (full severity)
 
-> [!IMPORTANT] Unclassified is NOT the same as non-sensitive. If a bucket has no
+> [!IMPORTANT]
+> Unclassified is NOT the same as non-sensitive. If a bucket has no
 > classification, treat it as worst-case until the customer classifies it.

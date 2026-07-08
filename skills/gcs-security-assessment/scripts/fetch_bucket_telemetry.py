@@ -55,8 +55,10 @@ def fetch_bucket_telemetry(
   """Fetches bucket telemetry signals from BigQuery.
 
   Queries the latest snapshot from the Storage Insights bucket_attributes
-  table. If bucket_names is provided, only those buckets are returned;
-  otherwise all buckets in the dataset are returned.
+  table. Results are always restricted to buckets owned by project_id, since
+  the dataset may be org- or folder-scoped and contain buckets from other
+  projects. If bucket_names is provided, only those buckets are returned;
+  otherwise all of the project's buckets in the dataset are returned.
 
   Args:
     project_id: The GCP project ID.
@@ -70,14 +72,14 @@ def fetch_bucket_telemetry(
     cloud_rest_helpers_nodeps.CloudRestError: If the REST query fails.
     RuntimeError: If the query job does not complete in time.
   """
-  validation.validate_inputs(project_id, dataset_name, bucket_names)
+  validation.validate_inputs(project_id, dataset_name, bucket_names)  # pyrefly: ignore[bad-argument-type]
 
   if not bucket_names:
     bucket_filter = ""
-    query_parameters = []
+    bucket_parameters = []
   else:
     bucket_filter = "AND name IN UNNEST(@bucket_names)"
-    query_parameters = [{
+    bucket_parameters = [{
         "name": "bucket_names",
         "parameterType": {
             "type": "ARRAY",
@@ -112,23 +114,34 @@ def fetch_bucket_telemetry(
             `{project_id}.{dataset_name}.bucket_attributes_view`
           WHERE
             snapshotTime >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 2 DAY)
+            AND project = @project_number
             {bucket_filter}
         )
       WHERE
         rn = 1;
   """).strip()
 
-  payload = {
-      "query": query,
-      "useLegacySql": False,
-  }
-  if query_parameters:
-    payload["parameterMode"] = "NAMED"
-    payload["queryParameters"] = query_parameters
-
   with cloud_rest_helpers_nodeps.get_authorized_session(
       skill=_SKILL, script=_SCRIPT, project_id=project_id
   ) as session:
+    # The dataset may be org- or folder-scoped and contain buckets from other
+    # projects; the views identify the owning project by project number only.
+    project_number = cloud_rest_helpers_nodeps.get_project_number(
+        project_id=project_id, session=session
+    )
+    payload = {
+        "query": query,
+        "useLegacySql": False,
+        "parameterMode": "NAMED",
+        "queryParameters": [
+            {
+                "name": "project_number",
+                "parameterType": {"type": "INT64"},
+                "parameterValue": {"value": str(project_number)},
+            },
+            *bucket_parameters,
+        ],
+    }
     schema_fields, rows = cloud_rest_helpers_nodeps.execute_bigquery_query(
         project_id=project_id,
         payload=payload,

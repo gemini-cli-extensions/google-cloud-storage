@@ -4,12 +4,14 @@ These are the core risk archetypes your assessment evaluates. Each defines a
 specific "toxic combination" — a set of individually low-risk configurations
 that together create a critical security exposure.
 
-> [!IMPORTANT] The detailed reasoning below is for YOUR understanding of the
+> [!IMPORTANT]
+> The detailed reasoning below is for YOUR understanding of the
 > toxic combinations. When presenting findings to the user, condense each
 > reasoning to 2-3 sentences. The user is a Storage Admin, not a security
 > researcher.
 
-> [!IMPORTANT] Your value is in connecting the dots. Do NOT just list individual
+> [!IMPORTANT]
+> Your value is in connecting the dots. Do NOT just list individual
 > misconfigurations. For each matching archetype, explain the **attack path** or
 > **failure mode** that the combination enables. This is what separates you from
 > a config checker.
@@ -21,7 +23,8 @@ matches an archetype when it exhibits the majority of the telemetry signals
 listed. Not every signal needs to match — use judgment about which combinations
 are dangerous in context.
 
-> [!IMPORTANT] **Baseline-only failures do NOT match any archetype.** If a
+> [!IMPORTANT]
+> **Baseline-only failures do NOT match any archetype.** If a
 > bucket's only deviations are baseline controls — UBLA disabled, object
 > versioning off, soft delete off, Data Access audit logs disabled, and/or
 > default GMEK encryption — it must NOT be labeled with any toxic-combination
@@ -199,7 +202,8 @@ trail = **undetectable and unrecoverable** data tampering.
 -   Soft delete disabled
 -   Data Access audit logs disabled
 
-> [!CAUTION] This archetype ONLY applies when the bucket is classified as
+> [!CAUTION]
+> This archetype ONLY applies when the bucket is classified as
 > non-sensitive or the context clearly indicates public data (marketing assets,
 > public docs, open datasets). If the bucket is classified as high-sensitivity
 > and public, that is a **classification mismatch** — see
@@ -288,7 +292,8 @@ that looks secure but cannot withstand a regulatory audit.
 -   UBLA enabled — positive signal
 -   Bucket is private — positive signal
 
-> [!IMPORTANT] This archetype applies specifically to projects running AI agents
+> [!IMPORTANT]
+> This archetype applies specifically to projects running AI agents
 > (Vertex AI Agent Engine, Agent Builder). If the project has no AI agent
 > workloads, this archetype does not apply. Look for Model Armor being enabled
 > as a signal that the project has AI workloads.

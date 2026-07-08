@@ -51,14 +51,13 @@ necessary telemetry signals.
     Parse the JSON output. The `analysis_scope` field tells you which mode to
     run:
 
-    -   > [!IMPORTANT] > **STOP only on a required failure**: If
-        `ready_to_proceed` is `false` (i.e. `analysis_scope: "none"` — the `adc`
-        check is `missing`), you **MUST IMMEDIATELY STOP** and output your final
-        response. > * **DO NOT** invoke any telemetry-gathering scripts
-        (`fetch_bucket_telemetry.py`, `fetch_object_telemetry.py`, or
-        `evaluate_project_security_posture.py`). > > Report the `adc` check's
-        `impact` and `fix` verbatim and wait for the user to re-authenticate
-        before re-running preflight.
+    -   **STOP only on a required failure**: If `ready_to_proceed` is `false`
+        (i.e. `analysis_scope: "none"` — the `adc` check is `missing`), you
+        **MUST IMMEDIATELY STOP** and output your final response. **DO NOT**
+        invoke any telemetry-gathering scripts (`fetch_bucket_telemetry.py`,
+        `fetch_object_telemetry.py`, or `evaluate_project_security_posture.py`).
+        Report the `adc` check's `impact` and `fix` verbatim and wait for the
+        user to re-authenticate before re-running preflight.
     -   If `analysis_scope` is `"full"` (SI enabled and dataset queryable),
         proceed with the full assessment: run all telemetry scripts and all
         phases.
@@ -129,6 +128,7 @@ necessary telemetry signals.
     -   Do NOT assume a value. Log the gap explicitly.
     ```
 
-> [!CAUTION] You MUST have telemetry before proceeding. Do not guess at
+> [!CAUTION]
+> You MUST have telemetry before proceeding. Do not guess at
 > configurations. If a critical signal is unavailable, inform the user and
 > explain what it would have told you.

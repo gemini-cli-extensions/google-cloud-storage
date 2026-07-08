@@ -21,7 +21,9 @@ def fetch_object_telemetry(
   """Fetches object telemetry signals from BigQuery.
 
   Queries the latest snapshot from the Storage Insights
-  object_attributes_latest_snapshot_view.
+  object_attributes_latest_snapshot_view. Results are always restricted to
+  buckets owned by project_id, since the dataset may be org- or folder-scoped
+  and contain buckets from other projects.
 
   Args:
     project_id: The GCP project ID.
@@ -35,14 +37,14 @@ def fetch_object_telemetry(
     cloud_rest_helpers_nodeps.CloudRestError: If the REST query fails.
     RuntimeError: If the query job does not complete in time.
   """
-  validation.validate_inputs(project_id, dataset_name, bucket_names)
+  validation.validate_inputs(project_id, dataset_name, bucket_names)  # pyrefly: ignore[bad-argument-type]
 
   if not bucket_names:
     bucket_filter = ""
-    query_parameters = []
+    bucket_parameters = []
   else:
-    bucket_filter = "WHERE bucket IN UNNEST(@bucket_names)"
-    query_parameters = [{
+    bucket_filter = "AND bucket IN UNNEST(@bucket_names)"
+    bucket_parameters = [{
         "name": "bucket_names",
         "parameterType": {
             "type": "ARRAY",
@@ -67,22 +69,36 @@ def fetch_object_telemetry(
         COUNTIF(encryptionType = 'GMEK') AS gmek_objects
       FROM
         `{project_id}.{dataset_name}.object_attributes_latest_snapshot_view`
-      {bucket_filter}
+      WHERE
+        project = @project_number
+        {bucket_filter}
       GROUP BY
         bucket
   """).strip()
 
-  payload = {
-      "query": query,
-      "useLegacySql": False,
-  }
-  if query_parameters:
-    payload["parameterMode"] = "NAMED"
-    payload["queryParameters"] = query_parameters
-
   with cloud_rest_helpers_nodeps.get_authorized_session(
       skill=_SKILL, script=_SCRIPT, project_id=project_id
   ) as session:
+    # The dataset may be org- or folder-scoped and contain buckets from other
+    # projects; the views identify the owning project by project number only.
+    project_number = cloud_rest_helpers_nodeps.get_project_number(
+        project_id=project_id, session=session
+    )
+
+    payload = {
+        "query": query,
+        "useLegacySql": False,
+        "parameterMode": "NAMED",
+        "queryParameters": [
+            {
+                "name": "project_number",
+                "parameterType": {"type": "INT64"},
+                "parameterValue": {"value": str(project_number)},
+            },
+            *bucket_parameters,
+        ],
+    }
+
     schema_fields, rows = cloud_rest_helpers_nodeps.execute_bigquery_query(
         project_id=project_id,
         payload=payload,

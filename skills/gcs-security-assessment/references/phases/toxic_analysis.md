@@ -20,7 +20,8 @@ For each bucket, you MUST:
 4.  **Provide Remediation**: Provide remediation scripts for every gap
     identified.
 
-> [!IMPORTANT] Your reasoning MUST connect the dots between signals. Do not just
+> [!IMPORTANT]
+> Your reasoning MUST connect the dots between signals. Do not just
 > list individual misconfigurations. Explain the attack path or failure mode
 > that the combination enables. This is what makes you valuable — a config
 > checker lists findings; you explain consequences.
