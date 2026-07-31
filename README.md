@@ -2,11 +2,13 @@
 
 [![Install via skills.sh](https://img.shields.io/badge/skills.sh-install-green)](https://skills.sh/gemini-cli-extensions/google-cloud-storage)
 
-This repository contains [Agent Skills](https://agentskills.io/home) for
+This repository contains a growing collection of
+[Agent Skills](https://agentskills.io/home) for
 [Google Cloud Storage](https://cloud.google.com/storage). These skills deliver
 vetted GCS expertise directly into your coding agent, letting you use natural
 language prompts in your preferred CLI or IDE to work with your storage
-resources.
+resources — from everyday bucket and object management to security assessments
+and infrastructure code generation.
 
 > [!NOTE]
 > This repository is under active development. More skills will be added
@@ -23,9 +25,11 @@ resources.
 -   [Installation](#installation)
 -   [Available Skills](#available-skills)
 -   [Prerequisites](#prerequisites)
+-   [Authentication](#authentication)
+-   [Example Use Cases](#example-use-cases)
+-   [Google Cloud Storage Basics Skill](#google-cloud-storage-basics-skill)
 -   [GCS Security Assessment Skill](#gcs-security-assessment-skill)
     -   [Required Permissions](#required-permissions)
-    -   [Authentication](#authentication)
     -   [Usage Examples](#usage-examples)
 -   [Security Reminder: Agent Environment Hardening](#security-reminder-agent-environment-hardening)
 -   [Support](#support)
@@ -44,6 +48,11 @@ Gemini CLI, Claude Code, Codex, and Antigravity CLI.
 
 ## Available Skills
 
+-   [**Google Cloud Storage Basics**](#google-cloud-storage-basics-skill) —
+    Everyday GCS expertise: create and configure buckets; upload, download, and
+    transfer data; control access; manage storage classes, lifecycle, and data
+    protection; mount buckets with gcsfuse; and work through the gcloud CLI,
+    JSON/XML APIs, client libraries, Terraform, or Cloud Storage MCP servers.
 -   [**GCS Security Assessment**](#gcs-security-assessment-skill) — Assesses the
     security posture of Google Cloud Storage projects and buckets, identifying
     toxic combinations of vulnerabilities and checking SAIF compliance.
@@ -60,6 +69,121 @@ Ensure you have the following:
     are configured.
 *   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
     Antigravity CLI.
+
+## Authentication
+
+Before using the skills, authenticate with Google Cloud so your agent can read
+your storage resources and run any changes you approve. It is recommended to run
+**both** of the following commands:
+
+```bash
+gcloud auth login
+gcloud auth application-default login
+```
+
+*   **`gcloud auth application-default login`** is **required**: skill scripts
+    use Application Default Credentials (ADC) to generate access tokens for GCP
+    API calls.
+*   **`gcloud auth login`** allows the agent (or you) to run standard `gcloud`
+    commands to explore configurations or dig deeper into specific resources
+    beyond what the skill scripts cover.
+
+## Example Use Cases
+
+The skills cover the full storage lifecycle — provisioning, data movement,
+access control, protection and compliance, cost, security, and automation.
+Interact with Google Cloud Storage using natural language, right from your
+coding agent:
+
+### Design and provision storage for any workload
+
+*   **Quick start:** "Create a new GCS bucket named 'audio-video-assets' in the
+    'my-gcp-project' project"
+*   **Sensitive data:** "Create a secure GCS bucket to store PII and other
+    sensitive data. Make sure the data is protected against exfiltration and
+    unauthorized public exposure"
+*   **Media serving:** "I am building a high-performance media streaming service
+    that delivers millions of high-definition images and videos to a global
+    audience. Set up a Cloud Storage bucket as the origin, paired with a global
+    Content Delivery Network (CDN), to minimize latency and ensure optimal
+    streaming performance at scale"
+*   **AI/ML workloads:** "I have a large-scale model training and checkpointing
+    use case. Help me set up GCS to optimize performance"
+
+### Move, replicate, and migrate data at scale
+
+*   **Cloud migration:** "Migrate the data in my S3 bucket 'legacy-exports' into
+    a new GCS bucket"
+*   **Disaster recovery:** "Set up continuous replication of bucket 'ops-bucket'
+    to bucket 'vault-bucket-isolated', and ensure all the existing historical
+    data is copied as well"
+*   **Zero-downtime moves:** "Relocate my 'analytics-archive' bucket from
+    us-east1 to us-central1 without downtime"
+
+### Control who can access your data
+
+*   **Temporary sharing:** "How can I temporarily give one of my users access to
+    upload a large video to my bucket?"
+*   **Troubleshooting:** "I got a 403 Forbidden error. Help me diagnose and fix
+    it"
+
+### Protect data and meet compliance requirements
+
+*   **Recovery:** "I accidentally deleted objects from the 'prod-reports'
+    bucket. Can I get them back?"
+*   **Immutability:** "Configure my 'audit-logs' bucket so objects cannot be
+    deleted or modified for 7 years"
+
+### Optimize storage costs
+
+*   **Cost analysis:** "Analyze my buckets and recommend storage classes and
+    lifecycle rules to reduce storage costs"
+*   **Usage insight:** "Find my largest and least-accessed datasets across all
+    buckets in the project"
+
+### Assess and harden your security posture
+
+*   **Targeted assessment:** "Assess the security posture of buckets [BUCKET_1],
+    [BUCKET_2] in project [PROJECT_ID]"
+*   **Project-wide assessment:** "Run a security assessment of project
+    [PROJECT_ID] and show me the exact commands to remediate any toxic
+    combinations you find"
+
+### Generate infrastructure and application code
+
+*   **Terraform:** "Generate a Terraform configuration to provision a GCS bucket
+    in us-central1 for application logs. Make sure public access is prevented
+    and Uniform Bucket-Level Access is enabled, and add a lifecycle rule to
+    transition logs to Nearline storage after 30 days and delete them after 365
+    days"
+*   **Client libraries:** "Generate Java code to upload a local directory to my
+    'app-backups' bucket in parallel using the Cloud Storage client library"
+*   **File-system access:** "Help me mount the 'ml-datasets' bucket as a local
+    file system with gcsfuse, with mount options tuned for high-throughput model
+    training"
+
+### Build event-driven and AI-powered workflows
+
+*   **Event notifications:** "Send a Pub/Sub notification whenever new objects
+    land in my 'ingest' bucket so my pipeline can process them"
+*   **Agentic workflows:** "Scan the 'retail-raw-products' bucket for assets
+    related to 'ProductX', draft a promotional social media campaign listing,
+    and write the draft output file to bucket 'retail-campaigns'"
+
+## Google Cloud Storage Basics Skill
+
+The Google Cloud Storage Basics skill covers day-to-day work with GCS: bucket
+creation and configuration, object and folder management, uploads, downloads,
+and large-scale transfers, access control (IAM, ACLs, signed URLs, public access
+prevention), storage classes and lifecycle management, data protection
+(versioning, encryption, retention, soft delete), gcsfuse mounts, and
+performance tuning. It guides your agent across the gcloud CLI, JSON and XML
+APIs, client libraries, Terraform, and Cloud Storage MCP servers, backed by the
+curated reference docs in
+[`skills/google-cloud-storage-basics/`](./skills/google-cloud-storage-basics/).
+
+No permissions are required beyond the [prerequisites](#prerequisites) and
+whatever IAM access your identity already has to the buckets you work with.
 
 ## GCS Security Assessment Skill
 
@@ -91,24 +215,6 @@ Storage Insights telemetry (bucket/object analysis) and project-level posture
 **[PERMISSIONS.md](./PERMISSIONS.md)** for the full permission tables and a
 ready-to-apply custom IAM role
 ([`gcs-security-assessment-role.yaml`](./gcs-security-assessment-role.yaml)).
-
-### Authentication
-
-Before running an assessment, authenticate with Google Cloud so the agent can
-read your project telemetry and run any remediation you approve. It is
-recommended to run **both** of the following commands:
-
-```bash
-gcloud auth login
-gcloud auth application-default login
-```
-
-*   **`gcloud auth application-default login`** is **required**: the skill's
-    scripts use Application Default Credentials (ADC) to generate access tokens
-    for GCP API calls.
-*   **`gcloud auth login`** allows the agent (or you) to run standard `gcloud`
-    commands to explore configurations or dig deeper into specific resources
-    beyond what the skill scripts cover.
 
 ### Usage Examples
 
