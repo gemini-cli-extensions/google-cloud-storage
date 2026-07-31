@@ -17,6 +17,60 @@ _TIMEOUT_SECONDS = 10
 _SKILL = "gcs-security-assessment"
 _SCRIPT = "list-datasets"
 
+# Warnings attached to dataset entries whose config ingests resources beyond
+# the assessed project. Keyed by the scope returned by _dataset_scope().
+_NON_PROJECT_SCOPE_WARNINGS: Mapping[str, str] = {
+    "organization": (
+        "This dataset config is organization-scoped: it ingests metadata"
+        " from every project in the organization, not just the assessed"
+        " project. Bucket and object telemetry results are restricted to"
+        " buckets owned by the target project."
+    ),
+    "folders": (
+        "This dataset config is folder-scoped: it ingests metadata from"
+        " every project under its source folders, not just the assessed"
+        " project. Bucket and object telemetry results are restricted to"
+        " buckets owned by the target project."
+    ),
+}
+
+# Warning for a project-scoped config whose source projects include projects
+# other than the assessed one.
+_MULTI_PROJECT_WARNING = (
+    "This dataset config ingests metadata from projects other than the"
+    " assessed project. Bucket and object telemetry results are restricted"
+    " to buckets owned by the target project."
+)
+
+# Warning for a project-scoped config whose source projects do not include
+# the assessed project at all.
+_NO_TARGET_PROJECT_WARNING = (
+    "This dataset config does not ingest the assessed project: its source"
+    " projects do not include it. Bucket and object telemetry will return"
+    " no results for the target project."
+)
+
+
+def _dataset_scope(config: Mapping[str, Any]) -> str:
+  """Returns the resource scope of a dataset config.
+
+  A dataset config ingests metadata from an entire organization, a set of
+  folders, or a set of projects. Anything broader than "projects" means the
+  linked dataset contains buckets owned by projects other than the one being
+  assessed.
+
+  Args:
+    config: A DatasetConfig resource from the Storage Insights API.
+
+  Returns:
+    One of "organization", "folders", or "projects".
+  """
+  if config.get("organizationScope"):
+    return "organization"
+  if config.get("sourceFolders"):
+    return "folders"
+  return "projects"
+
 
 def list_datasets(
     *,
@@ -33,8 +87,13 @@ def list_datasets(
 
   Returns:
     A list of dictionaries mapping {"{LOCATION_NAME}": "{DATASET_ID}",
-    "description":
-    "{DESCRIPTION}"} where each field is extracted from the SI dataset.
+    "description": "{DESCRIPTION}", "scope": "{SCOPE}"} where each field is
+    extracted from the SI dataset. Scope is "organization", "folders", or
+    "projects" depending on which resources the dataset config ingests. An
+    entry whose config spans resources beyond the assessed project — scope
+    "organization" or "folders", or a project-scoped config whose source
+    projects include others or omit the assessed project entirely — also
+    carries a "warning" explaining that.
 
   Raises:
     RuntimeError: If the request fails.
@@ -51,15 +110,51 @@ def list_datasets(
   else:
     data = response.json()
   configs = data.get("datasetConfigs") or []
+  # sourceProjects lists project numbers, so comparing against the input
+  # project ID requires resolving it once up front.
+  target_project_number: str | None = None
+  if any(config.get("sourceProjects") for config in configs):
+    try:
+      target_project_number = str(
+          cloud_rest_helpers_nodeps.get_project_number(
+              project_id=project_id, session=session
+          )
+      )
+    except cloud_rest_helpers_nodeps.CloudRestError:
+      target_project_number = None
   result: MutableSequence[Mapping[str, str]] = []
   for config in configs:
     name = config.get("name") or ""
     link = config.get("link") or {}
     description = config.get("description") or ""
     if link.get("linked") and link.get("dataset") and "/locations/" in name:
+      # Config names look like projects/N/locations/LOC/datasetConfigs/ID.
       _, location_path = name.split("/locations/")
       loc, *_ = location_path.split("/")
-      result.append({loc: str(link.get("dataset")), "description": description})
+      scope = _dataset_scope(config)
+      entry = {
+          loc: str(link.get("dataset")),
+          "description": description,
+          "scope": scope,
+      }
+      # Organization and folder-scoped configs always span beyond the
+      # assessed project.
+      warning = _NON_PROJECT_SCOPE_WARNINGS.get(scope)
+      if scope == "projects" and target_project_number is not None:
+        source_projects = config.get("sourceProjects") or {}
+        source_numbers = {
+            str(number)
+            for number in source_projects.get("projectNumbers") or []
+        }
+        # A project-scoped config warns when it skips the assessed project
+        # entirely, or additionally ingests other projects.
+        if source_numbers and target_project_number not in source_numbers:
+          warning = _NO_TARGET_PROJECT_WARNING
+        elif source_numbers - {target_project_number}:
+          warning = _MULTI_PROJECT_WARNING
+      if warning is not None:
+        entry["warning"] = warning
+      result.append(entry)
   return result
 
 

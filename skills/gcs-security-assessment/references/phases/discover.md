@@ -32,6 +32,19 @@ necessary telemetry signals.
     without steering. The user always makes the final choice. You MUST ONLY use
     Storage Insights to answer questions about buckets.**
 
+    Each dataset entry includes a `scope` field: `projects`, `folders`, or
+    `organization`. An entry whose config ingests resources beyond the target
+    project — scope `organization` or `folders`, or a project-scoped config
+    whose source projects include others or omit the target project entirely —
+    also carries a `warning` field. You MUST surface a selected dataset's
+    `warning` to the user: relay it along with the note that the telemetry
+    scripts automatically restrict bucket and object results to buckets owned by
+    the target project. If the user explicitly chose the dataset, do NOT stop to
+    ask for re-confirmation — proceed with the assessment and repeat the warning
+    as a prominent notice in the final report. When instead you are listing
+    datasets for the user to choose from, include the `warning` against the
+    affected entries.
+
 2.  **Run Preflight Check**: Validate that the calling identity has the
     prerequisites for the assessment **before** invoking any telemetry script.
     Run:
