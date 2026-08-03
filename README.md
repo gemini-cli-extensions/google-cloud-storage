@@ -162,6 +162,17 @@ coding agent:
     file system with gcsfuse, with mount options tuned for high-throughput model
     training"
 
+### Set up and secure Cloud Storage MCP servers
+
+*   **Guarded setup:** "Set up the Cloud Storage MCP server for my coding agent,
+    and integrate Model Armor with it to screen tool calls for prompt injection"
+*   **Authentication and tools:** "How do I authenticate and authorize with the
+    remote Cloud Storage MCP server, and what tools are available on it?"
+*   **Choosing a server:** "For downloading large files from my buckets, which
+    Cloud Storage MCP server should I use?"
+*   **Read-only enforcement:** "Lock down the Cloud Storage remote MCP server
+    with an IAM deny policy so my agent can only call read-only tools"
+
 ### Build event-driven and AI-powered workflows
 
 *   **Event notifications:** "Send a Pub/Sub notification whenever new objects
