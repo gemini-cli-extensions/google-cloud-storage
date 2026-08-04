@@ -7,7 +7,11 @@ license: Apache-2.0
 metadata:
     version: v2
     publisher: google
-    tags: [gcs, security, compliance, saif]
+    tags:
+      - gcs
+      - security
+      - compliance
+      - saif
     category: security
     support_tier: primary
 ---
