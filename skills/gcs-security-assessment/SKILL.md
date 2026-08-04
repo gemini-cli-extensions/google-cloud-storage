@@ -5,7 +5,7 @@ description: >-
   live production outage, or asking general security questions not tied to a specific project or bucket.
 license: Apache-2.0
 metadata:
-    version: v1
+    version: v2
     publisher: google
     tags: [gcs, security, compliance, saif]
     category: security
