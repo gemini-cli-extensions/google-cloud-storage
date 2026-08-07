@@ -68,6 +68,11 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
     transfer data; control access; manage storage classes, lifecycle, and data
     protection; mount buckets with gcsfuse; and work through the gcloud CLI,
     JSON/XML APIs, client libraries, Terraform, or Cloud Storage MCP servers.
+-   [**Cloud Storage FUSE**](./skills/google-cloud-storage-fuse/) — Advanced
+    Cloud Storage FUSE (gcsfuse) expertise: guide when to use FUSE vs. direct
+    storage reads, optimize mount performance and caching across GKE, Compute
+    Engine, and Cloud Run, ensure safe file writes and ML checkpointing, and
+    diagnose speed or cost issues using telemetry metrics.
 -   [**GCS Security Assessment**](#gcs-security-assessment-skill) — Assesses the
     security posture of Google Cloud Storage projects and buckets, identifying
     toxic combinations of vulnerabilities and checking SAIF compliance.
