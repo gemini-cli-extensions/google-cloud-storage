@@ -31,6 +31,7 @@ and infrastructure code generation.
 -   [GCS Security Assessment Skill](#gcs-security-assessment-skill)
     -   [Required Permissions](#required-permissions)
     -   [Usage Examples](#usage-examples)
+-   [Google Cloud Storage Diagnostic Skill](#google-cloud-storage-diagnostic-skill)
 -   [Security Reminder: Agent Environment Hardening](#security-reminder-agent-environment-hardening)
 -   [Support](#support)
 -   [Contributing](#contributing)
@@ -76,6 +77,10 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
 -   [**GCS Security Assessment**](#gcs-security-assessment-skill) — Assesses the
     security posture of Google Cloud Storage projects and buckets, identifying
     toxic combinations of vulnerabilities and checking SAIF compliance.
+-   [**Google Cloud Storage Diagnostic**](#google-cloud-storage-diagnostic-skill)
+    — Troubleshoots and diagnoses Google Cloud Storage errors, 403 Permission
+    Denied access control issues, IAM policy bindings, ACLs, UBLA, Bucket-Level
+    IP Filtering, and VPC-SC perimeter denials.
 
 ## Prerequisites
 
@@ -264,6 +269,24 @@ The agent works through a fixed, auditable sequence of phases—discovering scop
 and gathering telemetry, classifying buckets, evaluating baseline security,
 analyzing toxic combinations, and producing a formatted report—so you can trace
 every finding back to a signal it actually collected.
+
+## Google Cloud Storage Diagnostic Skill
+
+The **Google Cloud Storage Diagnostic** skill systematically troubleshoots
+access denials and permission conflicts across Google Cloud Storage buckets and
+objects. When a 403 Permission Denied error occurs, the skill inspects active
+IAM policy bindings, Uniform Bucket-Level Access (UBLA), Object ACLs, Cloud
+Audit Logs, Bucket-Level IP Filtering, and VPC Service Controls perimeters.
+
+### Usage Examples
+
+*   **Diagnose 403 Permission Denied:** "User alice@example.com is getting a 403
+    Permission Denied when trying to list objects in gs://my-team-bucket"
+*   **Troubleshoot IP Filter Lockout:** "I am getting a 403 error on
+    gs://my-secure-bucket due to IP filtering restrictions"
+*   **Analyze UBLA / ACL Conflicts:** "Diagnose why reading
+    gs://data-bucket/object.txt fails even though I have object viewer
+    permissions"
 
 ## Security Reminder: Agent Environment Hardening
 
