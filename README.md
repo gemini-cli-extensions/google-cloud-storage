@@ -7,8 +7,9 @@ This repository contains a growing collection of
 [Google Cloud Storage](https://cloud.google.com/storage). These skills deliver
 vetted GCS expertise directly into your coding agent, letting you use natural
 language prompts in your preferred CLI or IDE to work with your storage
-resources — from everyday bucket and object management to security assessments
-and infrastructure code generation.
+resources — from everyday bucket and object management to file-system mounts
+with Cloud Storage FUSE, access-error diagnostics, security assessments, and
+infrastructure code generation.
 
 > [!NOTE]
 > This repository is under active development. More skills will be added
@@ -26,12 +27,8 @@ and infrastructure code generation.
 -   [Available Skills](#available-skills)
 -   [Prerequisites](#prerequisites)
 -   [Authentication](#authentication)
+-   [Additional Setup: GCS Security Assessment](#additional-setup-gcs-security-assessment)
 -   [Example Use Cases](#example-use-cases)
--   [Google Cloud Storage Basics Skill](#google-cloud-storage-basics-skill)
--   [GCS Security Assessment Skill](#gcs-security-assessment-skill)
-    -   [Required Permissions](#required-permissions)
-    -   [Usage Examples](#usage-examples)
--   [Google Cloud Storage Diagnostic Skill](#google-cloud-storage-diagnostic-skill)
 -   [Security Reminder: Agent Environment Hardening](#security-reminder-agent-environment-hardening)
 -   [Support](#support)
 -   [Contributing](#contributing)
@@ -64,23 +61,29 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
 
 ## Available Skills
 
--   [**Google Cloud Storage Basics**](#google-cloud-storage-basics-skill) —
+-   [**Google Cloud Storage Basics**](./skills/google-cloud-storage-basics/) —
     Everyday GCS expertise: create and configure buckets; upload, download, and
-    transfer data; control access; manage storage classes, lifecycle, and data
-    protection; mount buckets with gcsfuse; and work through the gcloud CLI,
-    JSON/XML APIs, client libraries, Terraform, or Cloud Storage MCP servers.
--   [**Cloud Storage FUSE**](./skills/google-cloud-storage-fuse/) — Advanced
-    Cloud Storage FUSE (gcsfuse) expertise: guide when to use FUSE vs. direct
-    storage reads, optimize mount performance and caching across GKE, Compute
-    Engine, and Cloud Run, ensure safe file writes and ML checkpointing, and
-    diagnose speed or cost issues using telemetry metrics.
--   [**GCS Security Assessment**](#gcs-security-assessment-skill) — Assesses the
-    security posture of Google Cloud Storage projects and buckets, identifying
-    toxic combinations of vulnerabilities and checking SAIF compliance.
--   [**Google Cloud Storage Diagnostic**](#google-cloud-storage-diagnostic-skill)
-    — Troubleshoots and diagnoses Google Cloud Storage errors, 403 Permission
-    Denied access control issues, IAM policy bindings, ACLs, UBLA, Bucket-Level
-    IP Filtering, and VPC-SC perimeter denials.
+    transfer data; control access; manage storage classes, lifecycle, cost, and
+    data protection — via the gcloud CLI, JSON/XML APIs, client libraries,
+    Terraform, or Cloud Storage MCP servers.
+-   [**Google Cloud Storage FUSE**](./skills/google-cloud-storage-fuse/) — Mount
+    buckets as a POSIX file system with gcsfuse: decide when to use FUSE vs.
+    direct storage reads, deploy tuned mounts on GKE, Compute Engine, and Cloud
+    Run, size the file, stat, and list caches, keep file writes and ML
+    checkpointing safe, and diagnose slow or costly mounts with gcsfuse metrics.
+-   [**Google Cloud Storage Diagnostic**](./skills/google-cloud-storage-diagnostic/)
+    — Root-cause access failures: diagnose 403 Permission Denied and other
+    access errors by analyzing IAM policy bindings, ACLs, Uniform Bucket-Level
+    Access, Bucket-Level IP Filtering, and VPC Service Controls perimeters, then
+    walk through a verified fix.
+-   [**GCS Security Assessment**](./skills/gcs-security-assessment/) — Assess
+    the security posture of GCS projects and buckets against Google's
+    [Secure AI Framework (SAIF)](https://saif.google/secure-ai-framework/saif-map):
+    correlate real telemetry signals to surface **toxic combinations** of
+    vulnerabilities — scenarios where individually low-risk configurations
+    combine into a critical exposure — with actionable, verified remediation.
+    Needs [additional setup](#additional-setup-gcs-security-assessment) for a
+    complete assessment.
 
 ## Prerequisites
 
@@ -113,12 +116,35 @@ gcloud auth application-default login
     commands to explore configurations or dig deeper into specific resources
     beyond what the skill scripts cover.
 
+## Additional Setup: GCS Security Assessment
+
+The GCS Security Assessment skill runs with nothing more than working
+Application Default Credentials (see [Authentication](#authentication)) — there
+is no required IAM permission. However, signals the skill cannot read are
+reported as `UNKNOWN`, so for a complete assessment grant the recommended
+**read-only** roles covering Storage Insights telemetry (bucket/object analysis)
+and project-level posture (IAM and audit config, org policies, VPC Service
+Controls, and Model Armor). See **[PERMISSIONS.md](./PERMISSIONS.md)** for the
+full permission tables and a ready-to-apply custom IAM role
+([`gcs-security-assessment-role.yaml`](./gcs-security-assessment-role.yaml)).
+
+> [!TIP]
+> For the best analysis, we highly recommend being a
+> [Storage Intelligence](https://docs.cloud.google.com/storage/docs/storage-intelligence/overview)
+> customer. When Storage Intelligence is enabled, the skill can query your
+> Storage Insights datasets to perform deep, bucket-level and object-level
+> assessments. Without it, the skill falls back to a project-level assessment
+> only.
+
+The other skills need no permissions beyond the [prerequisites](#prerequisites)
+and whatever IAM access your identity already has to the buckets you work with.
+
 ## Example Use Cases
 
 The skills cover the full storage lifecycle — provisioning, data movement,
-access control, protection and compliance, cost, security, and automation.
-Interact with Google Cloud Storage using natural language, right from your
-coding agent:
+file-system access, access control, troubleshooting, protection and compliance,
+cost, security, and automation. Interact with Google Cloud Storage using natural
+language, right from your coding agent:
 
 ### Design and provision storage for any workload
 
@@ -135,6 +161,23 @@ coding agent:
 *   **AI/ML workloads:** "I have a large-scale model training and checkpointing
     use case. Help me set up GCS to optimize performance"
 
+### Mount buckets as a file system
+
+*   **Workload fit:** "Should my ML training workload use Cloud Storage FUSE,
+    native gs:// reads, or Filestore? It reads millions of small files every
+    epoch"
+*   **Tuned mounts:** "Help me mount the 'ml-datasets' bucket as a local file
+    system with gcsfuse, with mount options tuned for high-throughput model
+    training"
+*   **GKE deployment:** "Deploy a gcsfuse mount on my GKE training cluster with
+    the CSI driver, with caches sized for repeated reads of the training
+    dataset"
+*   **Performance diagnosis:** "My training job reads from a gcsfuse mount and
+    GPU utilization is low. Diagnose whether the mount is the bottleneck and
+    tune it"
+*   **Cost diagnosis:** "My GCS bill spiked after we moved to gcsfuse. Figure
+    out which mount options are causing the excess operations"
+
 ### Move, replicate, and migrate data at scale
 
 *   **Cloud migration:** "Migrate the data in my S3 bucket 'legacy-exports' into
@@ -149,8 +192,21 @@ coding agent:
 
 *   **Temporary sharing:** "How can I temporarily give one of my users access to
     upload a large video to my bucket?"
-*   **Troubleshooting:** "I got a 403 Forbidden error. Help me diagnose and fix
-    it"
+*   **Least privilege:** "Give the analytics team read-only access to the
+    'reports' bucket without granting them anything else in the project"
+
+### Diagnose and fix access errors
+
+*   **403 Permission Denied:** "User alice@example.com is getting a 403
+    Permission Denied when trying to list objects in gs://my-team-bucket. Help
+    me diagnose and fix it"
+*   **Confusing denials:** "Diagnose why reading gs://data-bucket/object.txt
+    fails even though I have object viewer permissions"
+*   **IP filtering lockout:** "I am getting a 403 error on gs://my-secure-bucket
+    due to IP filtering restrictions"
+*   **Service agents:** "Pub/Sub notifications on my bucket stopped working
+    after we enabled CMEK. Check whether the service agents have the right
+    permissions"
 
 ### Protect data and meet compliance requirements
 
@@ -173,6 +229,9 @@ coding agent:
 *   **Project-wide assessment:** "Run a security assessment of project
     [PROJECT_ID] and show me the exact commands to remediate any toxic
     combinations you find"
+*   **Follow-up investigation:** "Explain why the 'ml-training-data' bucket is
+    flagged as a toxic combination, and show me the exact command to remediate
+    the public access finding"
 
 ### Generate infrastructure and application code
 
@@ -183,9 +242,6 @@ coding agent:
     days"
 *   **Client libraries:** "Generate Java code to upload a local directory to my
     'app-backups' bucket in parallel using the Cloud Storage client library"
-*   **File-system access:** "Help me mount the 'ml-datasets' bucket as a local
-    file system with gcsfuse, with mount options tuned for high-throughput model
-    training"
 
 ### Set up and secure Cloud Storage MCP servers
 
@@ -205,88 +261,6 @@ coding agent:
 *   **Agentic workflows:** "Scan the 'retail-raw-products' bucket for assets
     related to 'ProductX', draft a promotional social media campaign listing,
     and write the draft output file to bucket 'retail-campaigns'"
-
-## Google Cloud Storage Basics Skill
-
-The Google Cloud Storage Basics skill covers day-to-day work with GCS: bucket
-creation and configuration, object and folder management, uploads, downloads,
-and large-scale transfers, access control (IAM, ACLs, signed URLs, public access
-prevention), storage classes and lifecycle management, data protection
-(versioning, encryption, retention, soft delete), gcsfuse mounts, and
-performance tuning. It guides your agent across the gcloud CLI, JSON and XML
-APIs, client libraries, Terraform, and Cloud Storage MCP servers, backed by the
-curated reference docs in
-[`skills/google-cloud-storage-basics/`](./skills/google-cloud-storage-basics/).
-
-No permissions are required beyond the [prerequisites](#prerequisites) and
-whatever IAM access your identity already has to the buckets you work with.
-
-## GCS Security Assessment Skill
-
-The GCS Security Assessment skill is grounded in Google's
-[Secure AI Framework (SAIF)](https://saif.google/secure-ai-framework/saif-map).
-Rather than emitting isolated static alerts, it correlates real telemetry
-signals gathered from your project to surface **toxic combinations** of
-vulnerabilities—scenarios where individually low-risk configurations combine to
-create a critical exposure—and provides actionable, verified remediation.
-
-> [!TIP]
-> For the best analysis, we highly recommend being a
-> [Storage Intelligence](https://docs.cloud.google.com/storage/docs/storage-intelligence/overview)
-> customer. When Storage Intelligence is enabled, the skill can query your
-> Storage Insights datasets to perform deep, bucket-level and object-level
-> assessments. Without it, the skill falls back to a project-level assessment
-> only.
-
-### Required Permissions
-
-The only hard requirement is working **Application Default Credentials** (see
-[Authentication](#authentication)). There is no required IAM permission—any
-authenticated identity can run the skill, though signals it cannot read are
-reported as `UNKNOWN`.
-
-For a complete assessment, grant the recommended **read-only** roles covering
-Storage Insights telemetry (bucket/object analysis) and project-level posture
-(IAM and audit config, org policies, VPC Service Controls, and Model Armor). See
-**[PERMISSIONS.md](./PERMISSIONS.md)** for the full permission tables and a
-ready-to-apply custom IAM role
-([`gcs-security-assessment-role.yaml`](./gcs-security-assessment-role.yaml)).
-
-### Usage Examples
-
-Interact with your coding agent using natural language:
-
-*   **Assess an entire project:** `Assess the security posture of project
-    [PROJECT_ID]`
-*   **Assess a specific subset of buckets:** `Assess the security posture of
-    buckets [BUCKET_1], [BUCKET_2] in project [PROJECT_ID]`
-*   **Follow-up investigation:** After an assessment, ask the agent to drill
-    into a finding—for example, "Explain why the `ml-training-data` bucket is
-    flagged as a toxic combination" or "Show me the exact command to remediate
-    the public access finding."
-
-The agent works through a fixed, auditable sequence of phases—discovering scope
-and gathering telemetry, classifying buckets, evaluating baseline security,
-analyzing toxic combinations, and producing a formatted report—so you can trace
-every finding back to a signal it actually collected.
-
-## Google Cloud Storage Diagnostic Skill
-
-The **Google Cloud Storage Diagnostic** skill systematically troubleshoots
-access denials and permission conflicts across Google Cloud Storage buckets and
-objects. When a 403 Permission Denied error occurs, the skill inspects active
-IAM policy bindings, Uniform Bucket-Level Access (UBLA), Object ACLs, Cloud
-Audit Logs, Bucket-Level IP Filtering, and VPC Service Controls perimeters.
-
-### Usage Examples
-
-*   **Diagnose 403 Permission Denied:** "User alice@example.com is getting a 403
-    Permission Denied when trying to list objects in gs://my-team-bucket"
-*   **Troubleshoot IP Filter Lockout:** "I am getting a 403 error on
-    gs://my-secure-bucket due to IP filtering restrictions"
-*   **Analyze UBLA / ACL Conflicts:** "Diagnose why reading
-    gs://data-bucket/object.txt fails even though I have object viewer
-    permissions"
 
 ## Security Reminder: Agent Environment Hardening
 
