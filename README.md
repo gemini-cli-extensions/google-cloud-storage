@@ -38,6 +38,8 @@ and infrastructure code generation.
 
 ## Installation
 
+### Installing using [open agent skills tool](https://github.com/vercel-labs/skills)
+
 ```bash
 npx skills add gemini-cli-extensions/google-cloud-storage
 ```
@@ -45,6 +47,19 @@ npx skills add gemini-cli-extensions/google-cloud-storage
 From the `npx` install command, you can select the specific skills from this
 repo to install. The skills work with any compatible coding agent, including
 Gemini CLI, Claude Code, Codex, and Antigravity CLI.
+
+### Installing via a compatible Agent Plugins client
+
+This repository is also a valid
+[Agent Plugins](https://github.com/agentplugins/agent-plugins-spec) (v1) plugin.
+Any
+[Agent Plugins–compatible client](https://agent-plugins.org/compatible-clients)
+(VS Code, Cursor, GitHub Copilot, Codex, Kiro, …) can install it directly using
+its own built-in plugin command, by pointing at this repository:
+
+```
+https://github.com/gemini-cli-extensions/google-cloud-storage
+```
 
 ## Available Skills
 
