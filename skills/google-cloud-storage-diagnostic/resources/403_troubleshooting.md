@@ -159,6 +159,9 @@ gcloud storage buckets describe gs://{bucket_name} --format="value(uniform_bucke
 
     ```bash
     CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+    gcloud storage buckets get-iam-policy gs://{bucket_name}
+
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud storage buckets describe gs://{bucket_name} --format="json(acl)"
     ```
 
@@ -213,13 +216,13 @@ Once the gap is identified, synthesize a response similar to this format:
 
 ```bash
 # Example for a User:
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
 gcloud storage buckets add-iam-policy-binding gs://{bucket_name} \
   --member="user:alice@example.com" \
   --role="roles/storage.objectViewer"
 
 # Example for a Service Account:
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
 gcloud storage buckets add-iam-policy-binding gs://{bucket_name} \
   --member="serviceAccount:service-<project-number>@gcp-sa-storageinsights.iam.gserviceaccount.com" \
   --role="roles/storage.objectViewer"
@@ -249,7 +252,7 @@ use `gcloud` to review the Cloud Audit Logs for the specific bucket and
 principal.
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
 gcloud logging read "resource.type=gcs_bucket AND resource.labels.bucket_name=\"{bucket_name}\" AND protoPayload.authenticationInfo.principalEmail=\"{principal_email}\"" \
   --project="{project_id}" --limit=10
 ```
@@ -288,7 +291,7 @@ parameter will fail with `403 Permission Denied`.
 -   **Diagnostic Command:** Check bucket billing metadata:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud storage buckets describe gs://{bucket_name} --format="default(requester_pays)"
     ```
 
@@ -304,7 +307,7 @@ check if the bucket or object is protected by a Retention Policy or Legal Hold.
 -   **Diagnostic Command:** Check object and bucket retention metadata:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud storage buckets describe gs://{bucket_name} --format="default(retention_policy)"
     ```
 
@@ -322,10 +325,10 @@ check active authentication identities:
 -   **Diagnostic Command:** Check active authentication identities:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud auth list
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
-    gcloud auth application-default print-access-token
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+    gcloud config get-value account
     ```
 
 -   **Remediation:** Instruct the user to re-authenticate via `gcloud auth
@@ -340,10 +343,12 @@ entirely overridden. The agent must verify if an explicit Deny policy exists at
 the project layer (or higher).
 
 -   **Diagnostic Command:** The agent MUST print this exact command to the user
-    verbatim, without summarizing or omitting it:
+    verbatim, without summarizing or omitting it (and suggest checking
+    `--attachment-point=organizations/{org_id}` if project-level results are
+    empty but the 403 error persists):
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud iam policies list \
       --attachment-point=cloudresourcemanager.googleapis.com/projects/{project_id} \
       --kind=denypolicies
@@ -366,7 +371,7 @@ bucket's local network filter.
     reason (you will need the target project ID):
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud logging read "resource.type=gcs_bucket AND resource.labels.bucket_name=\"{bucket_name}\" AND protoPayload.authenticationInfo.principalEmail=\"{principal_email}\"" \
       --project="{project_id}" --limit=5 --format=json
     ```
@@ -403,7 +408,7 @@ bucket's local network filter.
 
     ```bash
     # 1. Fetch the current configuration:
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:gcs-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud storage buckets describe gs://{bucket_name} --format="json(ip_filter_config)" > current_filter.json
 
     # 2. Add TARGET_IP_HERE/32 to the allowedIpCidrRanges list in the JSON above,
