@@ -66,6 +66,14 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
     transfer data; control access; manage storage classes, lifecycle, cost, and
     data protection — via the gcloud CLI, JSON/XML APIs, client libraries,
     Terraform, or Cloud Storage MCP servers.
+-   [**Google Cloud Storage Bucket Architect**](./skills/google-cloud-storage-bucket-architect/)
+    — Creates Google Cloud Storage (GCS) buckets: analyzes the workload
+    (sensitive data, media hosting, ingestion, web hosting, archiving, backup,
+    logging, analytics, AI/ML, or general-purpose), validates project-level
+    security settings, and designs a secure-by-default, cost-effective
+    configuration (location, storage class, security, lifecycle) before creating
+    it via gcloud, JSON/REST API, Terraform, or SDK client libraries (C++, Java,
+    Python, and Go).
 -   [**Google Cloud Storage FUSE**](./skills/google-cloud-storage-fuse/) — Mount
     buckets as a POSIX file system with gcsfuse: decide when to use FUSE vs.
     direct storage reads, deploy tuned mounts on GKE, Compute Engine, and Cloud
