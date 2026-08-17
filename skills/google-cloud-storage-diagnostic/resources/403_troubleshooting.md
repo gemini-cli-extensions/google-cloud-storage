@@ -78,18 +78,20 @@ gcloud storage buckets get-iam-policy gs://{bucket_name}
 
 ### Required Permissions by Operation
 
-| Operation                | Minimum Role / Permissions Required |
-| :----------------------- | :---------------------------------- |
-| **Read Object**          | `roles/storage.objectViewer`        |
-:                          : (`storage.objects.get`)             :
-| **Write Object**         | `roles/storage.objectCreator` or    |
-:                          : `roles/storage.objectAdmin`         :
-| **List Bucket**          | `roles/storage.objectViewer`        |
-:                          : (`storage.objects.list`)            :
-| **Delete Object**        | `roles/storage.objectAdmin`         |
-:                          : (`storage.objects.delete`)          :
-| **Read Bucket Metadata** | `roles/storage.bucketViewer`        |
-:                          : (`storage.buckets.get`)             :
+| Operation                  | Minimum Role / Permissions Required |
+| :------------------------- | :---------------------------------- |
+| **Read Object**            | `roles/storage.objectViewer`        |
+:                            : (`storage.objects.get`)             :
+| **Write Object**           | `roles/storage.objectCreator` or    |
+:                            : `roles/storage.objectAdmin`         :
+| **List Bucket**            | `roles/storage.objectViewer`        |
+:                            : (`storage.objects.list`)            :
+| **Delete Object**          | `roles/storage.objectAdmin`         |
+:                            : (`storage.objects.delete`)          :
+| **Read Bucket Metadata**   | `roles/storage.bucketViewer`        |
+:                            : (`storage.buckets.get`)             :
+| **Read Bucket IAM Policy** | `roles/iam.securityReviewer`        |
+:                            : (`storage.buckets.getIamPolicy`)    :
 
 ### Handle Inspection Permission Denials (`403 on get-iam-policy`)
 
@@ -111,16 +113,24 @@ gcloud storage buckets get-iam-policy gs://{bucket_name}
 > Policies**, or **IP Filtering**) are actively blocking API calls to the
 > bucket.
 >
-> **DO NOT prescribe granting IAM roles (such as `roles/storage.admin` or
-> `roles/iam.securityReviewer`) when perimeter security or log denials are
-> present**, as granting IAM roles will NOT bypass VPC-SC or perimeter blocks.
+> **DO NOT prescribe granting IAM roles (such as `roles/iam.securityReviewer` or
+> custom roles) when perimeter security or log denials are present**, as
+> granting IAM roles will NOT bypass VPC-SC or perimeter blocks.
 >
 > Instead: 1. Check Cloud Audit Logs (`gcloud logging read`) or inspect for
 > `vpcServiceControlsUniqueIdentifier` and network rejection status
 > (`protoPayload.status.code=7`). 2. If VPC-SC or network perimeter controls are
 > suspected or log access is denied, explicitly inform the user that a perimeter
 > restriction (such as VPC-SC or IP Filtering) may be blocking access, and that
-> adding IAM roles will not resolve perimeter blocks.
+> adding IAM roles will not resolve perimeter blocks. 3. If perimeter controls
+> are ruled out and the caller simply lacks bucket IAM inspection permissions,
+> recommend granting the least-privilege role `roles/iam.securityReviewer` (or a
+> custom role containing exactly `storage.buckets.getIamPolicy`). **NEVER**
+> recommend `roles/storage.bucketViewer` (which contains only
+> `storage.buckets.get` and `storage.buckets.list` and cannot view IAM policies)
+> or over-privileged roles such as `roles/storage.admin`. 4. Alternatively,
+> fallback to project-level IAM policy checks if the caller has project-level
+> view access:
 
 ```bash
 CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \

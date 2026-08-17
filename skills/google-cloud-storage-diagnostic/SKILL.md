@@ -107,13 +107,19 @@ Whenever a user requests assistance diagnosing a GCS issue:
     immediately consult and execute the step-by-step diagnostic procedures
     documented in
     [`resources/403_troubleshooting.md`](resources/403_troubleshooting.md).
--   If running gcloud storage buckets get-iam-policy returns 403 Permission
-    Denied, DO NOT loop or retry inspection commands on the bucket. Immediately
-    recognize that the diagnostic caller lacks inspection permissions
-    (roles/storage.bucketViewer or roles/iam.securityReviewer). Ask the user to
-    grant roles/iam.securityReviewer or check project-level IAM policies.
-    Propose how to remediate inspection access or fallback to project-level
-    checks as outlined in `403_troubleshooting.md`.
+-   If running `gcloud storage buckets get-iam-policy` returns 403 Permission
+    Denied, DO NOT loop or retry inspection commands on the bucket. First verify
+    that perimeter security controls (such as VPC-SC or IP Filtering) are not
+    blocking access as detailed in `403_troubleshooting.md`, because granting
+    IAM roles will not resolve perimeter blocks. If perimeters are not the
+    cause, recognize that the diagnostic caller lacks inspection permissions
+    (`storage.buckets.getIamPolicy`). Recommend granting the least-privilege
+    role `roles/iam.securityReviewer` (or a custom role containing
+    `storage.buckets.getIamPolicy`); never recommend
+    `roles/storage.bucketViewer` (which does not grant IAM policy access) or
+    `roles/storage.admin`. Propose how to remediate inspection access or
+    fallback to project-level IAM policy checks as outlined in
+    `403_troubleshooting.md`.
 
 ### Step 3: Propose Remediation with User Confirmation
 
@@ -158,11 +164,17 @@ response you MUST give. Use this exactly.
 
 ### `Permission 'storage.buckets.getIamPolicy' denied`
 
--   **Cause:** Diagnostic caller lacks `roles/storage.admin`
--   **Fix:** **DO NOT LOOP OR RETRY.** Explain clearly that the account
-    executing the check lacks bucket inspection permissions. Ask the user to
-    grant `roles/storage.admin` or a custom role with
-    `storage.buckets.getIamPolicy`.
+-   **Cause:** Diagnostic caller lacks `storage.buckets.getIamPolicy` permission
+    (e.g., missing `roles/iam.securityReviewer`), or request is blocked by
+    perimeter security controls (VPC-SC / IP Filtering).
+-   **Fix:** **DO NOT LOOP OR RETRY.** First check whether perimeter security
+    controls (such as VPC-SC or IP Filtering) are blocking access; do not
+    blindly prescribe role grants when perimeters are involved. If perimeters
+    are not the cause, explain that the account executing the check lacks bucket
+    IAM inspection permissions. Recommend granting the least-privilege role
+    `roles/iam.securityReviewer` or a custom role containing
+    `storage.buckets.getIamPolicy` (never `roles/storage.bucketViewer` or
+    `roles/storage.admin`).
 
 ### `Bucket is requester pays bucket but no user project provided`
 
