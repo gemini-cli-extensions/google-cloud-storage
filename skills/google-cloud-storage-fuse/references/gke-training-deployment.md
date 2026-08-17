@@ -6,19 +6,12 @@ are noted inline.
 
 ## Decision table: pick the mount mechanism
 
-| Environment              | Mechanism                                         |
-| :----------------------- | :------------------------------------------------ |
-| GKE ≥ 1.35.1-gke.1616000 | PV/PVC on a pre-installed **profile               |
-:                          : StorageClass** (`gcsfusecsi-training`) —          :
-:                          : preferred; auto-tunes cache, media, and prefetch  :
-:                          : from node telemetry.                              :
-| GKE < 1.35.1-gke.1616000 | Static PV/PVC with **explicit mount options       |
-:                          : replicating the profile** (see manifest B).       :
-:                          : Profiles are unavailable.                         :
-| Compute Engine VM        | `gcsfuse --profile=aiml-training` with ADC from   |
-:                          : the attached service account.                     :
-| Cloud Run                | Native Cloud Storage volume mounts (`--add-volume |
-:                          : type=cloud-storage`).                             :
+Environment              | Mechanism
+:----------------------- | :--------
+GKE ≥ 1.35.1-gke.1616000 | PV/PVC on a pre-installed **profile StorageClass** (`gcsfusecsi-training`) — preferred; auto-tunes cache, media, and prefetch from node telemetry.
+GKE < 1.35.1-gke.1616000 | Static PV/PVC with **explicit mount options replicating the profile** (see manifest B). Profiles are unavailable.
+Compute Engine VM        | `gcsfuse --profile=aiml-training` with ADC from the attached service account.
+Cloud Run                | Native Cloud Storage volume mounts (`--add-volume type=cloud-storage`).
 
 **Never** pass `profile:aiml-*` as a mount option yourself on GKE: Cloud Storage
 FUSE CSI volumes do not support the `profile` field or `--profile` option on any
@@ -278,16 +271,10 @@ Then confirm the cache engaged and troubleshoot common blockers:
 
 ## Non-GKE variants
 
-| Environment    | Command                                                 |
-| :------------- | :------------------------------------------------------ |
-| Compute Engine | `gcsfuse --profile=aiml-training                        |
-:                : --config-file=cache.yaml BUCKET /mnt/data` - profile    :
-:                : works directly (≥ v3.4.0); still enable the file cache  :
-:                : in the config file. ADC comes from the attached service :
-:                : account.                                                :
-| Cloud Run      | `gcloud run services update SERVICE                     |
-:                : --add-volume=name=data,type=cloud-storage,bucket=BUCKET :
-:                : --add-volume-mount=volume=data,mount-path=/data`        :
+Environment    | Command
+:------------- | :------
+Compute Engine | `gcsfuse --profile=aiml-training --config-file=cache.yaml BUCKET /mnt/data` — profile works directly (≥ v3.4.0); still enable the file cache in the config file. ADC comes from the attached service account.
+Cloud Run      | `gcloud run services update SERVICE --add-volume=name=data,type=cloud-storage,bucket=BUCKET --add-volume-mount=volume=data,mount-path=/data`
 
 ## Documentation
 

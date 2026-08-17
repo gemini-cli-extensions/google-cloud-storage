@@ -6,28 +6,13 @@ must survive preemption.
 
 ## Verdict table (lead with this)
 
-| Write pattern          | Flat-namespace bucket    | HNS bucket               |
-| :--------------------- | :----------------------- | :----------------------- |
-| Rename a **file** to   | Safe — atomic MoveObject | Safe — atomic since      |
-: finalize               : since v3.2.0             : v3.1.0                   :
-| Rename a **directory** | **Fails by default**     | Safe — atomic            |
-: to finalize            : (`rename-dir-limit\:     : `RenameFolder`,          :
-:                        : 0`); raising the limit   : metadata-only            :
-:                        : makes it a               :                          :
-:                        : **non-atomic**           :                          :
-:                        : per-object copy+delete   :                          :
-| `fsync()` for          | **Not durable** under    | Same — rely on `close()` |
-: durability             : streaming writes (the    :                          :
-:                        : default for new files) — :                          :
-:                        : rely on `close()`        :                          :
-| Concurrent writers,    | First to close wins;     | Same                     |
-: same object            : later writers get        :                          :
-:                        : `ESTALE`. No file        :                          :
-:                        : locking exists.          :                          :
-| Kernel list cache      | **Dangerous** on mutable | Same — keep list cache   |
-: (`kernel-list-cache-   : mounts (directory        : off or low TTL; `-1` is  :
-: ttl-secs\: -1`)        : ghosting, missing files, : strictly for read-only   :
-:                        : `rmdir` failures)        : mounts                   :
+Write pattern                                        | Flat-namespace bucket                                                                                            | HNS bucket
+:--------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------- | :---------
+Rename a **file** to finalize                        | Safe — atomic MoveObject since v3.2.0                                                                            | Safe — atomic since v3.1.0
+Rename a **directory** to finalize                   | **Fails by default** (`rename-dir-limit: 0`); raising the limit makes it a **non-atomic** per-object copy+delete | Safe — atomic `RenameFolder`, metadata-only
+`fsync()` for durability                             | **Not durable** under streaming writes (the default for new files) — rely on `close()`                           | Same — rely on `close()`
+Concurrent writers, same object                      | First to close wins; later writers get `ESTALE`. No file locking exists.                                         | Same
+Kernel list cache (`kernel-list-cache-ttl-secs: -1`) | **Dangerous** on mutable mounts (directory ghosting, missing files, `rmdir` failures)                            | Same — keep list cache off or low TTL; `-1` is strictly for read-only mounts
 
 So the temp-then-rename pattern is **safe if and only if** the bucket has
 hierarchical namespace (HNS) enabled, or the framework renames individual files

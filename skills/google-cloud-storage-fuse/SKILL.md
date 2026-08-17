@@ -75,20 +75,11 @@ answer only for one of the three workload shapes below. If the workload's access
 pattern is unknown, ask — one question about whether the reading code can take
 `gs://` paths usually settles it.
 
-| Workload signal                      | Verdict                               |
-| :----------------------------------- | :------------------------------------ |
-| Reading library accepts `gs://` URIs | **Native reads, no mount.** Point the |
-: natively — pandas/pyarrow (via       : code at `gs\://` paths and stop.      :
-: gcsfs/fsspec), TensorFlow            :                                       :
-: (`tf.io.gfile`), or any              :                                       :
-: fsspec/gcsfs-based loader            :                                       :
-| Shared **mutable** writes with       | **Filestore** (NFS, POSIX locking) or |
-: locking semantics — databases,       : **Managed Lustre**, not FUSE. Stop.   :
-: concurrent in-place editors,         :                                       :
-: anything relying on `flock`/`fcntl`  :                                       :
-| Code or tools hardcoded to POSIX     | **gcsfuse** — continue to Step 2.     |
-: file paths; read-heavy or            :                                       :
-: new-file-write patterns              :                                       :
+Workload signal                                                                                                                                 | Verdict
+:---------------------------------------------------------------------------------------------------------------------------------------------- | :------
+Reading library accepts `gs://` URIs natively — pandas/pyarrow (via gcsfs/fsspec), TensorFlow (`tf.io.gfile`), or any fsspec/gcsfs-based loader | **Native reads, no mount.** Point the code at `gs://` paths and stop.
+Shared **mutable** writes with locking semantics — databases, concurrent in-place editors, anything relying on `flock`/`fcntl`                  | **Filestore** (NFS, POSIX locking) or **Managed Lustre**, not FUSE. Stop.
+Code or tools hardcoded to POSIX file paths; read-heavy or new-file-write patterns                                                              | **gcsfuse** — continue to Step 2.
 
 Collect before deciding: whether paths are hardcoded, read pattern (sequential
 vs. random, re-read frequency), write pattern (new files vs. edits vs. directory
@@ -96,22 +87,11 @@ renames). These same signals drive tuning later — record the answers.
 
 ## Step 2 — Route by intent
 
-| User intent (prompt     | Go to                                              |
-: shape)                  :                                                    :
-| :---------------------- | :------------------------------------------------- |
-| Provision: "mount my    | [GKE Training                                      |
-: bucket for X", "get     : Deployment](references/gke-training-deployment.md) :
-: training data into my   :                                                    :
-: pods"                   :                                                    :
-| Safety/semantics: "is   | [Checkpoint & Write                                |
-: this write pattern      : Safety](references/checkpoint-safety.md)           :
-: safe?", "can multiple   :                                                    :
-: writers share the       :                                                    :
-: mount?"                 :                                                    :
-| Regression: "training   | [Performance & Cost                                |
-: is slow", "the GCS bill : Diagnosis](references/performance-diagnosis.md)    :
-: spiked", "throughput    :                                                    :
-: dropped"                :                                                    :
+User intent (prompt shape)                                                               | Go to
+:--------------------------------------------------------------------------------------- | :----
+Provision: "mount my bucket for X", "get training data into my pods"                     | [GKE Training Deployment](references/gke-training-deployment.md)
+Safety/semantics: "is this write pattern safe?", "can multiple writers share the mount?" | [Checkpoint & Write Safety](references/checkpoint-safety.md)
+Regression: "training is slow", "the GCS bill spiked", "throughput dropped"              | [Performance & Cost Diagnosis](references/performance-diagnosis.md)
 
 **Never diagnose a regression without telemetry.** If gcsfuse metrics are not
 enabled on the mount, enabling them is the first remediation step — the
