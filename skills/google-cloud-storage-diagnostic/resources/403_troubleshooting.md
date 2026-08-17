@@ -36,7 +36,7 @@ cases:
 
     ```bash
     CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
-    gcloud compute instances describe
+    gcloud compute instances describe {instance_name} --zone={zone} --format="json(serviceAccounts)"
     ```
 
     And if restricted, explicitly advise updating via:
