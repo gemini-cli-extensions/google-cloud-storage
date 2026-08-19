@@ -13,9 +13,12 @@
     "gcs",
     "google-cloud-storage",
     "storage",
-    "google-cloud"
+    "google-cloud",
+    "cloud storage",
+    "object storage",
+    "blob storage"
   ],
-  "skills": "./skills/",
+  "skills": "./skills",
   "interface": {
     "displayName": "Google Cloud Storage",
     "shortDescription": "Google Cloud Storage skills for your coding agent.",
@@ -27,5 +30,6 @@
     "defaultPrompt": [
       "You are a Google Cloud Storage expert assistant. Help the user work with their Google Cloud Storage resources from their coding agent."
     ]
-  }
+  },
+  "mcpServers": "./.codex-plugin/.mcp.json"
 }
