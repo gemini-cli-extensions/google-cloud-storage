@@ -1,8 +1,16 @@
-# GCS Skills Permissions Guide
+# GCS Plugin Permissions Guide
 
 This guide documents the Google Cloud IAM permissions used by the skills in this
-repository. All access is **read-only**—the skills never mutate your resources.
-More skills (and their permission requirements) will be added here over time.
+plugin. All skill access is **read-only**: the skills never mutate your
+resources. More skills (and their permission requirements) will be added here
+over time.
+
+> [!IMPORTANT]
+> The plugin's [Cloud Storage MCP server](./README.md#cloud-storage-mcp-server)
+> is **not** read-only. Its tools can create, overwrite, and delete buckets and
+> objects, so it needs `roles/storage.objectAdmin` (copy, move, delete objects)
+> or `roles/storage.admin` (create, delete buckets) for those operations. Grant
+> only `roles/storage.objectViewer` to keep it read-only.
 
 ## GCS Security Assessment Skill
 

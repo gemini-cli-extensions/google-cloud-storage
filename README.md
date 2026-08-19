@@ -178,9 +178,8 @@ Ensure you have the following:
     are configured.
 *   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
     Antigravity CLI.
-*   **[Node.js](https://nodejs.org/)**, if you install the plugin: the
-    [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`. Not
-    needed for a skills-only install.
+*   **[Node.js](https://nodejs.org/)**: the
+    [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`.
 
 ## Authentication
 
@@ -372,13 +371,13 @@ on how to mitigate prompt injection attacks with Google Cloud MCP.
 
 ## Support
 
-If you need help or encounter issues with these skills, search for existing
+If you need help or encounter issues with this plugin, search for existing
 issues or open a new one in the
 [GitHub Issue Tracker](https://github.com/gemini-cli-extensions/google-cloud-storage/issues).
 
 ## Contributing
 
-We welcome contributions to improve these skills. You can help by:
+We welcome contributions to improve this plugin. You can help by:
 
 *   [Reporting bugs or inaccuracies](https://github.com/gemini-cli-extensions/google-cloud-storage/issues)
     in the skill files.
@@ -386,5 +385,5 @@ We welcome contributions to improve these skills. You can help by:
 
 ## License
 
-You are free to copy, modify, and distribute these skills under the terms of the
+You are free to copy, modify, and distribute this plugin under the terms of the
 Apache 2.0 license. See the `LICENSE` file for details.
