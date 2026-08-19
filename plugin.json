@@ -1,5 +1,4 @@
 {
-  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "google-cloud-storage",
   "version": "1.0.0",
   "description": "Official Google Cloud Storage (GCS) plugin. Manage buckets and objects, transfer data, and configure MCP, FUSE, IAM, security, lifecycle rules, signed URLs, Terraform, and the CLI.",
@@ -18,5 +17,33 @@
     "cloud storage",
     "object storage",
     "blob storage"
-  ]
+  ],
+  "extensions": {
+    "com.google.cloud.data.agent-plugins": {
+      "config": [
+        {
+          "key": "CLOUD_STORAGE_PROJECT",
+          "title": "Project ID",
+          "description": "ID of the Google Cloud project"
+        }
+      ],
+      "gemini": {
+        "mcpServerName": "cloud-storage"
+      },
+      "codex": {
+        "interface": {
+          "displayName": "Google Cloud Storage",
+          "shortDescription": "Google Cloud Storage skills for your coding agent.",
+          "developerName": "Google LLC",
+          "category": "Storage",
+          "capabilities": [
+            "Read"
+          ],
+          "defaultPrompt": [
+            "You are a Google Cloud Storage expert assistant. Help the user work with their Google Cloud Storage resources from their coding agent."
+          ]
+        }
+      }
+    }
+  }
 }
