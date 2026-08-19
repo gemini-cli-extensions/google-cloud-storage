@@ -1,0 +1,16 @@
+{
+  "name": "google-cloud-storage",
+  "owner": {
+    "name": "Google LLC",
+    "email": "gcs-agentic-ai-customer-support@google.com"
+  },
+  "metadata": {
+    "description": "Official Google Cloud Storage (GCS) plugin. Storage tools plus vetted skills to manage buckets and objects, transfer data, and configure MCP, FUSE, IAM, security, lifecycle rules, signed URLs, Terraform, and the CLI."
+  },
+  "plugins": [
+    {
+      "name": "google-cloud-storage",
+      "source": "./"
+    }
+  ]
+}

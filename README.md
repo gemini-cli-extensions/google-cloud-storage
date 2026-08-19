@@ -54,12 +54,11 @@ claude plugin install google-cloud-storage@claude-plugins-official
 
 ### Installing in Codex
 
-Add the [Google plugins](https://github.com/google/skills) marketplace, which
-lists this plugin, then install from it:
+Add this repository as a marketplace, then install from it:
 
 ```bash
-codex plugin marketplace add google/skills
-codex plugin add google-cloud-storage@google-plugins
+codex plugin marketplace add gemini-cli-extensions/google-cloud-storage
+codex plugin add google-cloud-storage@google-cloud-storage
 ```
 
 ### Installing in Antigravity CLI
