@@ -1,18 +1,18 @@
-# Google Cloud Storage Skills
+# Google Cloud Storage Plugin
 
-[![Install via skills.sh](https://img.shields.io/badge/skills.sh-install-green)](https://skills.sh/gemini-cli-extensions/google-cloud-storage)
+The official plugin for
+[Google Cloud Storage](https://cloud.google.com/storage). It bundles a growing
+collection of [Agent Skills](https://agentskills.io/home) with a
+[Cloud Storage MCP server](#cloud-storage-mcp-server), so your coding agent gets
+both vetted GCS expertise and structured tools for buckets and objects.
 
-This repository contains a growing collection of
-[Agent Skills](https://agentskills.io/home) for
-[Google Cloud Storage](https://cloud.google.com/storage). These skills deliver
-vetted GCS expertise directly into your coding agent, letting you use natural
-language prompts in your preferred CLI or IDE to work with your storage
-resources — from everyday bucket and object management to file-system mounts
-with Cloud Storage FUSE, access-error diagnostics, security assessments, and
-infrastructure code generation.
+The skills let you work with your storage resources through natural language in
+your preferred CLI or IDE: everyday bucket and object management, file-system
+mounts with Cloud Storage FUSE, access-error diagnostics, security assessments,
+and infrastructure code generation.
 
 > [!NOTE]
-> This repository is under active development. More skills will be added
+> This plugin is under active development. More skills will be added
 > over time.
 
 > [!IMPORTANT]
@@ -25,6 +25,7 @@ infrastructure code generation.
 
 -   [Installation](#installation)
 -   [Available Skills](#available-skills)
+-   [Cloud Storage MCP Server](#cloud-storage-mcp-server)
 -   [Prerequisites](#prerequisites)
 -   [Authentication](#authentication)
 -   [Additional Setup: GCS Security Assessment](#additional-setup-gcs-security-assessment)
@@ -36,27 +37,34 @@ infrastructure code generation.
 
 ## Installation
 
-### Installing using [open agent skills tool](https://github.com/vercel-labs/skills)
+### Installing in Gemini CLI
 
 ```bash
-npx skills add gemini-cli-extensions/google-cloud-storage
+gemini extensions install https://github.com/gemini-cli-extensions/google-cloud-storage
 ```
 
-From the `npx` install command, you can select the specific skills from this
-repo to install. The skills work with any compatible coding agent, including
-Gemini CLI, Claude Code, Codex, and Antigravity CLI.
+### Installing in Claude Code
 
-### Installing via a compatible Agent Plugins client
+This plugin is listed in Claude Code's official marketplace, which is built in,
+so no marketplace needs to be added first:
 
-This repository is also a valid
-[Agent Plugins](https://github.com/agentplugins/agent-plugins-spec) (v1) plugin.
-Any
-[Agent Plugins–compatible client](https://agent-plugins.org/compatible-clients)
-(VS Code, Cursor, GitHub Copilot, Codex, Kiro, …) can install it directly using
-its own built-in plugin command, by pointing at this repository:
-
+```bash
+claude plugin install google-cloud-storage@claude-plugins-official
 ```
-https://github.com/gemini-cli-extensions/google-cloud-storage
+
+### Installing in Codex
+
+Add this repository as a marketplace, then install from it:
+
+```bash
+codex plugin marketplace add gemini-cli-extensions/google-cloud-storage
+codex plugin add google-cloud-storage@google-cloud-storage
+```
+
+### Installing in Antigravity CLI
+
+```bash
+agy plugin install https://github.com/gemini-cli-extensions/google-cloud-storage
 ```
 
 ## Available Skills
@@ -93,6 +101,71 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
     Needs [additional setup](#additional-setup-gcs-security-assessment) for a
     complete assessment.
 
+## Cloud Storage MCP Server
+
+Installing the plugin also configures a local Cloud Storage MCP server, so your
+agent can call structured storage tools instead of only shelling out to the CLI.
+The server is
+[MCP Toolbox](https://github.com/googleapis/mcp-toolbox) running its prebuilt
+`cloud-storage` tools over stdio. It starts on demand through `npx`, so there is
+no binary to download, but Node.js must be installed.
+
+It authenticates with the same Application Default Credentials as the skills
+(see [Authentication](#authentication)), and needs the `roles/storage.*` roles
+for the operations you call: `roles/storage.objectViewer` to read,
+`roles/storage.objectAdmin` to copy, move, and delete objects, and
+`roles/storage.admin` to create or delete buckets.
+
+### Configuration
+
+The server needs one setting:
+
+*   `CLOUD_STORAGE_PROJECT`: the Google Cloud project it operates on.
+
+How you supply it depends on the harness:
+
+*   **Gemini CLI**: prompted on install. View or update later with
+    `gemini extensions config google-cloud-storage` (restart the CLI to apply).
+*   **Claude Code**: pass `--config CLOUD_STORAGE_PROJECT=<project-id>` on
+    install, or run `/plugin` inside Claude Code.
+*   **Codex** and **Antigravity**: export it before starting your agent:
+
+```bash
+export CLOUD_STORAGE_PROJECT="<your-project-id>"
+```
+
+### Available Tools
+
+| Tool                    | Description                                       |
+| :---------------------- | :------------------------------------------------ |
+| `list_buckets`          | List buckets in the project.                      |
+| `get_bucket_metadata`   | Get a bucket's metadata.                          |
+| `get_bucket_iam_policy` | Get a bucket's IAM policy.                        |
+| `create_bucket`         | Create a bucket.                                  |
+| `delete_bucket`         | Delete an empty bucket.                           |
+| `list_objects`          | List objects in a bucket.                         |
+| `get_object_metadata`   | Get an object's metadata.                         |
+| `read_object`           | Read UTF-8 text content (up to 8 MiB).            |
+| `download_object`       | Download an object (binary included) to a file.   |
+| `write_object`          | Write text content to an object (overwrites).     |
+| `upload_object`         | Upload a local file (binary included).            |
+| `copy_object`           | Copy an object.                                   |
+| `move_object`           | Rename an object; deletes the source.             |
+| `delete_object`         | Delete an object.                                 |
+
+> [!CAUTION]
+> Five of these tools destroy or overwrite data: `delete_bucket`,
+> `delete_object`, `move_object` (deletes the source), `write_object`, and
+> `upload_object`. Your agent must ask for explicit permission before calling
+> them.
+
+For a comparison with the Google-hosted remote Cloud Storage MCP server, which
+supports Model Armor screening and IAM deny policies, see the
+[MCP usage reference](./skills/google-cloud-storage-basics/references/mcp-usage.md).
+
+If your agent reports `spawn npx ENOENT`, Node.js is not installed or `npx` is
+not on your `PATH`.
+
 ## Prerequisites
 
 Ensure you have the following:
@@ -105,6 +178,8 @@ Ensure you have the following:
     are configured.
 *   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
     Antigravity CLI.
+*   **[Node.js](https://nodejs.org/)**: the
+    [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`.
 
 ## Authentication
 
@@ -296,19 +371,19 @@ on how to mitigate prompt injection attacks with Google Cloud MCP.
 
 ## Support
 
-If you need help or encounter issues with these skills, search for existing
+If you need help or encounter issues with this plugin, search for existing
 issues or open a new one in the
 [GitHub Issue Tracker](https://github.com/gemini-cli-extensions/google-cloud-storage/issues).
 
 ## Contributing
 
-We welcome contributions to improve these skills. You can help by:
+We welcome contributions to improve this plugin. You can help by:
 
 *   [Reporting bugs or inaccuracies](https://github.com/gemini-cli-extensions/google-cloud-storage/issues)
     in the skill files.
-*   Suggesting new skills to add to this repository by filing a feature request.
+*   Suggesting new skills to add to this plugin by filing a feature request.
 
 ## License
 
-You are free to copy, modify, and distribute these skills under the terms of the
+You are free to copy, modify, and distribute this plugin under the terms of the
 Apache 2.0 license. See the `LICENSE` file for details.
