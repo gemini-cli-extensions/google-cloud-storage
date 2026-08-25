@@ -29,7 +29,7 @@ Run the following command for each constraint
 `constraints/storage.restrictAuthTypes`):
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
 gcloud org-policies describe <CONSTRAINT> --project=<PROJECT_ID> --effective --format=json
 ```
 
@@ -51,7 +51,7 @@ gcloud org-policies describe <CONSTRAINT> --project=<PROJECT_ID> --effective --f
 Run the following command:
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
 gcloud alpha resource-manager liens list --project=<PROJECT_ID> --format=json
 ```
 

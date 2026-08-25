@@ -71,13 +71,20 @@ skill, so usage can be attributed. The tag identifies only the skill and its
 version; it carries no user data. Do not use attribution for SDK or Terraform
 snippets.
 
-*   **gcloud**: Prefix every `gcloud` invocation with the metrics environment
-    variable:
+*   **gcloud**: Prefix every `gcloud` invocation, whatever the subcommand, with
+    the metrics environment variables. Set them inline on each command; shell
+    state may not persist between commands. Use this append form verbatim. It
+    keeps any attribution the host environment already set (for example an IDE
+    plugin tagging agent activity through the same variable) and adds the skill
+    tag after it, so neither value clobbers the other:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
-    gcloud ...
+    CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-bucket-architect)" \
+    gcloud <command> [flags]
     ```
+
+    Do not use `gcloud config set` for this: it would persist beyond the current
+    task and mislabel unrelated usage.
 
 *   **REST (cURL)**: Set the `User-Agent` header verbatim:
 
