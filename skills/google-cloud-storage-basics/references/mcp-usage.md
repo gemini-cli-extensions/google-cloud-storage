@@ -139,12 +139,11 @@ MCP Toolbox is Google's open-source MCP server (formerly Gen AI Toolbox for
 Databases). It ships a prebuilt `cloud-storage` tool source that exposes the
 full set of bucket and object operations.
 
-1.  **Pick how to run it.** The Toolbox is published on npm as
-    `@toolbox-sdk/server`, so `npx` fetches and runs it on demand (this is what
-    the plugin does, and it needs Node.js). A standalone binary and a container
-    image are also available if you prefer no Node dependency: replace `VERSION`
-    with the [latest release](https://github.com/googleapis/mcp-toolbox/releases)
-    and pick your OS/architecture path.
+1.  **Download the binary.** The Toolbox ships as a standalone binary (or
+    container image) — it is not published as an npm or pip package, so never
+    configure it via `npx` or `pip`. Replace `VERSION` with the
+    [latest release](https://github.com/googleapis/mcp-toolbox/releases) and
+    pick your OS/architecture path:
 
     ```bash
     curl -L -o toolbox \
@@ -170,16 +169,13 @@ full set of bucket and object operations.
     {
       "mcpServers": {
         "cloud-storage": {
-          "command": "npx",
-          "args": ["-y", "@toolbox-sdk/server@1.9.0", "--prebuilt", "cloud-storage", "--stdio"],
+          "command": "./PATH/TO/toolbox",
+          "args": ["--prebuilt", "cloud-storage", "--stdio"],
           "env": {"CLOUD_STORAGE_PROJECT": "PROJECT_ID"}
         }
       }
     }
     ```
-
-    With the standalone binary instead, use `"command": "./PATH/TO/toolbox"` and
-    drop the first two `args`.
 
 The identity behind ADC needs the `roles/storage.*` roles for the operations you
 intend to call (for example, `roles/storage.objectAdmin` for copy, move, and
