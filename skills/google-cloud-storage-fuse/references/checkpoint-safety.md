@@ -50,7 +50,7 @@ Collect before giving a verdict:
 # Namespace type - the deciding signal. Prints "True" for HNS buckets;
 # empty output means flat namespace. --raw is required: without it the
 # describe output omits the hierarchical namespace field entirely.
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
 gcloud storage buckets describe gs://BUCKET --raw --format="value(hierarchicalNamespace.enabled)"
 ```
 
@@ -108,12 +108,12 @@ HNS buckets.
 
 ```bash
 # Create the HNS checkpoint bucket (--uniform-bucket-level-access is required)
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
 gcloud storage buckets create gs://CKPT_BUCKET --location=LOCATION \
   --uniform-bucket-level-access --enable-hierarchical-namespace
 
 # Copy existing checkpoints if migrating
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
 gcloud storage cp -r gs://OLD_BUCKET/checkpoints gs://CKPT_BUCKET/
 ```
 

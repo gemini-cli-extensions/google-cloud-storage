@@ -49,10 +49,13 @@ version; it carries no user data.
 
 -   Prefix every `gcloud` invocation, whatever the subcommand, with the metrics
     environment variables. Set them inline on each command; shell state may not
-    persist between commands:
+    persist between commands. Use this append form verbatim. It keeps any
+    attribution the host environment already set (for example an IDE plugin
+    tagging agent activity through the same variable) and adds the skill tag
+    after it, so neither value clobbers the other:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
     gcloud <command> [flags]
     ```
 

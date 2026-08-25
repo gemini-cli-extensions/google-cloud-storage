@@ -27,7 +27,7 @@ bucket — no GSA, no JSON keys (step 2).
 ## Step 1 — Verify cluster gates
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
 gcloud container clusters describe CLUSTER --location=LOCATION \
   --format="value(currentMasterVersion, addonsConfig.gcsFuseCsiDriverConfig.enabled, workloadIdentityConfig.workloadPool)"
 ```
@@ -54,7 +54,7 @@ Use `roles/storage.objectViewer` for read-only training data;
 `roles/storage.objectUser` if the workload also writes.
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-fuse)" \
 gcloud storage buckets add-iam-policy-binding gs://BUCKET \
   --member "principal://iam.googleapis.com/projects/PROJECT_NUMBER/locations/global/workloadIdentityPools/PROJECT_ID.svc.id.goog/subject/ns/NAMESPACE/sa/KSA_NAME" \
   --role "roles/storage.objectViewer"
