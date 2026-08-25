@@ -68,12 +68,18 @@ Problem Area              | Description                                         
 
 -   **gcloud commands:** Prefix every `gcloud` invocation, whatever the
     subcommand, with the metrics environment variables. Set them inline on each
-    command; shell state may not persist between commands:
+    command; shell state may not persist between commands. Use this append form
+    verbatim. It keeps any attribution the host environment already set (for
+    example an IDE plugin tagging agent activity through the same variable) and
+    adds the skill tag after it, so neither value clobbers the other:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
-        gcloud <command> [flags]
+    CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+    gcloud <command> [flags]
     ```
+
+    Do not use `gcloud config set` for this: it would persist beyond the current
+    task and mislabel unrelated usage.
 
 -   **curl commands:** For direct HTTP calls (e.g. `curl`), you MUST pass the
     explicit `-H "User-Agent: ..."` header in the shell command syntax exactly
@@ -140,8 +146,9 @@ Whenever a user requests assistance diagnosing a GCS issue:
 
 ### 2. Telemetry & Policy Eval
 
--   **Inputs:** `CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills..." gcloud storage
-    buckets describe / get-iam-policy`
+-   **Inputs:**
+    `CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT
+    }gcs-skills..." gcloud storage buckets describe / get-iam-policy`
 -   **Outputs:** Active IAM roles, VPC-SC alerts, Deny policies
 -   **Reference Section:** `resources/403_troubleshooting.md` Steps 3-7
 
@@ -232,7 +239,7 @@ response you MUST give. Use this exactly.
     filter violation:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud logging read "resource.type=gcs_bucket AND resource.labels.bucket_name=\"{bucket_name}\" AND protoPayload.authenticationInfo.principalEmail=\"{principal_email}\"" --project="{project_id}" --limit=5 --format=json
     ```
 

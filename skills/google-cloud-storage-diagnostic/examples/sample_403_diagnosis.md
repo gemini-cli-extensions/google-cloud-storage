@@ -14,7 +14,7 @@ a Cloud Storage `403 Permission Denied` issue.
 -   **Operation:** Read (`storage.objects.get`) via tagged command:
 
     ```bash
-    CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+    CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
     gcloud storage cp
     ```
 
@@ -41,7 +41,7 @@ To restore read access under UBLA, grant `roles/storage.objectViewer` at the
 bucket level:
 
 ```bash
-CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
+CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT }gcs-skills gcs-skills/1.0 (skill:google-cloud-storage-diagnostic)" \
 gcloud storage buckets add-iam-policy-binding \
   gs://analytics-raw-events-prod \
   --member="serviceAccount:etl-runner@data-pipeline-prod.iam.gserviceaccount.com" \
