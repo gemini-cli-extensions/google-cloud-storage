@@ -186,7 +186,7 @@ other operations. Both clients can share the same authenticated HTTP client.
 Detailed examples for each supported language can be found in the following
 reference documents:
 
-*   [C++ SDK Examples](sdk/cpp.md)
-*   [Go SDK Examples](sdk/go.md)
-*   [Java SDK Examples](sdk/java.md)
-*   [Python SDK Examples](sdk/python.md)
+*   [C++ SDK Examples](sdk_cpp.md)
+*   [Go SDK Examples](sdk_go.md)
+*   [Java SDK Examples](sdk_java.md)
+*   [Python SDK Examples](sdk_python.md)

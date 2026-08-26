@@ -96,9 +96,9 @@ snippets.
 
 Phase                              | Inputs                      | Outputs                               | Reference
 :--------------------------------- | :-------------------------- | :------------------------------------ | :--------
-**1. Preflight/Project Checks**    | Project ID                  | Default project security checks       | `references/phases/project_checks.md`
-**2. Draft Bucket Create Plan**    | User use case, requirements | Recommended bucket configuration plan | `references/phases/draft_plan.md`
-**3. Output Based on User Intent** | Plan, preferred format      | Command/Snippet for bucket creation   | `references/phases/output.md`
+**1. Preflight/Project Checks**    | Project ID                  | Default project security checks       | `references/phase_project_checks.md`
+**2. Draft Bucket Create Plan**    | User use case, requirements | Recommended bucket configuration plan | `references/phase_draft_plan.md`
+**3. Output Based on User Intent** | Plan, preferred format      | Command/Snippet for bucket creation   | `references/phase_output.md`
 
 ## Workflow Execution
 
@@ -114,18 +114,18 @@ Phase                              | Inputs                      | Outputs      
 When invoked, the agent **MUST follow this exact sequence**:
 
 1.  **Start at Phase 1 (Preflight/Project Checks)**: Assess project-level
-    settings by following `references/phases/project_checks.md` and follow its
+    settings by following `references/phase_project_checks.md` and follow its
     output format before proceeding.
 
 2.  **Proceed to Phase 2 (Draft Bucket Create Plan)**: Identify the use case and
     draft the bucket's configuration by following
-    `references/phases/draft_plan.md`. As described in the reference, stop and
+    `references/phase_draft_plan.md`. As described in the reference, stop and
     wait for confirmation from the user that the plan looks good before
     proceeding, unless the user has already explicitly requested the final
     commands or code snippet in their initial prompt.
 
 3.  **Proceed to Phase 3 (Output Based on User Intent)**: Generate the final
-    output by following `references/phases/output.md` but DO NOT execute any
+    output by following `references/phase_output.md` but DO NOT execute any
     commands.
 
     As described in the reference, the preferred output format should be clear

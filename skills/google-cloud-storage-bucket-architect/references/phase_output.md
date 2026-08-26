@@ -25,10 +25,10 @@ The agent must determine the user's preferred output format.
     selected format, generate the configuration using the templates and rules in
     the corresponding reference file:
 
-    *   **gcloud**: Refer to [gcloud.md](references/gcloud.md)
-    *   **REST (JSON)**: Refer to [rest.md](references/rest.md)
-    *   **Terraform**: Refer to [terraform.md](references/terraform.md)
-    *   **SDK**: Refer to [sdk.md](references/sdk.md)
+    *   **gcloud**: Refer to [gcloud.md](gcloud.md)
+    *   **REST (JSON)**: Refer to [rest.md](rest.md)
+    *   **Terraform**: Refer to [terraform.md](terraform.md)
+    *   **SDK**: Refer to [sdk.md](sdk.md)
 
 2.  **CRITICAL**: Ensure that all generated commands, payloads, configurations,
     or code snippets include the appropriate attribution tagging as described in

@@ -12,9 +12,8 @@ Phase 2) into the Python SDK.
 > [!IMPORTANT]
 > **Encryption Enforcement Config** requires the Python SDK version
 > **3.10.0** or higher. If you are using a version below 3.10.0, you must
-> configure this setting using the [REST API](references/rest.md),
-> [gcloud](references/gcloud.md), or [Terraform](references/terraform.md) (the
-> bucket can then be managed through the SDK).
+> configure this setting using the [REST API](rest.md), [gcloud](gcloud.md), or
+> [Terraform](terraform.md) (the bucket can then be managed through the SDK).
 
 --------------------------------------------------------------------------------
 
