@@ -20,9 +20,9 @@ Phase 2) into the corresponding `gcloud storage` commands.
 *   [gcloud storage cp](https://cloud.google.com/sdk/gcloud/reference/storage/cp)
 *   [gcloud storage buckets notifications create](https://cloud.google.com/sdk/gcloud/reference/storage/buckets/notifications/create)
 *   [gcloud storage buckets anywhere-caches create](https://cloud.google.com/sdk/gcloud/reference/storage/buckets/anywhere-caches/create)
-*   [Create zonal buckets](https://cloud.google.com/storage/docs/rapid/create-zonal-buckets)
-*   [Domain-named bucket verification](https://cloud.google.com/storage/docs/domain-name-verification)
-*   [Host a static website](https://cloud.google.com/storage/docs/hosting-static-website)
+*   [Create zonal buckets](https://docs.cloud.google.com/storage/docs/rapid/create-zonal-buckets.md.txt)
+*   [Domain-named bucket verification](https://docs.cloud.google.com/storage/docs/domain-name-verification.md.txt)
+*   [Host a static website](https://docs.cloud.google.com/storage/docs/hosting-static-website.md.txt)
 
 --------------------------------------------------------------------------------
 

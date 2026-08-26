@@ -90,85 +90,85 @@ explicitly configure and recommend the following:
 The following table maps Cloud Storage features to AI/ML workloads and details
 their recommendation status.
 
-| Feature Group   | Cloud Storage  | Status       | Recommendations  | Documentation Link                                                             |
-:                 : Feature /      :              : & Implementation :                                                                                :
-:                 : Setting        :              : Details          :                                                                                :
-| :-------------- | :------------- | :----------- | :--------------- | :----------------------------------------------------------------------------- |
-| **Core**        | **Storage      | Highly       | Use **STANDARD** | [Storage                                                                       |
-:                 : Class**        : Recommended  : for standard     : Classes](https\://cloud.google.com/storage/docs/storage-classes)<br>[Rapid     :
-:                 :                :              : buckets, or      : Buckets](https\://cloud.google.com/storage/docs/rapid/rapid-bucket)            :
-:                 :                :              : **RAPID**        :                                                                                :
-:                 :                :              : storage class    :                                                                                :
-:                 :                :              : for zonal Rapid  :                                                                                :
-:                 :                :              : Buckets.         :                                                                                :
-|                 | **Bucket       | Highly       | **Zonal** (for   | [Locations](https://cloud.google.com/storage/docs/locations)                   |
-:                 : Type**         : Recommended  : Rapid Buckets)   :                                                                                :
-:                 :                :              : or **Regional**  :                                                                                :
-:                 :                :              : (for standard    :                                                                                :
-:                 :                :              : Cloud            :                                                                                :
-:                 :                :              : Storage/Rapid    :                                                                                :
-:                 :                :              : Cache origin) to :                                                                                :
-:                 :                :              : co-locate        :                                                                                :
-:                 :                :              : storage and      :                                                                                :
-:                 :                :              : compute.         :                                                                                :
-| **Serving**     | **CORS &       | Optional /   | Avoid exposing   |                                                                                |
-:                 : Signed URLs**  : Not          : AI datasets      :                                                                                :
-:                 :                : Recommended  : directly to      :                                                                                :
-:                 :                :              : public users.    :                                                                                :
-| **Security**    | **Uniform      | **Required** | **Must be        | [Uniform Bucket-Level                                                          |
-:                 : Bucket-Level   :              : enabled** for    : Access](https\://cloud.google.com/storage/docs/uniform-bucket-level-access)    :
-:                 : Access         :              : baseline access  :                                                                                :
-:                 : (UBLA)**       :              : control          :                                                                                :
-:                 :                :              : security.        :                                                                                :
-|                 | **Encryption   | Highly       | Configure CMEK.  | [CMEK](https://cloud.google.com/storage/docs/encryption/customer-managed-keys) |
-:                 : (CMEK)**       : Recommended  : Use KMS Autokey  :                                                                                :
-:                 :                :              : for automation.  :                                                                                :
-|                 | **Soft         | Good to Have | Optional.        | [Soft Delete](https://cloud.google.com/storage/docs/soft-delete)               |
-:                 : Delete**       :              : (Useful but not  :                                                                                :
-:                 :                :              : highly           :                                                                                :
-:                 :                :              : recommended due  :                                                                                :
-:                 :                :              : to potential     :                                                                                :
-:                 :                :              : storage cost     :                                                                                :
-:                 :                :              : overhead from    :                                                                                :
-:                 :                :              : massive AI       :                                                                                :
-:                 :                :              : dataset churn).  :                                                                                :
-| **Cost**        | **Object       | Highly       | Define OLM rules | [Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle)        |
-:                 : Lifecycle      : Recommended  : to automatically :                                                                                :
-:                 : Management     :              : delete stale     :                                                                                :
-:                 : (OLM)**        :              : checkpoints      :                                                                                :
-:                 :                :              : (e.g. keep only  :                                                                                :
-:                 :                :              : the last 3 days  :                                                                                :
-:                 :                :              : of checkpoints)  :                                                                                :
-:                 :                :              : to avoid massive :                                                                                :
-:                 :                :              : storage bills on :                                                                                :
-:                 :                :              : zonal disks.     :                                                                                :
-| **Management**  | **Labels &     | Highly       | Apply billing    | [Bucket Labels](https://cloud.google.com/storage/docs/using-bucket-labels)     |
-:                 : Tagging**      : Recommended  : and ownership    :                                                                                :
-:                 :                :              : labels (e.g.     :                                                                                :
-:                 :                :              : `{"workload"\:   :                                                                                :
-:                 :                :              : "ai-training"}`) :                                                                                :
-:                 :                :              : to accurately    :                                                                                :
-:                 :                :              : trace expensive  :                                                                                :
-:                 :                :              : high-performance :                                                                                :
-:                 :                :              : storage spend.   :                                                                                :
-| **Specialized** | **BiDi         | Highly       | Utilize the BiDi | [Hierarchical Namespace](https://cloud.google.com/storage/docs/hns-overview)   |
-:                 : (Bidirectional : Recommended  : protocol on      :                                                                                :
-:                 : Streaming)**   :              : Rapid Buckets to :                                                                                :
-:                 :                :              : enable           :                                                                                :
-:                 :                :              : low-latency,     :                                                                                :
-:                 :                :              : high-QPS         :                                                                                :
-:                 :                :              : streaming and    :                                                                                :
-:                 :                :              : append           :                                                                                :
-:                 :                :              : operations.      :                                                                                :
-| **Monitoring**  | **Cloud        | Highly       | Monitor caching  | [Cloud Monitoring](https://cloud.google.com/storage/docs/monitoring)           |
-:                 : Monitoring**   : Recommended  : metrics, hit     :                                                                                :
-:                 :                :              : rates, and       :                                                                                :
-:                 :                :              : ingress/egress   :                                                                                :
-:                 :                :              : bandwidth to     :                                                                                :
-:                 :                :              : ensure TPUs/GPUs :                                                                                :
-:                 :                :              : are not          :                                                                                :
-:                 :                :              : bottlenecked by  :                                                                                :
-:                 :                :              : storage.         :                                                                                :
+| Feature Group   | Cloud Storage  | Status       | Recommendations  | Documentation Link                                                                         |
+:                 : Feature /      :              : & Implementation :                                                                                            :
+:                 : Setting        :              : Details          :                                                                                            :
+| :-------------- | :------------- | :----------- | :--------------- | :----------------------------------------------------------------------------------------- |
+| **Core**        | **Storage      | Highly       | Use **STANDARD** | [Storage                                                                                   |
+:                 : Class**        : Recommended  : for standard     : Classes](https\://docs.cloud.google.com/storage/docs/storage-classes.md.txt)<br>[Rapid     :
+:                 :                :              : buckets, or      : Buckets](https\://docs.cloud.google.com/storage/docs/rapid/rapid-bucket.md.txt)            :
+:                 :                :              : **RAPID**        :                                                                                            :
+:                 :                :              : storage class    :                                                                                            :
+:                 :                :              : for zonal Rapid  :                                                                                            :
+:                 :                :              : Buckets.         :                                                                                            :
+|                 | **Bucket       | Highly       | **Zonal** (for   | [Locations](https://docs.cloud.google.com/storage/docs/locations.md.txt)                   |
+:                 : Type**         : Recommended  : Rapid Buckets)   :                                                                                            :
+:                 :                :              : or **Regional**  :                                                                                            :
+:                 :                :              : (for standard    :                                                                                            :
+:                 :                :              : Cloud            :                                                                                            :
+:                 :                :              : Storage/Rapid    :                                                                                            :
+:                 :                :              : Cache origin) to :                                                                                            :
+:                 :                :              : co-locate        :                                                                                            :
+:                 :                :              : storage and      :                                                                                            :
+:                 :                :              : compute.         :                                                                                            :
+| **Serving**     | **CORS &       | Optional /   | Avoid exposing   |                                                                                            |
+:                 : Signed URLs**  : Not          : AI datasets      :                                                                                            :
+:                 :                : Recommended  : directly to      :                                                                                            :
+:                 :                :              : public users.    :                                                                                            :
+| **Security**    | **Uniform      | **Required** | **Must be        | [Uniform Bucket-Level                                                                      |
+:                 : Bucket-Level   :              : enabled** for    : Access](https\://docs.cloud.google.com/storage/docs/uniform-bucket-level-access.md.txt)    :
+:                 : Access         :              : baseline access  :                                                                                            :
+:                 : (UBLA)**       :              : control          :                                                                                            :
+:                 :                :              : security.        :                                                                                            :
+|                 | **Encryption   | Highly       | Configure CMEK.  | [CMEK](https://docs.cloud.google.com/storage/docs/encryption/customer-managed-keys.md.txt) |
+:                 : (CMEK)**       : Recommended  : Use KMS Autokey  :                                                                                            :
+:                 :                :              : for automation.  :                                                                                            :
+|                 | **Soft         | Good to Have | Optional.        | [Soft Delete](https://docs.cloud.google.com/storage/docs/soft-delete.md.txt)               |
+:                 : Delete**       :              : (Useful but not  :                                                                                            :
+:                 :                :              : highly           :                                                                                            :
+:                 :                :              : recommended due  :                                                                                            :
+:                 :                :              : to potential     :                                                                                            :
+:                 :                :              : storage cost     :                                                                                            :
+:                 :                :              : overhead from    :                                                                                            :
+:                 :                :              : massive AI       :                                                                                            :
+:                 :                :              : dataset churn).  :                                                                                            :
+| **Cost**        | **Object       | Highly       | Define OLM rules | [Lifecycle Management](https://docs.cloud.google.com/storage/docs/lifecycle.md.txt)        |
+:                 : Lifecycle      : Recommended  : to automatically :                                                                                            :
+:                 : Management     :              : delete stale     :                                                                                            :
+:                 : (OLM)**        :              : checkpoints      :                                                                                            :
+:                 :                :              : (e.g. keep only  :                                                                                            :
+:                 :                :              : the last 3 days  :                                                                                            :
+:                 :                :              : of checkpoints)  :                                                                                            :
+:                 :                :              : to avoid massive :                                                                                            :
+:                 :                :              : storage bills on :                                                                                            :
+:                 :                :              : zonal disks.     :                                                                                            :
+| **Management**  | **Labels &     | Highly       | Apply billing    | [Bucket Labels](https://docs.cloud.google.com/storage/docs/using-bucket-labels.md.txt)     |
+:                 : Tagging**      : Recommended  : and ownership    :                                                                                            :
+:                 :                :              : labels (e.g.     :                                                                                            :
+:                 :                :              : `{"workload"\:   :                                                                                            :
+:                 :                :              : "ai-training"}`) :                                                                                            :
+:                 :                :              : to accurately    :                                                                                            :
+:                 :                :              : trace expensive  :                                                                                            :
+:                 :                :              : high-performance :                                                                                            :
+:                 :                :              : storage spend.   :                                                                                            :
+| **Specialized** | **BiDi         | Highly       | Utilize the BiDi | [Hierarchical Namespace](https://docs.cloud.google.com/storage/docs/hns-overview.md.txt)   |
+:                 : (Bidirectional : Recommended  : protocol on      :                                                                                            :
+:                 : Streaming)**   :              : Rapid Buckets to :                                                                                            :
+:                 :                :              : enable           :                                                                                            :
+:                 :                :              : low-latency,     :                                                                                            :
+:                 :                :              : high-QPS         :                                                                                            :
+:                 :                :              : streaming and    :                                                                                            :
+:                 :                :              : append           :                                                                                            :
+:                 :                :              : operations.      :                                                                                            :
+| **Monitoring**  | **Cloud        | Highly       | Monitor caching  | [Cloud Monitoring](https://docs.cloud.google.com/storage/docs/monitoring.md.txt)           |
+:                 : Monitoring**   : Recommended  : metrics, hit     :                                                                                            :
+:                 :                :              : rates, and       :                                                                                            :
+:                 :                :              : ingress/egress   :                                                                                            :
+:                 :                :              : bandwidth to     :                                                                                            :
+:                 :                :              : ensure TPUs/GPUs :                                                                                            :
+:                 :                :              : are not          :                                                                                            :
+:                 :                :              : bottlenecked by  :                                                                                            :
+:                 :                :              : storage.         :                                                                                            :
 
 ## Key Pre-Deployment Questions to Ask:
 

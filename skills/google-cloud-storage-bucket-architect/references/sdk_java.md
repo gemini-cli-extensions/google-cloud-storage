@@ -5,7 +5,7 @@ Phase 2) into the Java SDK.
 
 ## Official Documentation Reference
 
-*   [Google Cloud Storage Client for Java Documentation](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/overview)
+*   [Google Cloud Storage Client for Java Documentation](https://docs.cloud.google.com/java/docs/reference/google-cloud-storage/latest/overview.md.txt)
 
 ## Version Requirements
 

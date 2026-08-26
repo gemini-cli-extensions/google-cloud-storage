@@ -5,7 +5,7 @@ Phase 2) into the C++ SDK.
 
 ## Official Documentation Reference
 
-*   [Google Cloud Storage C++ Client Library](https://cloud.google.com/cpp/docs/reference/storage/latest)
+*   [Google Cloud Storage C++ Client Library](https://docs.cloud.google.com/cpp/docs/reference/storage/latest.md.txt)
 
 ## Client Initialization
 

@@ -5,7 +5,7 @@ Phase 2) into the Python SDK.
 
 ## Official Documentation Reference
 
-*   [Google Cloud Storage Python Client Library](https://cloud.google.com/python/docs/reference/storage/latest)
+*   [Google Cloud Storage Python Client Library](https://docs.cloud.google.com/python/docs/reference/storage/latest.md.txt)
 
 ## Version Requirements
 

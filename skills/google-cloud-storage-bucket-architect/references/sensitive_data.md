@@ -17,90 +17,90 @@ pipelines processing data within a secure corporate boundary.
 The following table maps the Sensitive Data use case to specific Cloud Storage
 features and details their recommendation status.
 
-| Feature Group  | Cloud        | Status       | Recommendations & Implementation   | Documentation Link                                                                     |
-:                : Storage      :              : Details                            :                                                                                        :
-:                : Feature /    :              :                                    :                                                                                        :
-:                : Setting      :              :                                    :                                                                                        :
-| :------------- | :----------- | :----------- | :--------------------------------- | :------------------------------------------------------------------------------------- |
-| **Core**       | **Storage    | Highly       | **Autoclass** or **Standard**      | [Autoclass](https://cloud.google.com/storage/docs/autoclass)<br>[Storage               |
-:                : Class**      : Recommended  : Storage Class.<br><br>Autoclass    : Classes](https\://cloud.google.com/storage/docs/storage-classes)                       :
-:                :              :              : automatically moves cold data to   :                                                                                        :
-:                :              :              : lower-cost tiers without retrieval :                                                                                        :
-:                :              :              : fees. Standard storage is          :                                                                                        :
-:                :              :              : recommended if data requires       :                                                                                        :
-:                :              :              : frequent, immediate, low-latency   :                                                                                        :
-:                :              :              : access.                            :                                                                                        :
-|                | **Bucket     | Highly       | **Regional** bucket type. Choosing | [Locations](https://cloud.google.com/storage/docs/locations)                           |
-:                : Type**       : Recommended  : a single region allows co-locating :                                                                                        :
-:                :              :              : storage with compute resources to  :                                                                                        :
-:                :              :              : avoid latency and egress costs.    :                                                                                        :
-| **Serving**    | **Signed     | Optional /   | Avoid direct access. Restrict      | [Signed URLs](https://cloud.google.com/storage/docs/access-control/signed-urls)        |
-:                : URLs**       : Not          : access through backend             :                                                                                        :
-:                :              : Recommended  : microservices or require signed    :                                                                                        :
-:                :              :              : URLs only if clients must write    :                                                                                        :
-:                :              :              : directly.                          :                                                                                        :
-|                | **CORS**     | Optional /   | Disable or restrict to specific    | [CORS](https://cloud.google.com/storage/docs/using-cors)                               |
-:                :              : Not          : trusted internal domains to        :                                                                                        :
-:                :              : Recommended  : prevent cross-origin web           :                                                                                        :
-:                :              :              : exfiltration.                      :                                                                                        :
-| **Security**   | **Uniform    | **Required** | **Must be enabled.** Prevents      | [Uniform Bucket-Level                                                                  |
-:                : Bucket-Level :              : legacy object-level ACLs from      : Access](https\://cloud.google.com/storage/docs/uniform-bucket-level-access)            :
-:                : Access       :              : overriding bucket-level IAM        :                                                                                        :
-:                : (UBLA)**     :              : policies.                          :                                                                                        :
-|                | **Public     | **Required** | **Must be enforced.** Disallows    | [Public Access                                                                         |
-:                : Access       :              : public access via `allUsers` or    : Prevention](https\://cloud.google.com/storage/docs/public-access-prevention)           :
-:                : Prevention   :              : `allAuthenticatedUsers`.           :                                                                                        :
-:                : (PAP)**      :              :                                    :                                                                                        :
-|                | **Encryption | Highly       | **Customer-Managed Encryption Keys | [CMEK](https://cloud.google.com/storage/docs/encryption/customer-managed-keys)<br>[KMS |
-:                : (CMEK)**     : Recommended  : (CMEK)** via Cloud KMS.<br><br>Use : Autokey](https\://cloud.google.com/kms/docs/autokey-overview)                          :
-:                :              :              : KMS Autokey to dynamically         :                                                                                        :
-:                :              :              : provision keys on bucket creation, :                                                                                        :
-:                :              :              : or prompt the user for a KMS key   :                                                                                        :
-:                :              :              : path. Do not use Customer-Supplied :                                                                                        :
-:                :              :              : Encryption Keys (CSEK).            :                                                                                        :
-|                | **Soft       | Highly       | **Enabled (default 7 days).**      | [Soft Delete](https://cloud.google.com/storage/docs/soft-delete)                       |
-:                : Delete**     : Recommended  : Ensures data can be recovered      :                                                                                        :
-:                :              :              : within the retention window if     :                                                                                        :
-:                :              :              : accidentally deleted by automated  :                                                                                        :
-:                :              :              : scripts or administrative bugs.    :                                                                                        :
-|                | **Object     | Good to Have | Suggest as an alternative to       | [Object Versioning](https://cloud.google.com/storage/docs/object-versioning)           |
-:                : Versioning** :              : prevent data                       :                                                                                        :
-:                :              :              : modification/accidental deletes    :                                                                                        :
-:                :              :              : only if Soft Delete is disabled.   :                                                                                        :
-|                | **Data       | Good to Have | Prompt the user to configure a     | [Bucket Lock](https://cloud.google.com/storage/docs/bucket-lock)<br>[Object            |
-:                : Retention    :              : Retention Policy (Bucket Lock or   : Lock](https\://cloud.google.com/storage/docs/object-lock)                              :
-:                : (WORM)**     :              : Object Lock) if regulatory         :                                                                                        :
-:                :              :              : compliance mandates                :                                                                                        :
-:                :              :              : immutability.<br><br>**Warning\:** :                                                                                        :
-:                :              :              : Lock mode is permanent and         :                                                                                        :
-:                :              :              : irreversible.                      :                                                                                        :
-|                | **IP         | Good to Have | Limit access to the bucket to      | [Bucket IP Filtering](https://cloud.google.com/storage/docs/ip-filtering-overview)     |
-:                : Filtering**  :              : specific CIDR ranges or VPC        :                                                                                        :
-:                :              :              : networks (e.g. corporate SOC       :                                                                                        :
-:                :              :              : perimeters).                       :                                                                                        :
-| **Cost**       | **Object     | Highly       | Configure rules to automatically   | [Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle)                |
-:                : Lifecycle    : Recommended  : abort incomplete multipart uploads :                                                                                        :
-:                : Management   :              : (`abortIncompleteMultipartUpload`) :                                                                                        :
-:                : (OLM)**      :              : to avoid hidden storage costs. If  :                                                                                        :
-:                :              :              : Autoclass is disabled, transition  :                                                                                        :
-:                :              :              : objects to `ARCHIVE` after 365     :                                                                                        :
-:                :              :              : days.                              :                                                                                        :
-| **Management** | **Labels &   | Highly       | **Mandatory** bucket-level tagging | [Bucket Labels](https://cloud.google.com/storage/docs/using-bucket-labels)             |
-:                : Tagging**    : Recommended  : (e.g., `{"data-class"\: "pii"}`    :                                                                                        :
-:                :              :              : and `{"owner"\: "security-team"}`) :                                                                                        :
-:                :              :              : to ensure proper data              :                                                                                        :
-:                :              :              : classification and cost-center     :                                                                                        :
-:                :              :              : tracking.                          :                                                                                        :
-| **Transfers**  | **Storage    | Good to Have | Consider cross-bucket replication  | [Storage Transfer Service](https://cloud.google.com/storage-transfer/docs/overview)    |
-:                : Transfer     :              : via STS to maintain an             :                                                                                        :
-:                : Service      :              : independent, secure copy of data.  :                                                                                        :
-:                : (STS)**      :              :                                    :                                                                                        :
-| **Monitoring** | **Cloud      | Good to Have | Enable Cloud Audit Logging (Data   | [Cloud Audit Logging](https://cloud.google.com/storage/docs/audit-logging)             |
-:                : Logging**    :              : Access & Admin Activity logs) for  :                                                                                        :
-:                :              :              : audit trials.                      :                                                                                        :
-|                | **Cloud      | Good to Have | Monitor operational health and     | [Cloud Monitoring](https://cloud.google.com/storage/docs/monitoring)                   |
-:                : Monitoring** :              : watch for spikes in error rates    :                                                                                        :
-:                :              :              : (e.g., 404, 503).                  :                                                                                        :
+| Feature Group  | Cloud        | Status       | Recommendations & Implementation   | Documentation Link                                                                                 |
+:                : Storage      :              : Details                            :                                                                                                    :
+:                : Feature /    :              :                                    :                                                                                                    :
+:                : Setting      :              :                                    :                                                                                                    :
+| :------------- | :----------- | :----------- | :--------------------------------- | :------------------------------------------------------------------------------------------------- |
+| **Core**       | **Storage    | Highly       | **Autoclass** or **Standard**      | [Autoclass](https://docs.cloud.google.com/storage/docs/autoclass.md.txt)<br>[Storage               |
+:                : Class**      : Recommended  : Storage Class.<br><br>Autoclass    : Classes](https\://docs.cloud.google.com/storage/docs/storage-classes.md.txt)                       :
+:                :              :              : automatically moves cold data to   :                                                                                                    :
+:                :              :              : lower-cost tiers without retrieval :                                                                                                    :
+:                :              :              : fees. Standard storage is          :                                                                                                    :
+:                :              :              : recommended if data requires       :                                                                                                    :
+:                :              :              : frequent, immediate, low-latency   :                                                                                                    :
+:                :              :              : access.                            :                                                                                                    :
+|                | **Bucket     | Highly       | **Regional** bucket type. Choosing | [Locations](https://docs.cloud.google.com/storage/docs/locations.md.txt)                           |
+:                : Type**       : Recommended  : a single region allows co-locating :                                                                                                    :
+:                :              :              : storage with compute resources to  :                                                                                                    :
+:                :              :              : avoid latency and egress costs.    :                                                                                                    :
+| **Serving**    | **Signed     | Optional /   | Avoid direct access. Restrict      | [Signed URLs](https://docs.cloud.google.com/storage/docs/access-control/signed-urls.md.txt)        |
+:                : URLs**       : Not          : access through backend             :                                                                                                    :
+:                :              : Recommended  : microservices or require signed    :                                                                                                    :
+:                :              :              : URLs only if clients must write    :                                                                                                    :
+:                :              :              : directly.                          :                                                                                                    :
+|                | **CORS**     | Optional /   | Disable or restrict to specific    | [CORS](https://docs.cloud.google.com/storage/docs/using-cors.md.txt)                               |
+:                :              : Not          : trusted internal domains to        :                                                                                                    :
+:                :              : Recommended  : prevent cross-origin web           :                                                                                                    :
+:                :              :              : exfiltration.                      :                                                                                                    :
+| **Security**   | **Uniform    | **Required** | **Must be enabled.** Prevents      | [Uniform Bucket-Level                                                                              |
+:                : Bucket-Level :              : legacy object-level ACLs from      : Access](https\://docs.cloud.google.com/storage/docs/uniform-bucket-level-access.md.txt)            :
+:                : Access       :              : overriding bucket-level IAM        :                                                                                                    :
+:                : (UBLA)**     :              : policies.                          :                                                                                                    :
+|                | **Public     | **Required** | **Must be enforced.** Disallows    | [Public Access                                                                                     |
+:                : Access       :              : public access via `allUsers` or    : Prevention](https\://docs.cloud.google.com/storage/docs/public-access-prevention.md.txt)           :
+:                : Prevention   :              : `allAuthenticatedUsers`.           :                                                                                                    :
+:                : (PAP)**      :              :                                    :                                                                                                    :
+|                | **Encryption | Highly       | **Customer-Managed Encryption Keys | [CMEK](https://docs.cloud.google.com/storage/docs/encryption/customer-managed-keys.md.txt)<br>[KMS |
+:                : (CMEK)**     : Recommended  : (CMEK)** via Cloud KMS.<br><br>Use : Autokey](https\://docs.cloud.google.com/kms/docs/autokey-overview.md.txt)                          :
+:                :              :              : KMS Autokey to dynamically         :                                                                                                    :
+:                :              :              : provision keys on bucket creation, :                                                                                                    :
+:                :              :              : or prompt the user for a KMS key   :                                                                                                    :
+:                :              :              : path. Do not use Customer-Supplied :                                                                                                    :
+:                :              :              : Encryption Keys (CSEK).            :                                                                                                    :
+|                | **Soft       | Highly       | **Enabled (default 7 days).**      | [Soft Delete](https://docs.cloud.google.com/storage/docs/soft-delete.md.txt)                       |
+:                : Delete**     : Recommended  : Ensures data can be recovered      :                                                                                                    :
+:                :              :              : within the retention window if     :                                                                                                    :
+:                :              :              : accidentally deleted by automated  :                                                                                                    :
+:                :              :              : scripts or administrative bugs.    :                                                                                                    :
+|                | **Object     | Good to Have | Suggest as an alternative to       | [Object Versioning](https://docs.cloud.google.com/storage/docs/object-versioning.md.txt)           |
+:                : Versioning** :              : prevent data                       :                                                                                                    :
+:                :              :              : modification/accidental deletes    :                                                                                                    :
+:                :              :              : only if Soft Delete is disabled.   :                                                                                                    :
+|                | **Data       | Good to Have | Prompt the user to configure a     | [Bucket Lock](https://docs.cloud.google.com/storage/docs/bucket-lock.md.txt)<br>[Object            |
+:                : Retention    :              : Retention Policy (Bucket Lock or   : Lock](https\://docs.cloud.google.com/storage/docs/object-lock.md.txt)                              :
+:                : (WORM)**     :              : Object Lock) if regulatory         :                                                                                                    :
+:                :              :              : compliance mandates                :                                                                                                    :
+:                :              :              : immutability.<br><br>**Warning\:** :                                                                                                    :
+:                :              :              : Lock mode is permanent and         :                                                                                                    :
+:                :              :              : irreversible.                      :                                                                                                    :
+|                | **IP         | Good to Have | Limit access to the bucket to      | [Bucket IP Filtering](https://docs.cloud.google.com/storage/docs/ip-filtering-overview.md.txt)     |
+:                : Filtering**  :              : specific CIDR ranges or VPC        :                                                                                                    :
+:                :              :              : networks (e.g. corporate SOC       :                                                                                                    :
+:                :              :              : perimeters).                       :                                                                                                    :
+| **Cost**       | **Object     | Highly       | Configure rules to automatically   | [Lifecycle Management](https://docs.cloud.google.com/storage/docs/lifecycle.md.txt)                |
+:                : Lifecycle    : Recommended  : abort incomplete multipart uploads :                                                                                                    :
+:                : Management   :              : (`abortIncompleteMultipartUpload`) :                                                                                                    :
+:                : (OLM)**      :              : to avoid hidden storage costs. If  :                                                                                                    :
+:                :              :              : Autoclass is disabled, transition  :                                                                                                    :
+:                :              :              : objects to `ARCHIVE` after 365     :                                                                                                    :
+:                :              :              : days.                              :                                                                                                    :
+| **Management** | **Labels &   | Highly       | **Mandatory** bucket-level tagging | [Bucket Labels](https://docs.cloud.google.com/storage/docs/using-bucket-labels.md.txt)             |
+:                : Tagging**    : Recommended  : (e.g., `{"data-class"\: "pii"}`    :                                                                                                    :
+:                :              :              : and `{"owner"\: "security-team"}`) :                                                                                                    :
+:                :              :              : to ensure proper data              :                                                                                                    :
+:                :              :              : classification and cost-center     :                                                                                                    :
+:                :              :              : tracking.                          :                                                                                                    :
+| **Transfers**  | **Storage    | Good to Have | Consider cross-bucket replication  | [Storage Transfer Service](https://docs.cloud.google.com/storage-transfer/docs/overview.md.txt)    |
+:                : Transfer     :              : via STS to maintain an             :                                                                                                    :
+:                : Service      :              : independent, secure copy of data.  :                                                                                                    :
+:                : (STS)**      :              :                                    :                                                                                                    :
+| **Monitoring** | **Cloud      | Good to Have | Enable Cloud Audit Logging (Data   | [Cloud Audit Logging](https://docs.cloud.google.com/storage/docs/audit-logging.md.txt)             |
+:                : Logging**    :              : Access & Admin Activity logs) for  :                                                                                                    :
+:                :              :              : audit trials.                      :                                                                                                    :
+|                | **Cloud      | Good to Have | Monitor operational health and     | [Cloud Monitoring](https://docs.cloud.google.com/storage/docs/monitoring.md.txt)                   |
+:                : Monitoring** :              : watch for spikes in error rates    :                                                                                                    :
+:                :              :              : (e.g., 404, 503).                  :                                                                                                    :
 
 ## Project-Level Security Checks & Recommendations
 

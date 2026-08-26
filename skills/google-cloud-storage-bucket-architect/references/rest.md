@@ -13,9 +13,9 @@ Phase 2) into the corresponding JSON API (REST) request bodies/cURL commands.
 
 ## Official Documentation Reference
 
-*   [Cloud Storage JSON API Overview](https://cloud.google.com/storage/docs/json_api)
-*   [Buckets Resource Reference](https://cloud.google.com/storage/docs/json_api/v1/buckets)
-*   [Objects Resource Reference](https://cloud.google.com/storage/docs/json_api/v1/objects)
+*   [Cloud Storage JSON API Overview](https://docs.cloud.google.com/storage/docs/json_api.md.txt)
+*   [Buckets Resource Reference](https://docs.cloud.google.com/storage/docs/json_api/v1/buckets.md.txt)
+*   [Objects Resource Reference](https://docs.cloud.google.com/storage/docs/json_api/v1/objects.md.txt)
 
 --------------------------------------------------------------------------------
 
