@@ -3,11 +3,11 @@
 > [!IMPORTANT]
 > This phase is critical for establishing a secure baseline. Always
 > verify project-level settings (TLS, HTTPS, HMAC, Liens) before drafting any
-> GCS bucket configuration. If a project is insecure, warn the user and
-> recommend remediation.
+> Cloud Storage bucket configuration. If a project is insecure, warn the user
+> and recommend remediation.
 
 This phase focuses on assessing baseline project-level security settings before
-designing a new GCS bucket. These checks are non-blocking, but missing
+designing a new Cloud Storage bucket. These checks are non-blocking, but missing
 permissions will limit the scope of the assessment.
 
 ## Step 1: Execute Project Verification Commands
@@ -117,7 +117,7 @@ present a summary to the user using the following status indicators:
 
 **Remediation Recommendations:**
 *   **TLS 1.2 Enforcement**: Enforce the Organization Policy `constraints/gcp.restrictTLSVersion` to deny TLS versions older than 1.2.
-*   **HTTPS Only**: Enforce the Organization Policy `constraints/storage.secureHttpTransport` to require secure HTTPS transport for all GCS operations.
+*   **HTTPS Only**: Enforce the Organization Policy `constraints/storage.secureHttpTransport` to require secure HTTPS transport for all Cloud Storage operations.
 *   **Restrict HMAC Keys**: Enforce the Organization Policy `constraints/storage.restrictAuthTypes` to restrict HMAC key creation.
 *   **Project Liens**: Create at least one project lien using `gcloud alpha resource-manager liens create` to protect the project from accidental deletion.
 ```

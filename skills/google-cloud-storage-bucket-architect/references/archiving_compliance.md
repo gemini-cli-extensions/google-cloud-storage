@@ -15,10 +15,11 @@ premature deletion (immutability).
 ## Bucket Configuration Plan Mapping
 
 The following table maps the Long-Term Archive & Compliance use case to specific
-GCS features and details their recommendation status.
+Cloud Storage features and details their recommendation status.
 
-| Feature Group  | GCS Feature /  | Status       | Recommendations &         | Documentation Link                                                             |
-:                : Setting        :              : Implementation Details    :                                                                                :
+| Feature Group  | Cloud Storage  | Status       | Recommendations &         | Documentation Link                                                             |
+:                : Feature /      :              : Implementation Details    :                                                                                :
+:                : Setting        :              :                           :                                                                                :
 | :------------- | :------------- | :----------- | :------------------------ | :----------------------------------------------------------------------------- |
 | **Core**       | **Storage      | Highly       | **Coldline** or           | [Storage Classes](https://cloud.google.com/storage/docs/storage-classes)       |
 :                : Class**        : Recommended  : **Archive** Storage       :                                                                                :
@@ -63,9 +64,10 @@ GCS features and details their recommendation status.
 :                :                :              : exclusively to verified   :                                                                                :
 :                :                :              : corporate office IPs or   :                                                                                :
 :                :                :              : secure VPN ranges.        :                                                                                :
-|                | **Retention    | Good to Have | Configure GCS **Bucket    | [Bucket Lock](https://cloud.google.com/storage/docs/bucket-lock)<br>[Object    |
-:                : Policy         :              : Lock** or **Object Lock** : Lock](https\://cloud.google.com/storage/docs/object-lock)                      :
-:                : (WORM)**       :              : to enforce immutability   :                                                                                :
+|                | **Retention    | Good to Have | Configure Cloud Storage   | [Bucket Lock](https://cloud.google.com/storage/docs/bucket-lock)<br>[Object    |
+:                : Policy         :              : **Bucket Lock** or        : Lock](https\://cloud.google.com/storage/docs/object-lock)                      :
+:                : (WORM)**       :              : **Object Lock** to        :                                                                                :
+:                :                :              : enforce immutability      :                                                                                :
 :                :                :              : (Write Once, Read         :                                                                                :
 :                :                :              : Many).<br><br>**Warning\: :                                                                                :
 :                :                :              : Locking the retention     :                                                                                :
@@ -113,12 +115,12 @@ GCS features and details their recommendation status.
 :                :                :              : mainframes upload         :                                                                                :
 :                :                :              : transaction logs          :                                                                                :
 :                :                :              : directly.                 :                                                                                :
-| **Monitoring** | **Cloud        | Highly       | Enable GCS Audit Logs     | [Cloud Audit Logging](https://cloud.google.com/storage/docs/audit-logging)     |
-:                : Logging**      : Recommended  : (Data Access & Admin      :                                                                                :
-:                :                :              : Activity) to maintain a   :                                                                                :
-:                :                :              : complete, audit-safe      :                                                                                :
-:                :                :              : record of data reads,     :                                                                                :
-:                :                :              : writes, and config        :                                                                                :
+| **Monitoring** | **Cloud        | Highly       | Enable Cloud Storage      | [Cloud Audit Logging](https://cloud.google.com/storage/docs/audit-logging)     |
+:                : Logging**      : Recommended  : Audit Logs (Data Access & :                                                                                :
+:                :                :              : Admin Activity) to        :                                                                                :
+:                :                :              : maintain a complete,      :                                                                                :
+:                :                :              : audit-safe record of data :                                                                                :
+:                :                :              : reads, writes, and config :                                                                                :
 :                :                :              : updates.                  :                                                                                :
 |                | **Cloud        | Good to Have | Monitor capacity trends   | [Cloud Monitoring](https://cloud.google.com/storage/docs/monitoring)           |
 :                : Monitoring**   :              : and set alert systems to  :                                                                                :

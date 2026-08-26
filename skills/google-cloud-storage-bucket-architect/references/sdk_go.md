@@ -24,10 +24,11 @@ client, err := storage.NewClient(ctx)
 ## Version Requirements
 
 > [!IMPORTANT]
-> **Encryption Enforcement Config** requires the Go GCS SDK version
-> **1.61.0** or higher. If you are using a version below 1.61.0, you must
-> configure this setting using the [REST API](rest.md), [gcloud](gcloud.md), or
-> [Terraform](terraform.md) (the bucket can then be managed through the SDK).
+> **Encryption Enforcement Config** requires the Go Cloud Storage
+> SDK version **1.61.0** or higher. If you are using a version below 1.61.0, you
+> must configure this setting using the [REST API](rest.md),
+> [gcloud](gcloud.md), or [Terraform](terraform.md) (the bucket can then be
+> managed through the SDK).
 
 --------------------------------------------------------------------------------
 

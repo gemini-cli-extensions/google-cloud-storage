@@ -1,4 +1,4 @@
-# Terraform Google Provider GCS Reference
+# Terraform Google Provider Cloud Storage Reference
 
 > [!IMPORTANT]
 >
@@ -42,12 +42,12 @@ Phase 2) into the corresponding Terraform configuration.
 | **Soft Delete** | `google_storage_bucket.soft_delete_policy.retention_duration_seconds` | Number (seconds). E.g. `604800` (7 days). Set to `0` to disable.    |
 :                 :                                                                       : Rapid/Zonal Buckets do not support Soft Delete (the field can be    :
 :                 :                                                                       : left unset or explicitly set to 0). Note\: Omitting this block      :
-:                 :                                                                       : leaves it enabled at GCS default (7 days). Min\: `604800` (7 days), :
-:                 :                                                                       : Max\: `7776000` (90 days).                                          :
+:                 :                                                                       : leaves it enabled at Cloud Storage default (7 days). Min\: `604800` :
+:                 :                                                                       : (7 days), Max\: `7776000` (90 days).                                :
 | **Object        | `google_storage_bucket.versioning.enabled`                            | Boolean. Enables/disables versioning.                               |
 : Versioning**    :                                                                       :                                                                     :
 | **Encryption    | `google_storage_bucket.encryption.default_kms_key_name`               | String. Full key ID: `projects/.../cryptoKeys/...` Note: Requires   |
-: (CMEK)**        :                                                                       : GCS Service Agent                                                   :
+: (CMEK)**        :                                                                       : Cloud Storage Service Agent                                         :
 :                 :                                                                       : (`service-PROJECT_NUM@gs-project-accounts.iam.gserviceaccount.com`) :
 :                 :                                                                       : to have `roles/cloudkms.cryptoKeyEncrypterDecrypter` role on the    :
 :                 :                                                                       : key.                                                                :
@@ -70,11 +70,12 @@ Phase 2) into the corresponding Terraform configuration.
 : Configuration** :                                                                       :                                                                     :
 | **Public IAM    | `google_storage_bucket_iam_member`                                    | Separate resource to grant `roles/storage.objectViewer` to          |
 : Policy**        :                                                                       : `allUsers`.                                                         :
-| **Pub/Sub       | `google_storage_notification`                                         | Separate resource linking bucket and Pub/Sub topic. Note: The GCS   |
-: Notifications** :                                                                       : service agent (via `google_storage_project_service_account` data    :
-:                 :                                                                       : source) must have `roles/pubsub.publisher` on the topic (typically  :
-:                 :                                                                       : via `google_pubsub_topic_iam_binding`), and the notification        :
-:                 :                                                                       : resource should have a `depends_on` targeting this IAM binding.     :
+| **Pub/Sub       | `google_storage_notification`                                         | Separate resource linking bucket and Pub/Sub topic. Note: The Cloud |
+: Notifications** :                                                                       : Storage service agent (via `google_storage_project_service_account` :
+:                 :                                                                       : data source) must have `roles/pubsub.publisher` on the topic        :
+:                 :                                                                       : (typically via `google_pubsub_topic_iam_binding`), and the          :
+:                 :                                                                       : notification resource should have a `depends_on` targeting this IAM :
+:                 :                                                                       : binding.                                                            :
 | **Bucket        | `google_storage_bucket.retention_policy.retention_period`             | Number in seconds. E.g. `7776000` (90 days).                        |
 : Retention       :                                                                       :                                                                     :
 : Period**        :                                                                       :                                                                     :

@@ -26,7 +26,7 @@ solutions.
 | **Primary Use Case** | **Model Training &        | **Model Checkpointing**   |
 :                      : Inference** where         : and high-QPS, write-heavy :
 :                      : datasets already exist in : training tasks.           :
-:                      : a GCS bucket.             :                           :
+:                      : a Cloud Storage bucket.   :                           :
 | **Read/Write**       | **Read-Only**. Writes     | **Read and Write**.       |
 :                      : must be written to the    : Serves as a writable      :
 :                      : underlying bucket.        : source of truth.          :
@@ -36,7 +36,7 @@ solutions.
 | **Performance**      | High throughput,          | Ultra-low latency, high   |
 :                      : cold-start penalty on     : throughput, and high QPS  :
 :                      : first reads. Same QPS as  : (no cold start).          :
-:                      : standard GCS.             :                           :
+:                      : standard Cloud Storage.   :                           :
 | **Data Lifecycle**   | Default TTL is 24 hours.  | Permanent storage (data   |
 :                      : Cache automatically       : lives forever until       :
 :                      : evicts stale data.        : deleted).                 :
@@ -87,12 +87,12 @@ explicitly configure and recommend the following:
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps GCS features to AI/ML workloads and details their
-recommendation status.
+The following table maps Cloud Storage features to AI/ML workloads and details
+their recommendation status.
 
-| Feature Group   | GCS Feature /  | Status       | Recommendations  | Documentation Link                                                             |
-:                 : Setting        :              : & Implementation :                                                                                :
-:                 :                :              : Details          :                                                                                :
+| Feature Group   | Cloud Storage  | Status       | Recommendations  | Documentation Link                                                             |
+:                 : Feature /      :              : & Implementation :                                                                                :
+:                 : Setting        :              : Details          :                                                                                :
 | :-------------- | :------------- | :----------- | :--------------- | :----------------------------------------------------------------------------- |
 | **Core**        | **Storage      | Highly       | Use **STANDARD** | [Storage                                                                       |
 :                 : Class**        : Recommended  : for standard     : Classes](https\://cloud.google.com/storage/docs/storage-classes)<br>[Rapid     :
@@ -105,8 +105,9 @@ recommendation status.
 :                 : Type**         : Recommended  : Rapid Buckets)   :                                                                                :
 :                 :                :              : or **Regional**  :                                                                                :
 :                 :                :              : (for standard    :                                                                                :
-:                 :                :              : GCS/Rapid Cache  :                                                                                :
-:                 :                :              : origin) to       :                                                                                :
+:                 :                :              : Cloud            :                                                                                :
+:                 :                :              : Storage/Rapid    :                                                                                :
+:                 :                :              : Cache origin) to :                                                                                :
 :                 :                :              : co-locate        :                                                                                :
 :                 :                :              : storage and      :                                                                                :
 :                 :                :              : compute.         :                                                                                :

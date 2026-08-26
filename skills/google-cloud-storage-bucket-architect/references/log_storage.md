@@ -15,12 +15,12 @@ grow cold.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Log Storage use case to specific GCS features and
-details their recommendation status.
+The following table maps the Log Storage use case to specific Cloud Storage
+features and details their recommendation status.
 
-| Feature Group  | GCS Feature /  | Status       | Recommendations &   | Documentation Link                                                             |
-:                : Setting        :              : Implementation      :                                                                                :
-:                :                :              : Details             :                                                                                :
+| Feature Group  | Cloud Storage  | Status       | Recommendations &   | Documentation Link                                                             |
+:                : Feature /      :              : Implementation      :                                                                                :
+:                : Setting        :              : Details             :                                                                                :
 | :------------- | :------------- | :----------- | :------------------ | :----------------------------------------------------------------------------- |
 | **Core**       | **Storage      | Highly       | **Autoclass**       | [Autoclass](https://cloud.google.com/storage/docs/autoclass)<br>[Storage       |
 :                : Class**        : Recommended  : Storage             : Classes](https\://cloud.google.com/storage/docs/storage-classes)               :
@@ -132,4 +132,4 @@ details their recommendation status.
 ## Mandatory Recommendations to Include in the Design Plan:
 
 *   **Cloud Monitoring**: You MUST recommend configuring Cloud Monitoring to
-    track GCS API limits, ingestion errors, and daily write volumes.
+    track Cloud Storage API limits, ingestion errors, and daily write volumes.

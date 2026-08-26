@@ -14,11 +14,13 @@ pipelines processing data within a secure corporate boundary.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Sensitive Data use case to specific GCS features
-and details their recommendation status.
+The following table maps the Sensitive Data use case to specific Cloud Storage
+features and details their recommendation status.
 
-| Feature Group  | GCS Feature  | Status       | Recommendations & Implementation   | Documentation Link                                                                     |
-:                : / Setting    :              : Details                            :                                                                                        :
+| Feature Group  | Cloud        | Status       | Recommendations & Implementation   | Documentation Link                                                                     |
+:                : Storage      :              : Details                            :                                                                                        :
+:                : Feature /    :              :                                    :                                                                                        :
+:                : Setting      :              :                                    :                                                                                        :
 | :------------- | :----------- | :----------- | :--------------------------------- | :------------------------------------------------------------------------------------- |
 | **Core**       | **Storage    | Highly       | **Autoclass** or **Standard**      | [Autoclass](https://cloud.google.com/storage/docs/autoclass)<br>[Storage               |
 :                : Class**      : Recommended  : Storage Class.<br><br>Autoclass    : Classes](https\://cloud.google.com/storage/docs/storage-classes)                       :

@@ -166,7 +166,7 @@ for standard operations and perform a direct HTTP REST call for the unexposed
 feature:
 
 1.  **Auth**: Use the SDK credentials helper to obtain an OAuth2 access token.
-2.  **Request**: Send a `PATCH` request to the GCS REST API (e.g.,
+2.  **Request**: Send a `PATCH` request to the Cloud Storage REST API (e.g.,
     `https://storage.googleapis.com/storage/v1/b/BUCKET_NAME`) containing the
     JSON payload for the unexposed feature (refer to
     [REST API Reference](rest.md)), passing the token in the `Authorization:

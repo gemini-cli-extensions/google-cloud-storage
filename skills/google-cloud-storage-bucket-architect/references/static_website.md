@@ -13,11 +13,12 @@ serve assets with low latency without backend servers.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Static Website Hosting use case to specific GCS
-features and details their recommendation status.
+The following table maps the Static Website Hosting use case to specific Cloud
+Storage features and details their recommendation status.
 
-| Feature Group  | GCS Feature /   | Status       | Recommendations &            | Documentation Link                                                                    |
-:                : Setting         :              : Implementation Details       :                                                                                       :
+| Feature Group  | Cloud Storage   | Status       | Recommendations &            | Documentation Link                                                                    |
+:                : Feature /       :              : Implementation Details       :                                                                                       :
+:                : Setting         :              :                              :                                                                                       :
 | :------------- | :-------------- | :----------- | :--------------------------- | :------------------------------------------------------------------------------------ |
 | **Core**       | **Storage       | Highly       | **Standard** Storage         | [Storage Classes](https://cloud.google.com/storage/docs/storage-classes)              |
 :                : Class**         : Recommended  : Class.<br><br>Required for   :                                                                                       :

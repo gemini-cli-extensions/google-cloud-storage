@@ -8,17 +8,18 @@ buckets serving as the origin for media assets and Content Delivery Networks
 ## Description
 
 The user is serving high-definition images, videos, or audio assets to a global
-or geo-regional audience with low latency. GCS acts as the origin store for a
-CDN (e.g. Cloud CDN or third-party CDNs), and requires high read QPS scaling,
-high bandwidth, and immediate data availability.
+or geo-regional audience with low latency. Cloud Storage acts as the origin
+store for a CDN (e.g. Cloud CDN or third-party CDNs), and requires high read QPS
+scaling, high bandwidth, and immediate data availability.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Media Hosting & CDN to specific GCS features and
-details their recommendation status.
+The following table maps the Media Hosting & CDN to specific Cloud Storage
+features and details their recommendation status.
 
-| Feature Group   | GCS Feature /  | Status       | Recommendations &       | Documentation Link                                                          |
-:                 : Setting        :              : Implementation Details  :                                                                             :
+| Feature Group   | Cloud Storage  | Status       | Recommendations &       | Documentation Link                                                          |
+:                 : Feature /      :              : Implementation Details  :                                                                             :
+:                 : Setting        :              :                         :                                                                             :
 | :-------------- | :------------- | :----------- | :---------------------- | :-------------------------------------------------------------------------- |
 | **Core**        | **Storage      | Highly       | **Autoclass** or        | [Autoclass](https://cloud.google.com/storage/docs/autoclass)<br>[Storage    |
 :                 : Class**        : Recommended  : **Standard** Storage    : Classes](https\://cloud.google.com/storage/docs/storage-classes)            :

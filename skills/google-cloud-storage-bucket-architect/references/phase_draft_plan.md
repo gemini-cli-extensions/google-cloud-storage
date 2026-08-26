@@ -66,9 +66,10 @@ the user did not explicitly request them.
 :              :                                      : apps/browsers  : mobile app",  :
 :              :                                      : to upload      : "signed URLs  :
 :              :                                      : files directly : for user      :
-:              :                                      : to GCS (often  : uploads",     :
-:              :                                      : via signed     : "direct image :
-:              :                                      : URLs) without  : ingestion"    :
+:              :                                      : to Cloud       : uploads",     :
+:              :                                      : Storage (often : "direct image :
+:              :                                      : via signed     : ingestion"    :
+:              :                                      : URLs) without  :               :
 :              :                                      : hitting app    :               :
 :              :                                      : servers.       :               :
 | **Static     | `references/static_website.md`       | Hosting static | "host static  |
@@ -77,7 +78,8 @@ the user did not explicitly request them.
 :              :                                      : custom domain  : single page   :
 :              :                                      : mapping,       : app",         :
 :              :                                      : accessible     : "landing page :
-:              :                                      : publicly.      : on GCS",      :
+:              :                                      : publicly.      : on Cloud      :
+:              :                                      :                : Storage",     :
 :              :                                      :                : "custom       :
 :              :                                      :                : domain        :
 :              :                                      :                : index.html"   :
@@ -115,8 +117,8 @@ the user did not explicitly request them.
 :              :                                      : checkpoints,   : checkpoints", :
 :              :                                      : or inference   : "Vertex AI    :
 :              :                                      : assets,        : storage",     :
-:              :                                      : optimized for  : "mount GCS    :
-:              :                                      : high           : FUSE"         :
+:              :                                      : optimized for  : "mount Cloud  :
+:              :                                      : high           : Storage FUSE" :
 :              :                                      : throughput.    :               :
 
 If the user's workload does not clearly fit any of the above, default to a
@@ -149,8 +151,8 @@ If the user specifies a location for the bucket:
 
 *   **Do NOT run commands** like `gcloud compute regions list` or `gcloud
     compute zones list` to verify locations.
-*   **Invalid Locations**: If the user requests an invalid or unsupported GCS
-    location (e.g., "Kenya"), you MUST:
+*   **Invalid Locations**: If the user requests an invalid or unsupported Cloud
+    Storage location (e.g., "Kenya"), you MUST:
     1.  Explicitly state that the requested location is not a valid Google Cloud
         Storage location.
     2.  Provide the link to the official Cloud Storage Locations documentation:
@@ -230,7 +232,7 @@ sensitive data use case), the agent MUST consider the following limitations:
     *   **BigQuery**: For loading data, exporting table data, exporting query
         results, or querying external tables.
     *   **App Engine**: Standard environment applications, unless they access
-        GCS through a VPC.
+        Cloud Storage through a VPC.
     *   **Cloud Shell**: IP filtering does not support Cloud Shell.
 
 --------------------------------------------------------------------------------

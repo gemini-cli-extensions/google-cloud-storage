@@ -15,11 +15,12 @@ infrequently, but require rapid access when a restore is triggered.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Backup and Disaster Recovery to specific GCS
-features and details their recommendation status.
+The following table maps the Backup and Disaster Recovery to specific Cloud
+Storage features and details their recommendation status.
 
-| Feature Group  | GCS Feature /  | Status       | Recommendations &              | Documentation Link                                                                     |
-:                : Setting        :              : Implementation Details         :                                                                                        :
+| Feature Group  | Cloud Storage  | Status       | Recommendations &              | Documentation Link                                                                     |
+:                : Feature /      :              : Implementation Details         :                                                                                        :
+:                : Setting        :              :                                :                                                                                        :
 | :------------- | :------------- | :----------- | :----------------------------- | :------------------------------------------------------------------------------------- |
 | **Core**       | **Storage      | Highly       | **Nearline**, **Coldline**, or | [Storage Classes](https://cloud.google.com/storage/docs/storage-classes)               |
 :                : Class**        : Recommended  : **Archive** Storage            :                                                                                        :

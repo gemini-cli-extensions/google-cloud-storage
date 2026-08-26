@@ -8,18 +8,19 @@ bypassing backend servers.
 ## Description
 
 The user is building a mobile or web application where end-users upload heavy
-files (such as profile pictures, documents, or video clips) directly to a GCS
-bucket. This is achieved using Signed URLs to authorize uploads and CORS
+files (such as profile pictures, documents, or video clips) directly to a Cloud
+Storage bucket. This is achieved using Signed URLs to authorize uploads and CORS
 configuration to allow browser-based calls, avoiding network bottlenecking on
 the application's backend web servers.
 
 ## Bucket Configuration Plan Mapping
 
-The following table maps the Direct UGC Ingestion use case to specific GCS
-features and details their recommendation status.
+The following table maps the Direct UGC Ingestion use case to specific Cloud
+Storage features and details their recommendation status.
 
-| Feature Group  | GCS Feature /   | Status       | Recommendations & Implementation | Documentation Link                                                             |
-:                : Setting         :              : Details                          :                                                                                :
+| Feature Group  | Cloud Storage   | Status       | Recommendations & Implementation | Documentation Link                                                             |
+:                : Feature /       :              : Details                          :                                                                                :
+:                : Setting         :              :                                  :                                                                                :
 | :------------- | :-------------- | :----------- | :------------------------------- | :----------------------------------------------------------------------------- |
 | **Core**       | **Storage       | Highly       | **Autoclass** or **Standard**    | [Autoclass](https://cloud.google.com/storage/docs/autoclass)<br>[Storage       |
 :                : Class**         : Recommended  : Storage Class.<br><br>Standard   : Classes](https\://cloud.google.com/storage/docs/storage-classes)               :
