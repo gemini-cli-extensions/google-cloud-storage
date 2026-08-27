@@ -92,6 +92,11 @@ https://github.com/gemini-cli-extensions/google-cloud-storage
     combine into a critical exposure — with actionable, verified remediation.
     Needs [additional setup](#additional-setup-gcs-security-assessment) for a
     complete assessment.
+-   [**Google Cloud Storage OKF**](./skills/google-cloud-storage-okf/) —
+    Token-efficient search, semantic navigation, and progressive disclosure of
+    unstructured or semi-structured objects (PDFs, logs, JSON/CSV dumps, media,
+    large documents) in GCS using the Open Knowledge Format (OKF) and Model
+    Context Protocol (MCP).
 
 ## Prerequisites
 
