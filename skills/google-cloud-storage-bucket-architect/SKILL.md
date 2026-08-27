@@ -141,3 +141,56 @@ When invoked, the agent **MUST follow this exact sequence**:
 Problem                           | Cause                                           | Fix
 --------------------------------- | ----------------------------------------------- | ---
 Execution failure during creation | Network issue, permission error during API call | Report the error details to the user and suggest manual execution with the generated command/snippet.
+
+## References
+
+### Phases
+
+*   [Preflight / Project Checks](references/phase_project_checks.md):
+    Project-level security verification and default configuration checks.
+*   [Draft Bucket Create Plan](references/phase_draft_plan.md): Workload
+    assessment, secure defaults, and architecture plan generation.
+*   [Output Based on User Intent](references/phase_output.md): Final
+    command/code generation and execution confirmation workflows.
+
+### Bucket Use Cases
+
+*   [Sensitive Data & Compliance](references/sensitive_data.md): Architecture
+    for regulated data (PII, HIPAA, finance) with CMEK, restricted CSEK, and IP
+    filtering.
+*   [Media Hosting & CDN](references/media_hosting.md): Public asset hosting and
+    CDN origin configuration.
+*   [Direct UGC Ingestion](references/ugc_ingestion.md): Signed URLs, direct
+    client uploads, CORS, and malware protection.
+*   [Static Website Hosting](references/static_website.md): Website hosting,
+    custom domain mapping, and index/error page handling.
+*   [Long-Term Archive & Compliance](references/archiving_compliance.md):
+    Regulatory retention, WORM (Object Retention), Bucket Lock, and Autoclass.
+*   [Backup & Disaster Recovery](references/backup_dr.md): Immutable backups,
+    dual-region turbo replication, and soft delete protection.
+*   [Log Storage](references/log_storage.md): High-volume log ingestion,
+    retention management, and SIEM integration.
+*   [AI & Machine Learning](references/storage_for_ai.md): High-throughput
+    training/inference, GCS FUSE, Anywhere Cache, and Zonal (Rapid) buckets.
+
+### Provisioning & Output Formats
+
+*   [gcloud CLI Reference](references/gcloud.md): `gcloud storage` commands for
+    creating and configuring buckets.
+*   [REST API Reference](references/rest.md): JSON API payloads and cURL
+    commands for bucket creation.
+*   [Terraform Reference](references/terraform.md): `google_storage_bucket`
+    Terraform resource definitions and best practices.
+*   [SDK Client Libraries Overview](references/sdk.md): SDK client
+    initialization, feature support matrix, and unexposed feature handling.
+
+### SDK Language-Specific Guides
+
+*   [C++ SDK Guide](references/sdk_cpp.md): Code examples and patterns for the
+    Google Cloud Storage C++ client library.
+*   [Go SDK Guide](references/sdk_go.md): Code examples and patterns for the
+    Cloud Storage Go client library.
+*   [Java SDK Guide](references/sdk_java.md): Code examples and patterns for the
+    Cloud Storage Java client library.
+*   [Python SDK Guide](references/sdk_python.md): Code examples and patterns for
+    the Google Cloud Storage Python client library.
