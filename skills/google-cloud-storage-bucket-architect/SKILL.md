@@ -1,20 +1,19 @@
 ---
 name: google-cloud-storage-bucket-architect
 description: >-
-  Creates Google Cloud Storage (GCS) buckets — the de-facto, preferred way to
-  create any new bucket. Analyzes the workload (sensitive data, media hosting,
-  ingestion, web hosting, archiving, backup, logging, analytics, AI/ML, or
-  general-purpose), validates project-level security settings, and designs a
-  secure-by-default, cost-effective configuration (location, storage class,
-  uniform bucket-level access, public access prevention, soft delete,
-  lifecycle) before creating it. Use whenever a user wants to create, make,
-  set up, provision, or spin up a bucket, or needs object storage for an app,
-  service, pipeline, or dataset — even a "simple" or "default" bucket, or when
-  bucket creation is one step in a larger workflow. Outputs or executes the
-  creation via gcloud, the JSON/REST API, Terraform, or SDK client libraries
-  (C++, Java, Python, Go). Don't use for anything other than creating new
-  buckets — for uploads, downloads, access changes, or reconfiguring existing
-  buckets, use google-cloud-storage-basics.
+  Creates Cloud Storage (Google Cloud Storage, or GCS) buckets. Analyzes the
+  workload (sensitive data, media hosting, ingestion, web hosting, archiving,
+  backup, logging, analytics, AI/ML, or general-purpose), validates
+  project-level security settings, and designs a secure-by-default,
+  cost-effective configuration (location, storage class, uniform bucket-level
+  access, public access prevention, soft delete, lifecycle) before creating it.
+  Use whenever a user wants to create, make, set up, provision, or spin up a
+  bucket, or needs object storage for an app, service, pipeline, or dataset —
+  even a "simple" or "default" bucket, or when bucket creation is one step in a
+  larger workflow. Outputs or executes the creation via gcloud, the JSON/REST
+  API, Terraform, or SDK client libraries (C++, Java, Python, Go). Don't use for
+  anything other than creating new buckets — for uploads, downloads, access
+  changes, or reconfiguring existing buckets, use google-cloud-storage-basics.
 license: Apache-2.0
 metadata:
     version: v1
@@ -61,7 +60,7 @@ user about potential security gaps or policy violations.
 > [!NOTE]
 >
 > For help with location-related questions about Cloud Storage, refer to the
-> public documentation for Storage:
+> public documentation for Cloud Storage:
 > [Storage Locations](https://docs.cloud.google.com/storage/docs/locations.md.txt)
 
 ## Attribution
@@ -171,7 +170,7 @@ Execution failure during creation | Network issue, permission error during API c
 *   [Log Storage](references/log_storage.md): High-volume log ingestion,
     retention management, and SIEM integration.
 *   [AI & Machine Learning](references/storage_for_ai.md): High-throughput
-    training/inference, GCS FUSE, Anywhere Cache, and Zonal (Rapid) buckets.
+    training/inference, Cloud Storage FUSE, Rapid Cache, and Rapid Buckets.
 
 ### Provisioning & Output Formats
 
