@@ -103,7 +103,7 @@ Storage features and details their recommendation status.
 :                : Transfer       : Recommended  : cross-bucket replication to a  :                                                                                                    :
 :                : Service        :              : secondary DR region to         :                                                                                                    :
 :                : (STS)**        :              : simplify disaster recovery.    :                                                                                                    :
-| **Monitoring** | **Cloud        | Highly       | Enable Cloud Logging for       | [Cloud Logging](https://cloud.google.com/storage/docs/logging)                                     |
+| **Monitoring** | **Cloud        | Highly       | Enable Cloud Logging for       | [Cloud Audit Logging](https://docs.cloud.google.com/storage/docs/audit-logging.md.txt)             |
 :                : Logging**      : Recommended  : troubleshooting network        :                                                                                                    :
 :                :                :              : timeouts or throughput         :                                                                                                    :
 :                :                :              : bottlenecks during massive     :                                                                                                    :
