@@ -138,9 +138,6 @@ When invoked, the agent **MUST follow this exact sequence**:
 
 ## Error Handling
 
-| Problem           | Cause                     | Fix                          |
-| ----------------- | ------------------------- | ---------------------------- |
-| Execution failure | Network issue, permission | Report the error details to  |
-: during creation   : error during API call     : the user and suggest manual  :
-:                   :                           : execution with the generated :
-:                   :                           : command/snippet.             :
+Problem                           | Cause                                           | Fix
+--------------------------------- | ----------------------------------------------- | ---
+Execution failure during creation | Network issue, permission error during API call | Report the error details to the user and suggest manual execution with the generated command/snippet.

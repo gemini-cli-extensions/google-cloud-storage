@@ -39,87 +39,16 @@ monitoring, logging, and storage intelligence tools like Cloud Monitoring and
 Storage Insights) from the selected reference file in your draft plan, even if
 the user did not explicitly request them.
 
-| Use Case     | Reference File                       | Description    | Example       |
-:              :                                      :                : Prompts /     :
-:              :                                      :                : Keywords      :
-| :----------- | :----------------------------------- | :------------- | :------------ |
-| **Sensitive  | `references/sensitive_data.md`       | Heavily        | "medical      |
-: Data &       :                                      : regulated data : records",     :
-: Compliance** :                                      : (PII, HIPAA,   : "PII", "SSN", :
-:              :                                      : financial)     : "credit       :
-:              :                                      : requiring      : card", "user  :
-:              :                                      : strict         : account       :
-:              :                                      : exfiltration   : data",        :
-:              :                                      : prevention and : "compliance   :
-:              :                                      : access         : audit"        :
-:              :                                      : controls.      :               :
-| **Media      | `references/media_hosting.md`        | Storage for    | "host         |
-: Hosting &    :                                      : images,        : videos",      :
-: CDN**        :                                      : videos, or     : "streaming    :
-:              :                                      : audio assets   : assets", "CDN :
-:              :                                      : acting as the  : origin",      :
-:              :                                      : origin for a   : "serve static :
-:              :                                      : CDN (e.g.,     : images        :
-:              :                                      : Cloud CDN).    : globally"     :
-| **Direct UGC | `references/ugc_ingestion.md`        | Allowing       | "upload files |
-: Ingestion**  :                                      : client         : directly from :
-:              :                                      : apps/browsers  : mobile app",  :
-:              :                                      : to upload      : "signed URLs  :
-:              :                                      : files directly : for user      :
-:              :                                      : to Cloud       : uploads",     :
-:              :                                      : Storage (often : "direct image :
-:              :                                      : via signed     : ingestion"    :
-:              :                                      : URLs) without  :               :
-:              :                                      : hitting app    :               :
-:              :                                      : servers.       :               :
-| **Static     | `references/static_website.md`       | Hosting static | "host static  |
-: Website      :                                      : HTML/CSS/JS    : website",     :
-: Hosting**    :                                      : files with     : "deploy       :
-:              :                                      : custom domain  : single page   :
-:              :                                      : mapping,       : app",         :
-:              :                                      : accessible     : "landing page :
-:              :                                      : publicly.      : on Cloud      :
-:              :                                      :                : Storage",     :
-:              :                                      :                : "custom       :
-:              :                                      :                : domain        :
-:              :                                      :                : index.html"   :
-| **Long-Term  | `references/archiving_compliance.md` | Retention of   | "7 year       |
-: Archive &    :                                      : data for legal : retention",   :
-: Compliance** :                                      : or regulatory  : "SEC 17a-4    :
-:              :                                      : requirements   : compliance",  :
-:              :                                      : (7-10+ years)  : "WORM         :
-:              :                                      : using Object   : storage",     :
-:              :                                      : Retention      : "archive old  :
-:              :                                      : (WORM) and     : tax           :
-:              :                                      : Autoclass.     : documents"    :
-| **Backup &   | `references/backup_dr.md`            | Highly durable | "database     |
-: Disaster     :                                      : storage for    : backups",     :
-: Recovery**   :                                      : backups,       : "ransomware   :
-:              :                                      : database       : protection",  :
-:              :                                      : dumps, and VM  : "disaster     :
-:              :                                      : snapshots with : recovery      :
-:              :                                      : protection     : replication", :
-:              :                                      : against        : "immutable    :
-:              :                                      : ransomware.    : backup"       :
-| **Log        | `references/log_storage.md`          | High-volume,   | "VPC flow     |
-: Storage**    :                                      : cost-effective : logs", "store :
-:              :                                      : storage for    : app logs",    :
-:              :                                      : application    : "audit trail  :
-:              :                                      : logs, network  : dumps", "SIEM :
-:              :                                      : logs, or audit : ingestion     :
-:              :                                      : logs to be     : storage"      :
-:              :                                      : parsed by      :               :
-:              :                                      : SIEM.          :               :
-| **AI &       | `references/storage_for_ai.md`       | Storage for    | "training     |
-: Machine      :                                      : training       : dataset       :
-: Learning**   :                                      : datasets,      : storage",     :
-:              :                                      : model          : "model        :
-:              :                                      : checkpoints,   : checkpoints", :
-:              :                                      : or inference   : "Vertex AI    :
-:              :                                      : assets,        : storage",     :
-:              :                                      : optimized for  : "mount Cloud  :
-:              :                                      : high           : Storage FUSE" :
-:              :                                      : throughput.    :               :
+Use Case                           | Reference File                       | Description                                                                                                                  | Example Prompts / Keywords
+:--------------------------------- | :----------------------------------- | :--------------------------------------------------------------------------------------------------------------------------- | :-------------------------
+**Sensitive Data & Compliance**    | `references/sensitive_data.md`       | Heavily regulated data (PII, HIPAA, financial) requiring strict exfiltration prevention and access controls.                 | "medical records", "PII", "SSN", "credit card", "user account data", "compliance audit"
+**Media Hosting & CDN**            | `references/media_hosting.md`        | Storage for images, videos, or audio assets acting as the origin for a CDN (e.g., Cloud CDN).                                | "host videos", "streaming assets", "CDN origin", "serve static images globally"
+**Direct UGC Ingestion**           | `references/ugc_ingestion.md`        | Allowing client apps/browsers to upload files directly to Cloud Storage (often via signed URLs) without hitting app servers. | "upload files directly from mobile app", "signed URLs for user uploads", "direct image ingestion"
+**Static Website Hosting**         | `references/static_website.md`       | Hosting static HTML/CSS/JS files with custom domain mapping, accessible publicly.                                            | "host static website", "deploy single page app", "landing page on Cloud Storage", "custom domain index.html"
+**Long-Term Archive & Compliance** | `references/archiving_compliance.md` | Retention of data for legal or regulatory requirements (7-10+ years) using Object Retention (WORM) and Autoclass.            | "7 year retention", "SEC 17a-4 compliance", "WORM storage", "archive old tax documents"
+**Backup & Disaster Recovery**     | `references/backup_dr.md`            | Highly durable storage for backups, database dumps, and VM snapshots with protection against ransomware.                     | "database backups", "ransomware protection", "disaster recovery replication", "immutable backup"
+**Log Storage**                    | `references/log_storage.md`          | High-volume, cost-effective storage for application logs, network logs, or audit logs to be parsed by SIEM.                  | "VPC flow logs", "store app logs", "audit trail dumps", "SIEM ingestion storage"
+**AI & Machine Learning**          | `references/storage_for_ai.md`       | Storage for training datasets, model checkpoints, or inference assets, optimized for high throughput.                        | "training dataset storage", "model checkpoints", "Vertex AI storage", "mount Cloud Storage FUSE"
 
 If the user's workload does not clearly fit any of the above, default to a
 generic secure configuration and ask the user for clarification.

@@ -80,30 +80,12 @@ present a summary to the user using the following status indicators:
 
 ### Status Mapping Table
 
-| Check      | Target / Constraint                       | Secure    | Status:  | Status:  | Status: ⚠️ (Undetermined)      |
-:            :                                           : Condition : ✅        : ❌        :                                :
-| :--------- | :---------------------------------------- | :-------- | :------: | :------: | :----------------------------- |
-| **TLS      | `constraints/gcp.restrictTLSVersion`      | Policy is | Enforced | Not      | Requires                       |
-: 1.2**      :                                           : enforced  :          : Enforced : `orgpolicy.policy.get`         :
-:            :                                           : and       :          : /        :                                :
-:            :                                           : denies    :          : Allowed  :                                :
-:            :                                           : TLS       :          :          :                                :
-:            :                                           : versions  :          :          :                                :
-:            :                                           : < 1.2     :          :          :                                :
-| **HTTPS    | `constraints/storage.secureHttpTransport` | Policy is | Enforced | Not      | Requires                       |
-: Only**     :                                           : enforced  :          : Enforced : `orgpolicy.policy.get`         :
-| **Restrict | `constraints/storage.restrictAuthTypes`   | Policy is | Enforced | Not      | Requires                       |
-: HMAC**     :                                           : enforced  :          : Enforced : `orgpolicy.policy.get`         :
-:            :                                           : and       :          :          :                                :
-:            :                                           : restricts :          :          :                                :
-:            :                                           : HMAC keys :          :          :                                :
-| **Project  | Liens                                     | At least  | Lien     | No Liens | Requires                       |
-: Liens**    :                                           : one       : exists   :          : `resourcemanager.projects.get` :
-:            :                                           : active    :          :          :                                :
-:            :                                           : lien      :          :          :                                :
-:            :                                           : exists on :          :          :                                :
-:            :                                           : the       :          :          :                                :
-:            :                                           : project   :          :          :                                :
+Check             | Target / Constraint                       | Secure Condition                                 | Status: ✅   | Status: ❌              | Status: ⚠️ (Undetermined)
+:---------------- | :---------------------------------------- | :----------------------------------------------- | :---------: | :--------------------: | :------------------------
+**TLS 1.2**       | `constraints/gcp.restrictTLSVersion`      | Policy is enforced and denies TLS versions < 1.2 | Enforced    | Not Enforced / Allowed | Requires `orgpolicy.policy.get`
+**HTTPS Only**    | `constraints/storage.secureHttpTransport` | Policy is enforced                               | Enforced    | Not Enforced           | Requires `orgpolicy.policy.get`
+**Restrict HMAC** | `constraints/storage.restrictAuthTypes`   | Policy is enforced and restricts HMAC keys       | Enforced    | Not Enforced           | Requires `orgpolicy.policy.get`
+**Project Liens** | Liens                                     | At least one active lien exists on the project   | Lien exists | No Liens               | Requires `resourcemanager.projects.get`
 
 ### Example Output Presentation
 
