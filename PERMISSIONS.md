@@ -1,9 +1,10 @@
 # GCS Plugin Permissions Guide
 
 This guide documents the Google Cloud IAM permissions used by the skills in this
-plugin. All skill access is **read-only**: the skills never mutate your
-resources. More skills (and their permission requirements) will be added here
-over time.
+plugin. The scripts bundled with the skills are **read-only**: they never mutate
+your resources. A skill may still propose a change, such as creating a bucket
+with gcloud or Terraform, which runs only once you approve it. More skills (and
+their permission requirements) will be added here over time.
 
 > [!IMPORTANT]
 > The plugin's [Cloud Storage MCP server](./README.md#cloud-storage-mcp-server)

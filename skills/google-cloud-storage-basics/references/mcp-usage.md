@@ -139,9 +139,9 @@ MCP Toolbox is Google's open-source MCP server (formerly Gen AI Toolbox for
 Databases). It ships a prebuilt `cloud-storage` tool source that exposes the
 full set of bucket and object operations.
 
-1.  **Download the binary.** The Toolbox ships as a standalone binary (or
-    container image) — it is not published as an npm or pip package, so never
-    configure it via `npx` or `pip`. Replace `VERSION` with the
+1.  **Download the binary.** The Toolbox also ships as a standalone binary (or
+    container image), which avoids the Node dependency of the `npx` command this
+    plugin uses. Replace `VERSION` with the
     [latest release](https://github.com/googleapis/mcp-toolbox/releases) and
     pick your OS/architecture path:
 

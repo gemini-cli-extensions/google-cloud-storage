@@ -126,8 +126,9 @@ How you supply it depends on the harness:
 
 *   **Gemini CLI**: prompted on install. View or update later with
     `gemini extensions config google-cloud-storage` (restart the CLI to apply).
-*   **Claude Code**: pass `--config CLOUD_STORAGE_PROJECT=<project-id>` on
-    install, or run `/plugin` inside Claude Code.
+*   **Claude Code**: pass `--config cloud_storage_project=<project-id>` on
+    install, or run `/plugin` inside Claude Code. The key is the lowercased
+    setting name, as declared in the plugin's `userConfig`.
 *   **Codex** and **Antigravity**: export it before starting your agent:
 
 ```bash
