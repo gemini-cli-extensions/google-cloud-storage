@@ -176,8 +176,8 @@ Ensure you have the following:
     gcloud CLI and ensure
     [Application Default Credentials (ADC)](https://cloud.google.com/docs/authentication/provide-credentials-adc)
     are configured.
-*   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
-    Antigravity CLI.
+*   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex
+    (v0.150.0+), or Antigravity CLI.
 *   **[Node.js](https://nodejs.org/)**: the
     [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`.
 
