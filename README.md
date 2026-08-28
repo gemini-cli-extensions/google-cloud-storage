@@ -183,9 +183,10 @@ Ensure you have the following:
 
 ## Authentication
 
-Before using the skills, authenticate with Google Cloud so your agent can read
-your storage resources and run any changes you approve. It is recommended to run
-**both** of the following commands:
+Before using the plugin, authenticate with Google Cloud so your agent can read
+your storage resources and run any changes you approve. Both the skills and the
+[MCP server](#cloud-storage-mcp-server) use these credentials. It is recommended
+to run **both** of the following commands:
 
 ```bash
 gcloud auth login
