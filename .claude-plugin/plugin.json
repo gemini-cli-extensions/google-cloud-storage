@@ -1,14 +1,36 @@
 {
   "name": "google-cloud-storage",
-  "version": "1.0.0",
-  "description": "Official Google Cloud Storage (GCS) plugin. Manage buckets and objects, transfer data, and configure MCP, FUSE, IAM, security, lifecycle rules, signed URLs, Terraform, and the CLI.",
+  "version": "1.1.0",
+  "description": "Official Google Cloud Storage (GCS) plugin. Storage tools plus vetted skills to manage buckets and objects, transfer data, and configure MCP, FUSE, IAM, security, lifecycle rules, signed URLs, Terraform, and the CLI.",
   "author": {
     "name": "Google LLC",
     "email": "gcs-agentic-ai-customer-support@google.com"
   },
   "homepage": "https://cloud.google.com/storage",
-  "license": "Apache-2.0",
   "repository": "https://github.com/gemini-cli-extensions/google-cloud-storage",
+  "license": "Apache-2.0",
   "skills": "./skills/",
-  "userConfig": {}
+  "userConfig": {
+    "cloud_storage_project": {
+      "title": "Project ID",
+      "description": "ID of the Google Cloud project",
+      "type": "string",
+      "sensitive": false
+    }
+  },
+  "mcpServers": {
+    "cloud-storage": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "cloud-storage",
+        "--stdio"
+      ],
+      "env": {
+        "CLOUD_STORAGE_PROJECT": "${user_config.cloud_storage_project}"
+      }
+    }
+  }
 }

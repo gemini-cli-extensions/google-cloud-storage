@@ -1,6 +1,6 @@
-# Contributing to Google Cloud Storage Skills
+# Contributing to the Google Cloud Storage Plugin
 
-Thank you for your interest in the Google Cloud Storage Skills repository!
+Thank you for your interest in the Google Cloud Storage plugin!
 
 ## Our Contribution Policy
 
