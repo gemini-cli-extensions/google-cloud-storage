@@ -25,8 +25,8 @@ Draft Plan Field / Setting         | REST API Resource Field / Path             
 :--------------------------------- | :-------------------------------------------------- | :-------------
 **Bucket Name**                    | `name`                                              | String in request body. Must be globally unique.
 **Project**                        | Query Parameter: `?project=[project-id]`            | Passed in the query string of the request URL.
-**Location**                       | `location`                                          | String. E.g., `us-central1`, `US`. For zonal (Rapid) buckets, use the region (e.g., `us-east1`) if the plan specifies a zone.
-**Placement**                      | `customPlacementConfig.dataLocations`               | Array of strings. E.g., `["us-east1", "us-west1"]` (for custom dual-regions), or `["us-east1-a"]` (for zonal/Rapid buckets).
+**Location**                       | `location`                                          | String. E.g., `us-central1`, `US`. For zonal buckets (using Rapid storage), use the region (e.g., `us-east1`) if the plan specifies a zone.
+**Placement**                      | `customPlacementConfig.dataLocations`               | Array of strings. E.g., `["us-east1", "us-west1"]` (for custom dual-regions), or `["us-east1-a"]` (for zonal buckets).
 **Replication Speed (RPO)**        | `rpo`                                               | String. E.g., `"ASYNC_TURBO"` (for dual-region buckets).
 **Storage Class**                  | `storageClass`                                      | String. E.g., `"STANDARD"`, `"NEARLINE"`, `"COLDLINE"`, `"ARCHIVE"`.
 **UBLA**                           | `iamConfiguration.uniformBucketLevelAccess.enabled` | Boolean. Always set to `true`.
@@ -472,7 +472,7 @@ https://storage.googleapis.com/storage/v1/b/www.my-company-site.com/iam`
 
 --------------------------------------------------------------------------------
 
-### Example 4: AI/ML Checkpointing (Zonal / Rapid Bucket)
+### Example 4: AI/ML Checkpointing (Zonal Bucket / Rapid Storage)
 
 #### Input Draft Plan
 
@@ -485,7 +485,7 @@ https://storage.googleapis.com/storage/v1/b/www.my-company-site.com/iam`
 *   **UBLA**: Enabled (Required for HNS)
 *   **Public Access Prevention (PAP)**: Enforced
 *   **Encryption**: Google-managed key
-*   **Soft Delete**: Disabled (Not supported for Zonal/Rapid buckets)
+*   **Soft Delete**: Disabled (Not supported for zonal buckets)
 *   **Use-case specific settings**:
     *   Hierarchical Namespace (HNS): Enabled (Required for Zonal buckets)
     *   Lifecycle: Delete checkpoint files older than 14 days

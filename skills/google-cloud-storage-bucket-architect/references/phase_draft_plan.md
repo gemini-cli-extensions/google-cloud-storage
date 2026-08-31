@@ -92,10 +92,10 @@ If the user specifies a location for the bucket:
 
 --------------------------------------------------------------------------------
 
-## Zonal (Rapid) Buckets Constraints
+## Zonal Buckets (Rapid Storage) Constraints
 
-If the user requires a Zonal bucket (also known as a Rapid bucket, typically
-used for AI/ML co-location):
+If the user requires a zonal bucket (enabled via the Rapid Bucket product for
+AI/ML co-location):
 
 *   **Storage Class**: You MUST explicitly set the storage class to `RAPID`. Do
     not default to `STANDARD`.

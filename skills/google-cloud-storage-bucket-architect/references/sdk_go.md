@@ -232,7 +232,7 @@ func CreateStaticWebsiteBucket(ctx context.Context, client *storage.Client, proj
 
 --------------------------------------------------------------------------------
 
-### Example 4: AI/ML Checkpointing (Zonal / Rapid Bucket)
+### Example 4: AI/ML Checkpointing (Zonal Bucket / Rapid Storage)
 
 #### Input Draft Plan
 
@@ -244,7 +244,7 @@ func CreateStaticWebsiteBucket(ctx context.Context, client *storage.Client, proj
 *   **UBLA**: Enabled (Required for HNS)
 *   **Public Access Prevention (PAP)**: Enforced
 *   **Encryption**: Google-managed key
-*   **Soft Delete**: Disabled (Not supported for Zonal/Rapid buckets)
+*   **Soft Delete**: Disabled (Not supported for zonal buckets)
 *   **Use-case specific settings**:
     *   Hierarchical Namespace (HNS): Enabled (Required for Zonal buckets)
     *   Lifecycle: Delete checkpoint files older than 14 days

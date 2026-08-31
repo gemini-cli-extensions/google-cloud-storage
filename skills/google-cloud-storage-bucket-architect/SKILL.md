@@ -170,7 +170,8 @@ Execution failure during creation | Network issue, permission error during API c
 *   [Log Storage](references/log_storage.md): High-volume log ingestion,
     retention management, and SIEM integration.
 *   [AI & Machine Learning](references/storage_for_ai.md): High-throughput
-    training/inference, Cloud Storage FUSE, Rapid Cache, and Rapid Buckets.
+    training/inference, Cloud Storage FUSE, Rapid Cache, and zonal buckets
+    (Rapid storage).
 
 ### Provisioning & Output Formats
 

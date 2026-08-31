@@ -228,7 +228,7 @@ StatusOr<gcs::BucketMetadata> CreateStaticWebsiteBucket(gcs::Client client,
 
 --------------------------------------------------------------------------------
 
-### Example 4: AI/ML Checkpointing (Zonal / Rapid Bucket)
+### Example 4: AI/ML Checkpointing (Zonal Bucket / Rapid Storage)
 
 #### Input Draft Plan
 

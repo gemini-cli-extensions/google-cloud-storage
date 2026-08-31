@@ -25,17 +25,17 @@ Draft Plan Field / Setting         | Terraform Resource & Attribute             
 :--------------------------------- | :-------------------------------------------------------------------- | :-------------
 **Bucket Name**                    | `google_storage_bucket.name`                                          | Required string. Must be globally unique.
 **Project**                        | `google_storage_bucket.project`                                       | Optional. Defaults to provider project.
-**Location**                       | `google_storage_bucket.location`                                      | Required. E.g., `"us-central1"`, `"us"`. Zonal (Rapid) buckets require setting this to the region (e.g., `"us-east1"`).
-**Placement**                      | `google_storage_bucket.custom_placement_config.data_locations`        | List of strings. E.g., `["us-east1", "us-west1"]` (for custom dual-regions), or `["us-east1-b"]` (for zonal/Rapid buckets).
+**Location**                       | `google_storage_bucket.location`                                      | Required. E.g., `"us-central1"`, `"us"`. Zonal buckets (using Rapid storage) require setting this to the region (e.g., `"us-east1"`).
+**Placement**                      | `google_storage_bucket.custom_placement_config.data_locations`        | List of strings. E.g., `["us-east1", "us-west1"]` (for custom dual-regions), or `["us-east1-b"]` (for zonal buckets).
 **Replication Speed (RPO)**        | `google_storage_bucket.rpo`                                           | String. E.g., `"ASYNC_TURBO"` (for dual-region buckets).
 **Storage Class**                  | `google_storage_bucket.storage_class`                                 | String. E.g., `"STANDARD"`, `"NEARLINE"`, `"COLDLINE"`, `"ARCHIVE"`, `"RAPID"`. Zonal locations require `"RAPID"`. Note: If Autoclass is enabled, do not set storage_class to anything other than `"STANDARD"`.
 **UBLA**                           | `google_storage_bucket.uniform_bucket_level_access`                   | Boolean. Always set to `true`.
 **Public Access Prevention**       | `google_storage_bucket.public_access_prevention`                      | String. `"enforced"` or `"inherited"`.
-**Soft Delete**                    | `google_storage_bucket.soft_delete_policy.retention_duration_seconds` | Number (seconds). E.g. `604800` (7 days). Set to `0` to disable. Rapid/Zonal Buckets do not support Soft Delete (the field can be left unset or explicitly set to 0). Note: Omitting this block leaves it enabled at Cloud Storage default (7 days). Min: `604800` (7 days), Max: `7776000` (90 days).
+**Soft Delete**                    | `google_storage_bucket.soft_delete_policy.retention_duration_seconds` | Number (seconds). E.g. `604800` (7 days). Set to `0` to disable. Zonal buckets do not support Soft Delete (the field can be left unset or explicitly set to 0). Note: Omitting this block leaves it enabled at Cloud Storage default (7 days). Min: `604800` (7 days), Max: `7776000` (90 days).
 **Object Versioning**              | `google_storage_bucket.versioning.enabled`                            | Boolean. Enables/disables versioning.
 **Encryption (CMEK)**              | `google_storage_bucket.encryption.default_kms_key_name`               | String. Full key ID: `projects/.../cryptoKeys/...` Note: Requires Cloud Storage Service Agent (`service-PROJECT_NUM@gs-project-accounts.iam.gserviceaccount.com`) to have `roles/cloudkms.cryptoKeyEncrypterDecrypter` role on the key.
 **Restrict Encryption (CSEK)**     | `google_storage_bucket` encryption enforcement blocks                 | Configures encryption restrictions. See below.
-**Autoclass**                      | `google_storage_bucket.autoclass.enabled`                             | Boolean. Set to `true` to enable. Note: Incompatible with Rapid (Zonal) Buckets.
+**Autoclass**                      | `google_storage_bucket.autoclass.enabled`                             | Boolean. Set to `true` to enable. Note: Incompatible with zonal buckets.
 **Hierarchical Namespace**         | `google_storage_bucket.hierarchical_namespace.enabled`                | Boolean. Set to `true` to enable. Note: Incompatible with Bucket Lock (retention policy), object versioning, and object retention. Must be enabled at bucket creation (irreversible).
 **Labels**                         | `google_storage_bucket.labels`                                        | Map of strings.
 **IP Filtering**                   | `google_storage_bucket.ip_filter`                                     | Block. Defines IP restriction rules. See below.
@@ -337,7 +337,7 @@ resource "google_storage_bucket_iam_member" "public_viewer" {
 
 --------------------------------------------------------------------------------
 
-### Example 4: AI/ML Checkpointing (Zonal / Rapid Bucket)
+### Example 4: AI/ML Checkpointing (Zonal Bucket / Rapid Storage)
 
 #### Input Draft Plan
 
