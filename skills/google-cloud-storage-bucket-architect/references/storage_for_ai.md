@@ -22,16 +22,16 @@ solutions. Per the
 location and the **Rapid storage** class, while individual buckets are referred
 to as **zonal buckets**.
 
-Dimension                        | Rapid Cache                                                                             | Zonal Buckets (Rapid Storage)
-:------------------------------- | :-------------------------------------------------------------------------------------- | :----------------------------
-**Description**                  | Zonal read cache attached to an existing standard regional bucket.                      | Zonal bucket in the `RAPID` storage class (different namespace).
-**Primary Use Case**             | **Model Training & Inference** where datasets already exist in a Cloud Storage bucket.  | **Model Checkpointing** and high-QPS, write-heavy training tasks.
-**Read/Write**                   | **Read-Only**. Writes must be written to the underlying bucket.                         | **Read and Write**. Serves as a writable source of truth.
-**Namespace**                    | Same namespace as the underlying standard bucket.                                       | Independent namespace (must copy/upload data directly).
-**Performance**                  | High throughput, cold-start penalty on first reads. Same QPS as standard Cloud Storage. | Ultra-low latency, high throughput, and high QPS (no cold start).
-**Data Lifecycle**               | Default TTL is 24 hours. Cache automatically evicts stale data.                         | Permanent storage (data lives forever until deleted).
-**Appendability**                | No append support.                                                                      | **Supports Append (BiDi protocol)** to write streaming data up to 5TB.
-**Hierarchical Namespace (HNS)** | Optional.                                                                               | **Required** (Always enabled, not configurable).
+Dimension                        | Rapid Cache                                                                                                            | Zonal Buckets (Rapid Storage)
+:------------------------------- | :--------------------------------------------------------------------------------------------------------------------- | :----------------------------
+**Description**                  | SSD-backed zonal read cache attached to an existing Cloud Storage bucket (regional, dual-regional, or multi-regional). | Zonal bucket in the `RAPID` storage class.
+**Primary Use Case**             | **Model Training & Inference** where datasets already exist in a Cloud Storage bucket.                                 | **Model Checkpointing** and high-QPS, write-heavy training tasks.
+**Read/Write**                   | **Read-Only**. Writes must be written to the underlying bucket.                                                        | **Read and Write**. Serves as a writable source of truth.
+**Namespace**                    | Same namespace as the underlying Cloud Storage bucket.                                                                 | Independent namespace (must copy/upload data directly).
+**Performance**                  | High throughput, cold-start penalty on first reads. Same QPS as standard Cloud Storage.                                | Ultra-low latency, high throughput, and high QPS (no cold start).
+**Data Lifecycle**               | Default TTL is 24 hours. Cache automatically evicts stale data.                                                        | Permanent storage (data lives forever until deleted).
+**Appendability**                | No append support.                                                                                                     | **Supports Append (BiDi protocol)** to write streaming data up to 5TiB.
+**Hierarchical Namespace (HNS)** | Optional.                                                                                                              | **Required** (Always enabled, not configurable).
 
 --------------------------------------------------------------------------------
 
@@ -47,8 +47,6 @@ configure and recommend the following:
     prevent GPU/TPU starvation.
     *   **gcloud Command**: `gcloud storage cat gs://[bucket-name]/**
         --project=[project-id] > /dev/null`
-3.  **Cache Pinning**: Explain that cache ingestion can be paused to pin the
-    dataset after hydration (using `pause` and `resume` subcommands).
 
 --------------------------------------------------------------------------------
 
@@ -67,7 +65,7 @@ agent MUST explicitly configure and recommend the following:
 5.  **BiDi Protocol Recommendation**: For streaming, write-heavy, or logging
     workloads, explicitly recommend utilizing the **BiDi protocol**
     (Bidirectional Streaming) on the zonal bucket to enable low-latency,
-    high-QPS streaming append operations up to 5TB.
+    high-QPS streaming append operations up to 5TiB.
 
 --------------------------------------------------------------------------------
 
@@ -76,18 +74,18 @@ agent MUST explicitly configure and recommend the following:
 The following table maps Cloud Storage features to AI/ML workloads and details
 their recommendation status.
 
-Feature Group   | Cloud Storage Feature / Setting        | Status                     | Recommendations & Implementation Details                                                                                                                  | Documentation Link
-:-------------- | :------------------------------------- | :------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------
-**Core**        | **Storage Class**                      | Highly Recommended         | Use **STANDARD** for standard buckets, or **RAPID** storage class for zonal buckets.                                                                      | [Storage Classes](https://cloud.google.com/storage/docs/storage-classes)<br>[Rapid Bucket Terminology](https://cloud.google.com/storage/docs/rapid/rapid-bucket#terminology)
-                | **Bucket Type**                        | Highly Recommended         | **Zonal** (with Rapid storage) or **Regional** (for standard Cloud Storage/Rapid Cache origin) to co-locate storage and compute.                          | [Locations](https://cloud.google.com/storage/docs/locations)
-**Serving**     | **CORS & Signed URLs**                 | Optional / Not Recommended | Avoid exposing AI datasets directly to public users.                                                                                                      |
-**Security**    | **Uniform Bucket-Level Access (UBLA)** | **Required**               | **Must be enabled** for baseline access control security.                                                                                                 | [Uniform Bucket-Level Access](https://cloud.google.com/storage/docs/uniform-bucket-level-access)
-                | **Encryption (CMEK)**                  | Highly Recommended         | Configure CMEK. Use KMS Autokey for automation.                                                                                                           | [CMEK](https://cloud.google.com/storage/docs/encryption/customer-managed-keys)
-                | **Soft Delete**                        | Good to Have               | Optional. (Useful but not highly recommended due to potential storage cost overhead from massive AI dataset churn).                                       | [Soft Delete](https://cloud.google.com/storage/docs/soft-delete)
-**Cost**        | **Object Lifecycle Management (OLM)**  | Highly Recommended         | Define OLM rules to automatically delete stale checkpoints (e.g. keep only the last 3 days of checkpoints) to avoid massive storage bills on zonal disks. | [Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle)
-**Management**  | **Labels & Tagging**                   | Highly Recommended         | Apply billing and ownership labels (e.g. `{"workload": "ai-training"}`) to accurately trace expensive high-performance storage spend.                     | [Bucket Labels](https://cloud.google.com/storage/docs/using-bucket-labels)
-**Specialized** | **BiDi (Bidirectional Streaming)**     | Highly Recommended         | Utilize the BiDi protocol on zonal buckets to enable low-latency, high-QPS streaming and append operations.                                               | [Hierarchical Namespace](https://cloud.google.com/storage/docs/hns-overview)
-**Monitoring**  | **Cloud Monitoring**                   | Highly Recommended         | Monitor caching metrics, hit rates, and ingress/egress bandwidth to ensure TPUs/GPUs are not bottlenecked by storage.                                     | [Cloud Monitoring](https://cloud.google.com/storage/docs/monitoring)
+Feature Group   | Cloud Storage Feature / Setting        | Status                     | Recommendations & Implementation Details                                                                                                                                | Documentation Link
+:-------------- | :------------------------------------- | :------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-----------------
+**Core**        | **Storage Class**                      | Highly Recommended         | Use **STANDARD** for standard buckets, or **RAPID** storage class for zonal buckets.                                                                                    | [Storage Classes](https://cloud.google.com/storage/docs/storage-classes)<br>[Rapid Bucket Terminology](https://cloud.google.com/storage/docs/rapid/rapid-bucket#terminology)
+                | **Bucket Type**                        | Highly Recommended         | **Zonal** (with Rapid storage) or **Regional / Dual-region / Multi-region** (for Cloud Storage bucket with Rapid Cache) to co-locate storage and compute.               | [Locations](https://cloud.google.com/storage/docs/locations)
+**Serving**     | **CORS & Signed URLs**                 | Optional / Not Recommended | Avoid exposing AI datasets directly to public users.                                                                                                                    |
+**Security**    | **Uniform Bucket-Level Access (UBLA)** | **Required**               | **Must be enabled** for baseline access control security.                                                                                                               | [Uniform Bucket-Level Access](https://cloud.google.com/storage/docs/uniform-bucket-level-access)
+                | **Encryption (CMEK)**                  | Highly Recommended         | Configure CMEK. Use KMS Autokey for automation.                                                                                                                         | [CMEK](https://cloud.google.com/storage/docs/encryption/customer-managed-keys)
+                | **Soft Delete**                        | Good to Have               | Optional for non-zonal buckets (useful but not highly recommended due to potential storage cost overhead from massive AI dataset churn). Unsupported for zonal buckets. | [Soft Delete](https://cloud.google.com/storage/docs/soft-delete)
+**Cost**        | **Object Lifecycle Management (OLM)**  | Highly Recommended         | Define OLM rules to automatically delete stale checkpoints (e.g. keep only the last 3 days of checkpoints) to avoid massive storage bills on zonal disks.               | [Lifecycle Management](https://cloud.google.com/storage/docs/lifecycle)
+**Management**  | **Labels & Tagging**                   | Highly Recommended         | Apply billing and ownership labels (e.g. `{"workload": "ai-training"}`) to accurately trace expensive high-performance storage spend.                                   | [Bucket Labels](https://cloud.google.com/storage/docs/using-bucket-labels)
+**Specialized** | **BiDi (Bidirectional Streaming)**     | Highly Recommended         | Utilize the BiDi protocol on zonal buckets to enable low-latency, high-QPS streaming and append operations.                                                             | [Hierarchical Namespace](https://cloud.google.com/storage/docs/hns-overview)
+**Monitoring**  | **Cloud Monitoring**                   | Highly Recommended         | Monitor caching metrics, hit rates, and ingress/egress bandwidth to ensure TPUs/GPUs are not bottlenecked by storage.                                                   | [Cloud Monitoring](https://cloud.google.com/storage/docs/monitoring)
 
 ## Key Pre-Deployment Questions to Ask:
 
