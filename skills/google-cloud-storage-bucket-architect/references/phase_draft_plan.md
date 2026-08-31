@@ -85,7 +85,7 @@ If the user specifies a location for the bucket:
     1.  Explicitly state that the requested location is not a valid Google Cloud
         Storage location.
     2.  Provide the link to the official Cloud Storage Locations documentation:
-        https://docs.cloud.google.com/storage/docs/locations.md.txt.
+        https://cloud.google.com/storage/docs/locations.
     3.  Suggest alternative valid locations (e.g., the nearest region) and ask
         the user to select a valid location.
     4.  Do NOT generate creation commands for the invalid location.
@@ -214,4 +214,4 @@ Does this draft plan look correct? Please confirm if you'd like to proceed or if
 
 ## Documentation
 
--   [Enforce Bucket Encryption Types](https://docs.cloud.google.com/storage/docs/encryption/enforce-encryption-types.md.txt)
+-   [Enforce Bucket Encryption Types](https://cloud.google.com/storage/docs/encryption/enforce-encryption-types)

@@ -61,7 +61,7 @@ user about potential security gaps or policy violations.
 >
 > For help with location-related questions about Cloud Storage, refer to the
 > public documentation for Cloud Storage:
-> [Storage Locations](https://docs.cloud.google.com/storage/docs/locations.md.txt)
+> [Storage Locations](https://cloud.google.com/storage/docs/locations)
 
 ## Attribution
 

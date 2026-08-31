@@ -14,17 +14,17 @@ Phase 2) into the corresponding SDK configuration in C++, Java, Python, and Go.
 
 ### Cloud Storage (Data Plane)
 
-*   [Google Cloud Storage C++ Client Library](https://docs.cloud.google.com/cpp/docs/reference/storage/latest.md.txt)
+*   [Google Cloud Storage C++ Client Library](https://cloud.google.com/cpp/docs/reference/storage/latest)
 *   [Google Cloud Storage Go Package Reference](https://pkg.go.dev/cloud.google.com/go/storage)
-*   [Google Cloud Storage Java Client Library](https://docs.cloud.google.com/java/docs/reference/google-cloud-storage/latest/overview.md.txt)
-*   [Google Cloud Storage Python Client Library](https://docs.cloud.google.com/python/docs/reference/storage/latest.md.txt)
+*   [Google Cloud Storage Java Client Library](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/overview)
+*   [Google Cloud Storage Python Client Library](https://cloud.google.com/python/docs/reference/storage/latest)
 
 ### Cloud Storage Control (Control Plane - HNS, Folders, Anywhere Cache)
 
-*   [Google Cloud Storage Control C++ Client Library](https://docs.cloud.google.com/cpp/docs/reference/storagecontrol/latest.md.txt)
+*   [Google Cloud Storage Control C++ Client Library](https://cloud.google.com/cpp/docs/reference/storagecontrol/latest)
 *   [Google Cloud Storage Control Go Package Reference](https://pkg.go.dev/cloud.google.com/go/storage/control/apiv2)
-*   [Google Cloud Storage Control Java Client Library](https://docs.cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.storage.control.v2.StorageControlClient.md.txt)
-*   [Google Cloud Storage Control Python Client Library](https://docs.cloud.google.com/python/docs/reference/google-cloud-storage-control/latest/google.cloud.storage_control_v2.services.storage_control.StorageControlClient.md.txt)
+*   [Google Cloud Storage Control Java Client Library](https://cloud.google.com/java/docs/reference/google-cloud-storage/latest/com.google.storage.control.v2.StorageControlClient)
+*   [Google Cloud Storage Control Python Client Library](https://cloud.google.com/python/docs/reference/google-cloud-storage-control/latest/google.cloud.storage_control_v2.services.storage_control.StorageControlClient)
 
 --------------------------------------------------------------------------------
 
