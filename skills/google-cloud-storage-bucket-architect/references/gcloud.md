@@ -72,7 +72,7 @@ Draft Plan Field / Setting                | gcloud CLI Element / Flag           
 **Lock Bucket Retention Policy**          | `gcloud storage buckets update gs://[bucket-name] --lock-retention-period`                                                                                              | Locks the retention policy. **Irreversible.**
 **Object Retention (Object Lock)**        | `--enable-per-object-retention`                                                                                                                                         | Enables per-object retention. **Can only be set during bucket creation via gcloud.**
 **Set Object Retention**                  | `gcloud storage objects update gs://[bucket]/[object] --retain-until=[timestamp] --retention-mode=[Locked/Unlocked]`                                                    | Sets retention on a specific object. Can also be set during upload.
-**Anywhere Cache (Rapid Cache)**          | `gcloud storage buckets anywhere-caches create gs://[bucket-name] [zone] --ttl=[duration]`                                                                              | **Cannot be set during creation.** Creates Anywhere Cache instance for the bucket in the specified zone.
+**Rapid Cache**                           | `gcloud storage buckets anywhere-caches create gs://[bucket-name] [zone] --ttl=[duration]`                                                                              | **Cannot be set during creation.** Creates Rapid Cache instance for the bucket in the specified zone.
 
 --------------------------------------------------------------------------------
 

@@ -48,7 +48,7 @@ Draft Plan Field / Setting         | REST API Resource Field / Path             
 **Lock Bucket Retention Policy**   | `storage.buckets.lockRetentionPolicy`               | Separate POST request to lock. **Irreversible.**
 **Object Retention (Object Lock)** | Query Parameter: `enableObjectRetention=true`       | Boolean. Set to `true` during bucket creation (`buckets.insert`) to permanently enable object retention.
 **Set Object Retention**           | Object `retention` property                         | Property on object: `{"mode": "Locked", "retainUntilTime": "..."}`. Applied via `PATCH` to object or during upload.
-**Anywhere Cache**                 | `storage.anywhereCaches.insert`                     | Separate POST request to `POST https://storage.googleapis.com/storage/v1/b/BUCKET_NAME/anywhereCaches`.
+**Rapid Cache**                    | `storage.anywhereCaches.insert`                     | Separate POST request to `POST https://storage.googleapis.com/storage/v1/b/BUCKET_NAME/anywhereCaches`.
 
 --------------------------------------------------------------------------------
 

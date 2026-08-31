@@ -31,13 +31,13 @@ Dimension                        | Rapid Cache                                  
 
 --------------------------------------------------------------------------------
 
-## Rapid Cache (Anywhere Cache) Specific Recommendations
+## Rapid Cache Specific Recommendations
 
-When the architecture plan recommends **Rapid Cache (Anywhere Cache)**, the
-agent MUST explicitly configure and recommend the following:
+When the architecture plan recommends **Rapid Cache**, the agent MUST explicitly
+configure and recommend the following:
 
-1.  **Zonal Co-location**: Co-locate the Anywhere Cache instance in the exact
-    same zone as the compute cluster (e.g. GPU/TPU cluster).
+1.  **Zonal Co-location**: Co-locate the Rapid Cache instance in the exact same
+    zone as the compute cluster (e.g. GPU/TPU cluster).
 2.  **Cache Pre-warming (Workload Strategy)**: Recommend pre-warming the cache
     prior to starting the training script to avoid cold-start latencies and
     prevent GPU/TPU starvation.

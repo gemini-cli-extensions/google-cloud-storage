@@ -48,7 +48,7 @@ Draft Plan Field / Setting         | Terraform Resource & Attribute             
 **Lock Bucket Retention Policy**   | `google_storage_bucket.retention_policy.is_locked`                    | Boolean. Setting to `true` permanently locks policy. **Irreversible.**
 **Object Retention (Object Lock)** | `google_storage_bucket.enable_object_retention`                       | Boolean. Enables object-level retention.
 **Set Object Retention**           | `google_storage_bucket_object.retention`                              | Block with `mode` and `retain_until_time` inside bucket object resource.
-**Anywhere Cache**                 | `google_storage_anywhere_cache`                                       | Separate resource linking bucket to Anywhere/Rapid Cache zone.
+**Rapid Cache**                    | `google_storage_anywhere_cache`                                       | Separate resource linking bucket to Rapid Cache zone.
 
 --------------------------------------------------------------------------------
 
