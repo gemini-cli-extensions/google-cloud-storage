@@ -1,0 +1,14 @@
+{
+  "mcpServers": {
+    "cloud-storage": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@toolbox-sdk/server@1.9.0",
+        "--prebuilt",
+        "cloud-storage",
+        "--stdio"
+      ]
+    }
+  }
+}
