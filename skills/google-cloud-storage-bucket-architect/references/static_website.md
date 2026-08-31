@@ -1,15 +1,14 @@
 # Static Website Hosting
 
 This reference document outlines the configuration mapping and architecture
-recommendation for Google Cloud Storage buckets configured to host static
-websites.
+recommendation for Cloud Storage buckets configured to host static websites.
 
 ## Description
 
 The user is deploying a static website (HTML, CSS, JavaScript, media assets)
-directly to Google Cloud Storage. The site needs to be publicly accessible,
-support custom domain mapping, scale automatically for viral traffic spikes, and
-serve assets with low latency without backend servers.
+directly to Cloud Storage. The site needs to be publicly accessible, support
+custom domain mapping, scale automatically for viral traffic spikes, and serve
+assets with low latency without backend servers.
 
 ## Bucket Configuration Plan Mapping
 

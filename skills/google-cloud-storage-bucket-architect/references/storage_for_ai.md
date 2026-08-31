@@ -1,7 +1,7 @@
 # AI & Machine Learning (Storage for AI)
 
 This reference document outlines the configuration mapping and architecture
-recommendation for Google Cloud Storage buckets optimized for AI/ML workloads,
+recommendation for Cloud Storage buckets optimized for AI/ML workloads,
 including model training, checkpointing, and model inference.
 
 ## Description

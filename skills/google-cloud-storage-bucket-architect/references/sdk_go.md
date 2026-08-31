@@ -5,7 +5,7 @@ Phase 2) into the Go SDK.
 
 ## Official Documentation Reference
 
-*   [Google Cloud Storage Go Package Reference](https://pkg.go.dev/cloud.google.com/go/storage)
+*   [Cloud Storage Go Package Reference](https://pkg.go.dev/cloud.google.com/go/storage)
 
 ## Client Initialization
 

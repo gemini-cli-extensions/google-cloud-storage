@@ -1,9 +1,9 @@
 # Backup and Disaster Recovery
 
 This reference document outlines the secure-by-default, highly durable
-configuration mapping and architecture recommendation for Google Cloud Storage
-buckets serving as the storage backend for database dumps, virtual machine
-snapshots, and system backups.
+configuration mapping and architecture recommendation for Cloud Storage buckets
+serving as the storage backend for database dumps, virtual machine snapshots,
+and system backups.
 
 ## Description
 

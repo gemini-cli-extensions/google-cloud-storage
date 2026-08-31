@@ -1,7 +1,7 @@
 # Log Storage
 
 This reference document outlines the configuration mapping and architecture
-recommendation for Google Cloud Storage buckets optimized for log storage and
+recommendation for Cloud Storage buckets optimized for log storage and
 ingestion.
 
 ## Description

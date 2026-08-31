@@ -82,7 +82,7 @@ If the user specifies a location for the bucket:
     compute zones list` to verify locations.
 *   **Invalid Locations**: If the user requests an invalid or unsupported Cloud
     Storage location (e.g., "Kenya"), you MUST:
-    1.  Explicitly state that the requested location is not a valid Google Cloud
+    1.  Explicitly state that the requested location is not a valid Cloud
         Storage location.
     2.  Provide the link to the official Cloud Storage Locations documentation:
         https://cloud.google.com/storage/docs/locations.

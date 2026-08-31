@@ -1,9 +1,9 @@
 # Sensitive Data & Compliance (PII, HIPAA, Finance)
 
 This reference document outlines the secure-by-default configuration mapping and
-architecture recommendation for Google Cloud Storage buckets designed to host
-highly regulated, sensitive data (such as Personally Identifiable Information
-(PII), healthcare records subject to HIPAA, or financial transaction logs).
+architecture recommendation for Cloud Storage buckets designed to host highly
+regulated, sensitive data (such as Personally Identifiable Information (PII),
+healthcare records subject to HIPAA, or financial transaction logs).
 
 ## Description
 

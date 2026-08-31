@@ -1,7 +1,7 @@
 # Direct User-Generated Content (UGC) Ingestion
 
 This reference document outlines the secure-by-default configuration mapping and
-architecture recommendation for Google Cloud Storage buckets receiving direct
+architecture recommendation for Cloud Storage buckets receiving direct
 client-side uploads from user applications (mobile apps, web browsers, etc.)
 bypassing backend servers.
 

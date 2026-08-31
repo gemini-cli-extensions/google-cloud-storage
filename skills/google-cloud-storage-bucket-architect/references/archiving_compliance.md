@@ -1,8 +1,8 @@
 # Long-Term Archive & Regulatory Compliance
 
 This reference document outlines the secure-by-default, cost-effective
-configuration mapping and architecture recommendation for Google Cloud Storage
-buckets optimized for long-term archiving and regulatory compliance mandates.
+configuration mapping and architecture recommendation for Cloud Storage buckets
+optimized for long-term archiving and regulatory compliance mandates.
 
 ## Description
 

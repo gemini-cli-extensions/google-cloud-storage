@@ -1,9 +1,8 @@
 # Media Hosting & Content Delivery Network (CDN)
 
 This reference document outlines the secure-by-default, high-performance
-configuration mapping and architecture recommendation for Google Cloud Storage
-buckets serving as the origin for media assets and Content Delivery Networks
-(CDNs).
+configuration mapping and architecture recommendation for Cloud Storage buckets
+serving as the origin for media assets and Content Delivery Networks (CDNs).
 
 ## Description
 
