@@ -55,9 +55,20 @@ configuration conflicts, and proposing actionable remediation commands.
 When diagnosing GCS issues, identify the problem type and consult the relevant
 diagnostic resource guide before proceeding:
 
-Problem Area              | Description                                                                                                                               | Diagnostic Guide
-:------------------------ | :---------------------------------------------------------------------------------------------------------------------------------------- | :---------------
-**403 Permission Denied** | Principal (User or Service Account) receives a `403 Permission Denied` error when reading, writing, listing, or deleting buckets/objects. | [`resources/403_troubleshooting.md`](resources/403_troubleshooting.md)
+| Problem    | Description      | Diagnostic Guide                                                         |
+: Area       :                  :                                                                          :
+| :--------- | :--------------- | :----------------------------------------------------------------------- |
+| **403      | Principal (User  | [`references/403_troubleshooting.md`](references/403_troubleshooting.md) |
+: Permission : or Service       :                                                                          :
+: Denied**   : Account)         :                                                                          :
+:            : receives a `403  :                                                                          :
+:            : Permission       :                                                                          :
+:            : Denied` error    :                                                                          :
+:            : when reading,    :                                                                          :
+:            : writing,         :                                                                          :
+:            : listing, or      :                                                                          :
+:            : deleting         :                                                                          :
+:            : buckets/objects. :                                                                          :
 
 --------------------------------------------------------------------------------
 
@@ -112,7 +123,7 @@ Whenever a user requests assistance diagnosing a GCS issue:
 -   If the issue involves a **403 Permission Denied** error or IAM/ACL denial,
     immediately consult and execute the step-by-step diagnostic procedures
     documented in
-    [`resources/403_troubleshooting.md`](resources/403_troubleshooting.md).
+    [`references/403_troubleshooting.md`](references/403_troubleshooting.md).
 -   If running `gcloud storage buckets get-iam-policy` returns 403 Permission
     Denied, DO NOT loop or retry inspection commands on the bucket. First verify
     that perimeter security controls (such as VPC-SC or IP Filtering) are not
@@ -142,7 +153,7 @@ Whenever a user requests assistance diagnosing a GCS issue:
 
 -   **Inputs:** User input (principal, bucket/object URI, error text)
 -   **Outputs:** Target scope, UBLA vs ACL classification
--   **Reference Section:** `resources/403_troubleshooting.md` Steps 1-2
+-   **Reference Section:** `references/403_troubleshooting.md` Steps 1-2
 
 ### 2. Telemetry & Policy Eval
 
@@ -150,13 +161,13 @@ Whenever a user requests assistance diagnosing a GCS issue:
     `CLOUDSDK_METRICS_ENVIRONMENT="${CLOUDSDK_METRICS_ENVIRONMENT:+$CLOUDSDK_METRICS_ENVIRONMENT
     }gcs-skills..." gcloud storage buckets describe / get-iam-policy`
 -   **Outputs:** Active IAM roles, VPC-SC alerts, Deny policies
--   **Reference Section:** `resources/403_troubleshooting.md` Steps 3-7
+-   **Reference Section:** `references/403_troubleshooting.md` Steps 3-7
 
 ### 3. Edge-Case Root Cause Isolation
 
 -   **Inputs:** Advanced signals (`requesterPays`, `retentionPeriod`, ADC)
 -   **Outputs:** Root cause diagnosis
--   **Reference Section:** `resources/403_troubleshooting.md` Step 8
+-   **Reference Section:** `references/403_troubleshooting.md` Step 8
 
 ### 4. Prescriptive Remediation
 
@@ -252,7 +263,7 @@ response you MUST give. Use this exactly.
     Logs.
 
     **Remediation:** Do not write ad-hoc CLI commands. Refer to Step 8 in
-    `resources/403_troubleshooting.md` for proper instructions to prepare and
+    `references/403_troubleshooting.md` for proper instructions to prepare and
     apply an `ALLOWED_IPS.json` overriding configuration via the `gcloud storage
     buckets update` command.
 
