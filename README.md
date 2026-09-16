@@ -92,6 +92,11 @@ gemini extensions install https://github.com/gemini-cli-extensions/google-cloud-
     access errors by analyzing IAM policy bindings, ACLs, Uniform Bucket-Level
     Access, Bucket-Level IP Filtering, and VPC Service Controls perimeters, then
     walk through a verified fix.
+-   [**Google Cloud Storage OKF**](./skills/google-cloud-storage-okf/) —
+    Token-efficient search, semantic navigation, and progressive disclosure of
+    unstructured or semi-structured objects (PDFs, logs, JSON/CSV dumps, media,
+    large documents) in GCS using the Open Knowledge Format (OKF) and Model
+    Context Protocol (MCP).
 -   [**GCS Security Assessment**](./skills/gcs-security-assessment/) — Assess
     the security posture of GCS projects and buckets against Google's
     [Secure AI Framework (SAIF)](https://saif.google/secure-ai-framework/saif-map):
@@ -271,6 +276,17 @@ language, right from your coding agent:
 *   **Zero-downtime moves:** "Relocate my 'analytics-archive' bucket from
     us-east1 to us-central1 without downtime"
 
+### Search and navigate large objects with Open Knowledge Format (OKF)
+
+*   **Token-efficient search:** "Find the root cause of the outage in the 500MB
+    server log gs://my-bucket/logs/incident-2026-08.log without downloading the
+    entire file"
+*   **Semantic document navigation:** "Navigate the regulatory filing
+    gs://reports-bucket/annual-filing-2025.pdf using OKF to extract Section 4.2"
+*   **Generate OKF Table of Contents:** "Generate an OKF Table of Contents index
+    with semantic regions and write it to the GCS object context for
+    gs://archive-bucket/quarterly-dump.json"
+
 ### Control who can access your data
 
 *   **Temporary sharing:** "How can I temporarily give one of my users access to
@@ -336,6 +352,15 @@ language, right from your coding agent:
     Cloud Storage MCP server should I use?"
 *   **Read-only enforcement:** "Lock down the Cloud Storage remote MCP server
     with an IAM deny policy so my agent can only call read-only tools"
+
+### Progressive disclosure and semantic search with OKF
+
+*   **Document navigation:** "Search for the compliance summary inside
+    `gs://my-bucket/annual_report_2026.pdf` without downloading the full file"
+*   **Log analysis:** "Find the root cause error in
+    `gs://my-bucket/system_audit_2026.log` using progressive disclosure"
+*   **Index creation:** "Index `gs://my-bucket/large_dump.json` with OKF so
+    agents can query specific regions token-efficiently"
 
 ### Build event-driven and AI-powered workflows
 
