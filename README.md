@@ -37,10 +37,10 @@ and infrastructure code generation.
 
 ## Installation
 
-### Installing in Gemini CLI
+### Installing in Antigravity CLI
 
 ```bash
-gemini extensions install https://github.com/gemini-cli-extensions/google-cloud-storage
+agy plugin install https://github.com/gemini-cli-extensions/google-cloud-storage
 ```
 
 ### Installing in Claude Code
@@ -61,10 +61,10 @@ codex plugin marketplace add gemini-cli-extensions/google-cloud-storage
 codex plugin add google-cloud-storage@google-cloud-storage
 ```
 
-### Installing in Antigravity CLI
+### Installing in Gemini CLI
 
 ```bash
-agy plugin install https://github.com/gemini-cli-extensions/google-cloud-storage
+gemini extensions install https://github.com/gemini-cli-extensions/google-cloud-storage
 ```
 
 ## Available Skills
@@ -123,15 +123,16 @@ The server needs one setting:
 
 How you supply it depends on the harness:
 
-*   **Gemini CLI**: prompted on install. View or update later with `gemini
-    extensions config google-cloud-storage` (restart the CLI to apply).
+*   **Antigravity** and **Codex**: export it before starting your agent:
+
+    ```bash
+    export CLOUD_STORAGE_PROJECT="<your-project-id>"
+    ```
+
 *   **Claude Code**: pass `--config cloud_storage_project=<project-id>` on
     install, or run `/plugin` inside Claude Code.
-*   **Codex** and **Antigravity**: export it before starting your agent:
-
-```bash
-export CLOUD_STORAGE_PROJECT="<your-project-id>"
-```
+*   **Gemini CLI**: prompted on install. View or update later with `gemini
+    extensions config google-cloud-storage` (restart the CLI to apply).
 
 ### Available Tools
 
@@ -175,8 +176,8 @@ Ensure you have the following:
     gcloud CLI and ensure
     [Application Default Credentials (ADC)](https://cloud.google.com/docs/authentication/provide-credentials-adc)
     are configured.
-*   **A compatible coding agent**, such as Gemini CLI, Claude Code, Codex, or
-    Antigravity CLI.
+*   **A compatible coding agent**, such as Antigravity CLI, Claude Code, Codex,
+    or Gemini CLI.
 *   **[Node.js](https://nodejs.org/)**: the
     [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`.
 
