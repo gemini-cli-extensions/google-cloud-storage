@@ -67,6 +67,24 @@ codex plugin add google-cloud-storage@google-cloud-storage
 gemini extensions install https://github.com/gemini-cli-extensions/google-cloud-storage
 ```
 
+### Installing Skills Only (Skills CLI)
+
+To install the skills without the bundled
+[Cloud Storage MCP server](#cloud-storage-mcp-server) or plugin configuration
+(prefer a native plugin installation above for the full package), use the
+[Skills CLI](https://github.com/vercel-labs/skills):
+
+```bash
+npx skills add gemini-cli-extensions/google-cloud-storage
+```
+
+From the `npx` prompt, select the skills to install, or pass `--skill` to
+install a single skill directly:
+
+```bash
+npx skills add gemini-cli-extensions/google-cloud-storage --skill google-cloud-storage-basics
+```
+
 ## Available Skills
 
 -   [**Google Cloud Storage Basics**](./skills/google-cloud-storage-basics/) —
