@@ -7,7 +7,9 @@
         "@toolbox-sdk/server@1.9.0",
         "--prebuilt",
         "cloud-storage",
-        "--stdio"
+        "--stdio",
+        "--user-agent-metadata",
+        "gcs-skills/1.0 (skill:gcs-skills-mcp-traffic)"
       ]
     }
   }

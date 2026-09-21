@@ -26,7 +26,9 @@
         "@toolbox-sdk/server@1.9.0",
         "--prebuilt",
         "cloud-storage",
-        "--stdio"
+        "--stdio",
+        "--user-agent-metadata",
+        "gcs-skills/1.0 (skill:gcs-skills-mcp-traffic)"
       ],
       "env": {
         "CLOUD_STORAGE_PROJECT": "${user_config.cloud_storage_project}"
