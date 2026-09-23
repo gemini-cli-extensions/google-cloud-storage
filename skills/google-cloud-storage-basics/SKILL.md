@@ -16,7 +16,7 @@ description: >-
   databases (Cloud SQL, Spanner, Bigtable, Firestore).
 license: Apache-2.0
 metadata:
-    version: v2
+    version: v3
     publisher: google
     tags:
       - gcs
