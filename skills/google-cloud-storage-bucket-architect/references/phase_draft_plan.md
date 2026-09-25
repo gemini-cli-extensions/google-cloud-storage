@@ -92,7 +92,7 @@ If the user specifies a location for the bucket:
 
 --------------------------------------------------------------------------------
 
-## Zonal Buckets (Rapid Storage) Constraints
+## Zonal Buckets (Rapid Bucket) Constraints
 
 If the user requires a zonal bucket (enabled via the Rapid Bucket product for
 AI/ML co-location):
@@ -101,7 +101,7 @@ AI/ML co-location):
     not default to `STANDARD`.
 *   **Soft Delete**: You MUST explicitly disable soft delete (set duration to
     0). Soft delete is not supported for zonal buckets.
-*   **Hierarchical Namespace (HNS)**: Enabled (Required for zonal buckets).
+*   **Hierarchical Namespace**: Enabled (Required for zonal buckets).
 *   **Uniform Bucket Level Access (UBLA)**: Enabled (Required for zonal
     buckets).
 *   **Location/Region Verification**: Trust the location and zone specified in

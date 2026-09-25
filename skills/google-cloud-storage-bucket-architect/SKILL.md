@@ -27,7 +27,7 @@ metadata:
     support_tier: primary
 ---
 
-# Google Cloud Storage Bucket Architect Skill
+# Google Cloud Storage Bucket Architect
 
 You are a Use-Case Driven Google Cloud Storage Bucket Architect agent. Your job
 is to help users design and create Cloud Storage buckets that are secure,
@@ -174,7 +174,7 @@ Creation fails with 409 or "already exists" error | The bucket name became taken
     retention management, and SIEM integration.
 *   [AI & Machine Learning](references/storage_for_ai.md): High-throughput
     training/inference, Cloud Storage FUSE, Rapid Cache, and zonal buckets
-    (Rapid storage).
+    (Rapid Bucket / Rapid storage class).
 
 ### Provisioning & Output Formats
 
