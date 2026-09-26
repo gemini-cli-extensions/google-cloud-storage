@@ -335,7 +335,9 @@ Toolbox (`cloud-storage`), read [MCP Usage](references/mcp-usage.md). When a
 -   [Data Management](references/data-management.md): IAM roles, authentication
     (including signed URLs and HMAC), access control, routing for 403 error
     troubleshooting, network security, automated security assessment, data
-    protection, and pricing and cost optimization (lifecycle rules, Autoclass).
+    protection, pricing and cost optimization (lifecycle rules, Autoclass), and
+    Cloud Audit Logs (enabling Data Access logs, exempting principals, and
+    estimating log volume and ingestion cost).
 
 -   [Storage Intelligence](references/storage-intelligence.md): The subscription
     for managing storage at scale — Storage Insights datasets (BigQuery metadata
