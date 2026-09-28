@@ -222,6 +222,10 @@ Toolbox (`cloud-storage`), read [MCP Usage](references/mcp-usage.md). When a
 `cloud-storage` MCP server is connected, prefer its tools (see
 [Tool Execution Priority](#tool-execution-priority-mcp-toolbox-first)).
 
+`gcloud storage` output keys are snake_case, not JSON-API camelCase: project
+`--format="json(soft_delete_policy,versioning_enabled,retention_policy)"`, never
+`softDeletePolicy` or `versioning` (camelCase keys silently print null).
+
 1.  **Enable the Cloud Storage API:**
 
     ```bash
