@@ -171,7 +171,7 @@ binary (Option B).
           "command": "npx",
           "args": [
             "-y",
-            "@toolbox-sdk/server@1.13.0",
+            "@toolbox-sdk/server@1.13.1",
             "--prebuilt",
             "cloud-storage",
             "--stdio",
@@ -192,7 +192,7 @@ binary (Option B).
     command = "npx"
     args = [
       "-y",
-      "@toolbox-sdk/server@1.13.0",
+      "@toolbox-sdk/server@1.13.1",
       "--prebuilt",
       "cloud-storage",
       "--stdio",
