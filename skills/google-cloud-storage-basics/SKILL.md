@@ -11,9 +11,10 @@ description: >-
   CMEK, retention, Bucket Lock, holds, soft delete), host static websites,
   trigger Pub/Sub notifications, mount buckets (gcsfuse), or optimize
   performance. Covers gcloud storage / gsutil, JSON/XML APIs, client
-  libraries, Terraform, and Cloud Storage MCP servers. Don't use for
-  non-Storage MCP servers, block storage (Persistent Disk), BigQuery, or
-  databases (Cloud SQL, Spanner, Bigtable, Firestore).
+  libraries, Terraform, and Cloud Storage MCP servers. Don't use for generic
+  MCP setup that doesn't mention Cloud Storage, other MCP servers, block
+  storage (Persistent Disk), BigQuery, or databases (Cloud SQL, Spanner,
+  Bigtable, Firestore).
 license: Apache-2.0
 metadata:
     version: v4
