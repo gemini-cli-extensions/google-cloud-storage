@@ -85,6 +85,15 @@ If the user specifies a location for the bucket:
 
 *   **Do NOT run commands** like `gcloud compute regions list` or `gcloud
     compute zones list` to verify locations.
+*   **Predefined Dual-Regions (`nam4`, `eur4`, `asia1`)**: When a named
+    (predefined) dual-region such as `nam4` (`us-east1`, `us-central1`), `eur4`
+    (`europe-north1`, `europe-west4`), or `asia1` (`asia-northeast1`,
+    `asia-northeast2`) is specified—even if the user also names its constituent
+    regions—you MUST set `--location` directly to the predefined dual-region
+    name (e.g., `--location=nam4`) and MUST NOT configure it as a custom
+    dual-region (`--location=US --placement=us-east1,us-central1`). Cloud
+    Storage rejects custom dual-region placement for region pairs that match a
+    predefined dual-region with an `HTTPError 400`.
 *   **Invalid Locations**: If the user requests an invalid or unsupported Cloud
     Storage location (e.g., "Kenya"), you MUST:
     1.  Explicitly state that the requested location is not a valid Cloud
