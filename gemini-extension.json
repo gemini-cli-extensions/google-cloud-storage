@@ -14,6 +14,14 @@
         "--user-agent-metadata",
         "gcs-skills/1.0 (skill:gcs-skills-mcp-traffic)"
       ]
+    },
+    "google-cloud-storage-okf": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${extensionPath}/skills/google-cloud-storage-okf/scripts/mcp_server.py"
+      ]
     }
   },
   "settings": [

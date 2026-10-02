@@ -1,8 +1,20 @@
+# /// script
+# requires-python = ">=3.10"
+# dependencies = [
+#   "mcp",
+#   "google-cloud-storage",
+# ]
+# ///
 """mcp_server.py - GCS-OKF MCP Server.
 
 This script acts as the Model Context Protocol (MCP) server for GCS-OKF.
 It exposes the four core OKF verbs (peek, list_regions, expand, write_okf)
 as MCP tools. It relies on core.py to handle the actual GCS operations.
+
+The comment block above is PEP 723 inline script metadata: the plugin
+manifests launch this file with `uv run --script`, which installs the listed
+dependencies into an isolated environment on first start. Running it with a
+plain `python3` that already has the packages installed works too.
 """
 
 import json

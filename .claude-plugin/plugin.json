@@ -33,6 +33,17 @@
       "env": {
         "CLOUD_STORAGE_PROJECT": "${user_config.cloud_storage_project}"
       }
+    },
+    "google-cloud-storage-okf": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${CLAUDE_PLUGIN_ROOT}/skills/google-cloud-storage-okf/scripts/mcp_server.py"
+      ],
+      "env": {
+        "CLOUD_STORAGE_PROJECT": "${user_config.cloud_storage_project}"
+      }
     }
   }
 }

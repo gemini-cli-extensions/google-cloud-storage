@@ -189,6 +189,24 @@ supports Model Armor screening and IAM deny policies, see the
 If your agent reports `spawn npx ENOENT`, Node.js is not installed or `npx` is
 not on your `PATH`.
 
+### Cloud Storage OKF MCP Server
+
+Installing the plugin also registers a second local server,
+`google-cloud-storage-okf`, which serves the `peek`, `list_regions`, `expand`,
+and `write_okf` tools used by the
+[Google Cloud Storage OKF skill](./skills/google-cloud-storage-okf/). It is a
+Python script bundled with the skill and launched through
+[`uv`](https://docs.astral.sh/uv/), which installs its dependencies (`mcp`,
+`google-cloud-storage`) into an isolated environment on first start, so there is
+nothing to `pip install`, but `uv` must be installed.
+
+It uses the same Application Default Credentials and `CLOUD_STORAGE_PROJECT`
+setting as the Toolbox server, and needs `storage.objects.get` to read objects
+and `storage.objects.update` to write OKF indices.
+
+If your agent reports `spawn uv ENOENT`, `uv` is not installed or not on your
+`PATH`.
+
 ## Prerequisites
 
 Ensure you have the following:
@@ -203,6 +221,9 @@ Ensure you have the following:
     or Gemini CLI.
 *   **[Node.js](https://nodejs.org/)**: the
     [Cloud Storage MCP server](#cloud-storage-mcp-server) runs via `npx`.
+*   **[uv](https://docs.astral.sh/uv/getting-started/installation/)**: the
+    [Cloud Storage OKF MCP server](#cloud-storage-okf-mcp-server) runs via `uv
+    run`.
 
 ## Authentication
 

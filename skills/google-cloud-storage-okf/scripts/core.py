@@ -75,6 +75,7 @@ import functools
 import gzip
 import importlib
 import json
+import os
 from typing import Any, Mapping, Sequence
 
 from google.api_core import client_info
@@ -364,8 +365,17 @@ def _format_missing_okf_error(
 
 @functools.cache
 def _get_storage_client() -> storage.Client:
-  """Returns a cached module-level storage.Client instance with telemetry."""
-  return storage.Client(client_info=CLIENT_INFO)
+  """Returns a cached module-level storage.Client instance with telemetry.
+
+  The project is resolved from GOOGLE_CLOUD_PROJECT, then from
+  CLOUD_STORAGE_PROJECT (the plugin manifests pass the plugin's Project ID
+  setting under that name), and otherwise left to the SDK's defaults (gcloud
+  config).
+  """
+  project = os.environ.get("GOOGLE_CLOUD_PROJECT") or os.environ.get(
+      "CLOUD_STORAGE_PROJECT"
+  )
+  return storage.Client(project=project or None, client_info=CLIENT_INFO)
 
 
 def _fetch_blob(gs_uri: str) -> tuple[storage.Blob | None, str | None]:

@@ -14,6 +14,17 @@
       "env_vars": [
         "CLOUD_STORAGE_PROJECT"
       ]
+    },
+    "google-cloud-storage-okf": {
+      "command": "uv",
+      "args": [
+        "run",
+        "--script",
+        "${PLUGIN_ROOT}/skills/google-cloud-storage-okf/scripts/mcp_server.py"
+      ],
+      "env_vars": [
+        "CLOUD_STORAGE_PROJECT"
+      ]
     }
   }
 }
