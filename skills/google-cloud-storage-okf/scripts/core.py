@@ -151,6 +151,7 @@ GCS_CONTEXT_MAX_KEYS = 50
 OKF_SUMMARY_CHUNK_SIZE = 200
 OKF_KEYWORD_TRUNCATION_LIMIT = 3
 OKF_TITLE_TRUNCATION_LIMIT = 50
+STALE_INDEX_PREFIX = "Stale OKF index:"
 
 
 def _check_staleness_warning(
@@ -177,8 +178,8 @@ def _check_staleness_warning(
   curr_gen = getattr(blob, "generation", None)
   if stored_gen and curr_gen is not None and str(curr_gen) != str(stored_gen):
     return (
-        f"Stale OKF index: Index created for object generation {stored_gen}, "
-        f"but current generation is {curr_gen}."
+        f"{STALE_INDEX_PREFIX} Index created for object generation"
+        f" {stored_gen}, but current generation is {curr_gen}."
     )
   return None
 
