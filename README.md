@@ -118,6 +118,11 @@ npx skills add gemini-cli-extensions/google-cloud-storage --skill google-cloud-s
     combine into a critical exposure — with actionable, verified remediation.
     Needs [additional setup](#additional-setup-gcs-security-assessment) for a
     complete assessment.
+-   [**Google Cloud Storage OKF**](./skills/google-cloud-storage-okf/) —
+    Token-efficient search, semantic navigation, and progressive disclosure of
+    unstructured or semi-structured objects (PDFs, logs, JSON/CSV dumps, media,
+    large documents) in GCS using the Open Knowledge Format (OKF) and Model
+    Context Protocol (MCP).
 
 ## Cloud Storage MCP Server
 
@@ -278,6 +283,17 @@ language, right from your coding agent:
     tune it"
 *   **Cost diagnosis:** "My GCS bill spiked after we moved to gcsfuse. Figure
     out which mount options are causing the excess operations"
+
+### Search and navigate large objects with Open Knowledge Format (OKF)
+
+*   **Token-efficient search:** "Find the root cause of the outage in the 500MB
+    server log gs://my-bucket/logs/incident-2026-08.log without downloading the
+    entire file"
+*   **Semantic document navigation:** "Navigate the regulatory filing
+    gs://reports-bucket/annual-filing-2025.pdf using OKF to extract Section 4.2"
+*   **Generate OKF Table of Contents:** "Generate an OKF Table of Contents index
+    with semantic regions and write it to the GCS object context for
+    gs://archive-bucket/quarterly-dump.json"
 
 ### Move, replicate, and migrate data at scale
 
