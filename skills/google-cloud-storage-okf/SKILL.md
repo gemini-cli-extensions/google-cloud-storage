@@ -16,7 +16,7 @@ description: >-
   exceed window limits.
 license: Apache-2.0
 metadata:
-  version: v1
+  version: v2
   publisher: google
   tags:
     - gcs
@@ -326,6 +326,45 @@ Object Attributes:
 }
 ```
 
+### Confirmation Gate (Ask Before Generating OKF)
+
+Generating an OKF index reads slices of the object to compute semantic
+boundaries (consuming time and tokens) and mutates the live object's **GCS
+Object Context** (`custom_contexts`) via `write_okf`. Before scanning an object
+to split it into regions or calling `write_okf`, apply this gate:
+
+-   **Small Objects (`< 20 KB`) on Read Queries**: If the user only asked a
+    read, search, or diagnostic question and `Object Attributes.size < 20480`,
+    do **NOT** generate an OKF index — read the object directly with
+    `expand(gs_uri, 0, size - 1)` and answer the question.
+-   **When Confirmation Is Required (Ask Once, Then Stop)**: Whenever `peek` or
+    `list_regions` returns `OKF_NOT_FOUND` on an object `>= 20 KB` (or returns a
+    `Stale OKF index` warning) and the user has **not** already explicitly
+    requested or approved generating/writing the OKF index:
+    1.  Do **NOT** call `expand` to scan or segment the object and do **NOT**
+        call `write_okf`.
+    2.  Tell the user that the object does not have an OKF index yet (or that
+        its existing OKF index is stale), citing the object's `size` and
+        remaining `Object Context Capacity` from the `peek`/`list_regions`
+        diagnostic.
+    3.  Ask a single yes/no question confirming whether to inspect the object
+        and generate/write an OKF index into its GCS Object Context, and **end
+        your turn**.
+    4.  **On yes**: execute **Steps to Generate and Commit OKF** below (`expand`
+        to determine semantic region boundaries → `write_okf`), then complete
+        the user's original request.
+    5.  **On no**: do **NOT** call `write_okf`; leave the object's GCS Object
+        Context untouched.
+-   **When Consent Is Already Granted (Proceed Without Re-Asking)**: Proceed
+    directly to **Steps to Generate and Commit OKF** without stopping to ask
+    when:
+    -   The user's prompt explicitly asks to generate, index, or write an OKF
+        manifest for the target object(s) (or explicitly states that permission
+        to generate OKF is granted),
+    -   The user has already confirmed in the conversation, or
+    -   You are an isolated worker sub-agent invoked for batch indexing after
+        the lead agent has already obtained user confirmation.
+
 ### Steps to Generate and Commit OKF:
 
 1.  **Leverage Pre-existing Object Context, Custom Metadata & Attributes**:
@@ -340,7 +379,8 @@ Object Attributes:
 
     -   **Small Objects (< 20 KB)**: If the entire object easily fits in context
         and is small, read directly via `expand(gs_uri, 0, size - 1)` or
-        standard tools without forcing OKF indexing.
+        standard tools without forcing OKF indexing (unless the user explicitly
+        asked to generate an OKF index for it).
     -   **Large/Medium Objects (> 20 KB to multi-GB)**: Segment the object into
         semantic, logical regions (e.g., chapters, log phases, data tables,
         video keyframe intervals) using inclusive byte ranges. This is a
@@ -398,14 +438,19 @@ When indexing multiple objects under a GCS prefix or bucket:
 
 1.  **List Candidate URIs**: Identify all unindexed objects in the target
     bucket/prefix.
-2.  **Partition Batches**: Split the list of URIs into balanced batches across
+2.  **Confirm Once for the Batch**: Unless the user's prompt already explicitly
+    requests or grants permission to generate OKF for the batch, report the
+    candidate URIs and ask a single yes/no question for confirmation before
+    dispatching workers.
+3.  **Partition Batches**: Split the list of URIs into balanced batches across
     worker sub-agents (e.g., 5–10 objects per sub-agent).
-3.  **Dispatch Parallel Sub-Agents**: Invoke worker sub-agents concurrently
+4.  **Dispatch Parallel Sub-Agents**: Invoke worker sub-agents concurrently
     using `invoke_subagent`:
-    -   Each sub-agent is assigned an isolated batch of URIs.
+    -   Each sub-agent is assigned an isolated batch of URIs and informed that
+        user confirmation to generate OKF is already granted.
     -   Each sub-agent runs the OKF generation flow (`peek` -> inspect
         attributes -> generate semantic regions -> `write_okf`).
-4.  **Aggregate Results**: Workers report completion status and persisted region
+5.  **Aggregate Results**: Workers report completion status and persisted region
     counts back to the lead agent.
 
 --------------------------------------------------------------------------------
@@ -437,6 +482,12 @@ CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-stor
 -   **Never Reconfigure the User's Environment**: On credential, project, or
     permission errors, relay the fix and stop; never change gcloud configuration
     or credentials yourself (see **Setup**).
+-   **Confirm Before Generating OKF**: When `peek` or `list_regions` returns
+    `OKF_NOT_FOUND` on an object `>= 20 KB` (or a `Stale OKF index` warning) and
+    the user has not explicitly requested or pre-approved OKF generation, report
+    the object's size and remaining Object Context capacity, ask once for
+    confirmation, and wait for a `yes` before scanning the object or calling
+    `write_okf`.
 -   **Never Overwrite Object Payload**: OKF operations only read byte ranges and
     write non-destructive Object Contexts. Never delete or overwrite the
     original GCS object.
@@ -452,4 +503,5 @@ CLOUDSDK_METRICS_ENVIRONMENT="gcs-skills gcs-skills/1.0 (skill:google-cloud-stor
         truncation are handled automatically by `write_okf`).
 -   **Detect Stale Indices**: If `peek` or `list_regions` returns a `Stale OKF
     index` warning (indicating the underlying blob generation changed since
-    indexing), re-evaluate and re-generate the OKF index.
+    indexing), confirm with the user (unless already granted) before
+    re-evaluating and re-generating the OKF index.
